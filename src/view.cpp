@@ -1,8 +1,7 @@
-#include <glew/include/GL/glew.h>
+#include <GL/glew.h>
 #include "view.h"
 #include <QApplication>
 #include <QKeyEvent>
-#include <QGLFormat>
 #include <iostream>
 #include <QGLShader>
 #include <QGLShaderProgram>
