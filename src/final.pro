@@ -22,6 +22,8 @@ SOURCES += main.cpp \
     view.cpp
 
 HEADERS += mainwindow.h \
-    view.h
+    view.h \
+    geometry.h \
+    common.h
 
 FORMS += mainwindow.ui
