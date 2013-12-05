@@ -21,6 +21,8 @@ public:
     
     void render() const;
     
+    void load(string filename);
+    
     const VertexBuffer& vertexBuffer() const;
     void setVertexBuffer(VertexBuffer &&vertexBuffer);
     

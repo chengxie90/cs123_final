@@ -24,5 +24,7 @@ using std::endl;
     #define DEBUG_LOG(message)
 #endif
 
+class DrawContext;
+
 
 #endif // COMMON_H

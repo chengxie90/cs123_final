@@ -26,6 +26,7 @@ View::View(QWidget *parent) : QGLWidget(parent)
 
 View::~View()
 {
+    
 }
 
 void View::initializeGL()
@@ -55,22 +56,7 @@ void View::initializeGL()
     
     program.bind();
     
-    VertexBuffer vb;
-    Vertex v1, v2, v3;
-    v1.position = vec3{-0.5, -0.5, 0};
-    v2.position = vec3{0.5, -0.5, 0};
-    v3.position = vec3{0, 0.5, 0};
-    vb.push_back(v1);
-    vb.push_back(v2);
-    vb.push_back(v3);
-    
-    IndexBuffer ib;
-    ib.push_back(0);
-    ib.push_back(1);
-    ib.push_back(2);
-    
-    mesh.setVertexBuffer(std::move(vb));
-    mesh.setIndexBuffer(std::move(ib));
+    mesh.load("models/bunny.obj");
     
     program.setUniformValue("view", camera.getViewMatrix());
     program.setUniformValue("projection", camera.getProjectionMatrix());
@@ -90,6 +76,7 @@ void View::resizeGL(int w, int h)
 
 void View::mousePressEvent(QMouseEvent *event)
 {
+    
 }
 
 void View::mouseMoveEvent(QMouseEvent *event)

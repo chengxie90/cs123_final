@@ -27,9 +27,9 @@ SOURCES += main.cpp \
     mesh.cpp \
     material.cpp \
     sceneobject.cpp \
-    scenenode.cpp \
     drawcontext.cpp \
-    geometry.cpp
+    geometry.cpp \
+    pointlight.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -41,8 +41,8 @@ HEADERS += mainwindow.h \
     mesh.h \
     material.h \
     sceneobject.h \
-    scenenode.h \
-    drawcontext.h
+    drawcontext.h \
+    pointlight.h
 
 DEFINES += QT_COORD_TYPE=float
 
