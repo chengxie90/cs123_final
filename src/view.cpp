@@ -2,9 +2,11 @@
 #include "view.h"
 #include <QApplication>
 #include <QKeyEvent>
-#include <iostream>
 #include <QGLShader>
 #include <QGLShaderProgram>
+#include <geometry.h>
+#include "mesh.h"
+#include "common.h"
 using namespace std;
 
 View::View(QWidget *parent) : QGLWidget(parent)
@@ -28,12 +30,6 @@ View::~View()
 
 void View::initializeGL()
 {
-    // All OpenGL initialization *MUST* be done during or after this
-    // method. Before this method is called, there is no active OpenGL
-    // context and all OpenGL calls have no effect.
-
-    // Start a timer that will try to get 60 frames per second (the actual
-    // frame rate depends on the operating system and other running programs)
     time.start();
     timer.start(1000 / 60);
 
@@ -57,30 +53,30 @@ void View::initializeGL()
     
     program.bind();
     
-    float vertices[] = {
-        -0.5, -0.5, 0,
-        0.5, -0.5, 0,
-        0, 0.5, 0,
-    };
+    Mesh mesh;
+    VertexBuffer vb;
+    Vertex v1, v2, v3;
+    v1.position = vec3{-0.5, -0.5, 0};
+    v2.position = vec3{0.5, -0.5, 0};
+    v3.position = vec3{0, 0.5, 0};
+    vb.push_back(v1);
+    vb.push_back(v2);
+    vb.push_back(v3);
     
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+    IndexBuffer ib;
+    ib.push_back(0);
+    ib.push_back(1);
+    ib.push_back(2);
     
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    mesh.setVertexBuffer(std::move(vb));
+    mesh.setIndexBuffer(std::move(ib));
 }
 
 void View::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    mesh.Render();
 }
 
 void View::resizeGL(int w, int h)
@@ -94,13 +90,6 @@ void View::mousePressEvent(QMouseEvent *event)
 
 void View::mouseMoveEvent(QMouseEvent *event)
 {
-    // This starter code implements mouse capture, which gives the change in
-    // mouse position since the last mouse movement. The mouse needs to be
-    // recentered after every movement because it might otherwise run into
-    // the edge of the screen, which would stop the user from moving further
-    // in that direction. Note that it is important to check that deltaX and
-    // deltaY are not zero before recentering the mouse, otherwise there will
-    // be an infinite loop of mouse move events.
 //    int deltaX = event->x() - width() / 2;
 //    int deltaY = event->y() - height() / 2;
     

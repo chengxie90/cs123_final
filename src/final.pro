@@ -19,11 +19,21 @@ INCLUDEPATH += "glew/include"
 
 SOURCES += main.cpp \
     mainwindow.cpp \
-    view.cpp
+    view.cpp \
+    scene.cpp \
+    camera.cpp \
+    light.cpp \
+    mesh.cpp \
+    material.cpp
 
 HEADERS += mainwindow.h \
     view.h \
     geometry.h \
-    common.h
+    common.h \
+    scene.h \
+    camera.h \
+    light.h \
+    mesh.h \
+    material.h
 
 FORMS += mainwindow.ui

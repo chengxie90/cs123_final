@@ -1,9 +1,10 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include <qgl.h>
 #include <QTime>
 #include <QTimer>
+#include <QGLWidget>
+#include "mesh.h"
 
 class View : public QGLWidget
 {
@@ -28,6 +29,7 @@ private:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 
+    Mesh mesh;
 private slots:
     void tick();
 };

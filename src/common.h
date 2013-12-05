@@ -14,6 +14,9 @@ using std::unique_ptr;
 #include <algorithm>
 using std::min;
 using std::max;
+#include <iostream>
+using std::cout;
+using std::endl;
 
 #ifdef QT_DEBUG
     #define DEBUG_LOG(message) printf("-->");printf(message);printf("\n");fflush(stdout);
