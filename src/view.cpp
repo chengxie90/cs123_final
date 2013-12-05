@@ -30,6 +30,8 @@ View::~View()
 
 void View::initializeGL()
 {
+    assert(sizeof(qreal) == sizeof(float));
+    
     time.start();
     timer.start(1000 / 60);
 
@@ -53,7 +55,6 @@ void View::initializeGL()
     
     program.bind();
     
-    Mesh mesh;
     VertexBuffer vb;
     Vertex v1, v2, v3;
     v1.position = vec3{-0.5, -0.5, 0};
@@ -70,13 +71,16 @@ void View::initializeGL()
     
     mesh.setVertexBuffer(std::move(vb));
     mesh.setIndexBuffer(std::move(ib));
+    
+    program.setUniformValue("view", camera.getViewMatrix());
+    program.setUniformValue("projection", camera.getProjectionMatrix());
 }
 
 void View::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    mesh.Render();
+    
+    mesh.render();
 }
 
 void View::resizeGL(int w, int h)

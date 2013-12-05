@@ -19,13 +19,13 @@ public:
     Mesh();
     ~Mesh();
     
-    void Render() const;
+    void render() const;
     
     const VertexBuffer& vertexBuffer() const;
-    void setVertexBuffer(const VertexBuffer &&vertexBuffer);
+    void setVertexBuffer(VertexBuffer &&vertexBuffer);
     
     const IndexBuffer& indexBuffer() const;
-    void setIndexBuffer(const IndexBuffer &&indexBuffer);
+    void setIndexBuffer(IndexBuffer &&indexBuffer);
     
 private:
     VertexBuffer vertexBuffer_;

@@ -12,7 +12,7 @@ Mesh::~Mesh()
     glDeleteBuffers(1, &indexBufferObject_);
 }
 
-void Mesh::Render() const
+void Mesh::render() const
 {
     assert(vertexArrayObject_ > 0 && vertexBufferObject_ > 0 && indexBufferObject_ > 0);
     
@@ -27,7 +27,7 @@ const VertexBuffer& Mesh::vertexBuffer() const
     return vertexBuffer_;
 }
 
-void Mesh::setVertexBuffer(const VertexBuffer &&vertexBuffer)
+void Mesh::setVertexBuffer(VertexBuffer &&vertexBuffer)
 {
     vertexBuffer_ = std::move(vertexBuffer);
     
@@ -61,7 +61,7 @@ const IndexBuffer& Mesh::indexBuffer() const
     return indexBuffer_;
 }
 
-void Mesh::setIndexBuffer(const IndexBuffer &&indexBuffer)
+void Mesh::setIndexBuffer(IndexBuffer &&indexBuffer)
 {
     indexBuffer_ = std::move(indexBuffer);
     
