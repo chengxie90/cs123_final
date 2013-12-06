@@ -63,7 +63,7 @@ void View::initializeGL()
     context.camera = camera;
     context.light = light;
     
-    mesh.load("models/dragon.obj");
+    mesh.load("models/sphere.obj");
     
     QCursor::setPos(mapToGlobal(QPoint(width() / 2, height() / 2)));
 }

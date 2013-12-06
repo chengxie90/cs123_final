@@ -2,13 +2,13 @@
 
 Camera::Camera()
 {
-    near_ = 1;
-    far_ = 30;
+    near_ = 0.1;
+    far_ = 100;
     aspectRatio_ = 1;
     heightAngle_ = 60;
     
     updateProjection();
-    lookAt({1, 1, 1}, {0, 0, 0}, {0, 1, 0});
+    lookAt({0, 0, 5}, {0, 0, 0}, {0, 1, 0});
 }
 
 const mat4& Camera::getProjectionMatrix() const
