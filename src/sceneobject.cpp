@@ -4,6 +4,11 @@ SceneObject::SceneObject()
 {
 }
 
+SceneObject::~SceneObject()
+{
+    delete material_;
+}
+
 void SceneObject::render(DrawContext &context)
 {
     assert(material_);

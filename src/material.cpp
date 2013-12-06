@@ -29,6 +29,11 @@ Material::Material(string shader)
     }
 }
 
+Material::~Material()
+{
+    shader_.deleteLater();
+}
+
 void Material::apply(DrawContext &context)
 {
     shader_.bind();
@@ -39,8 +44,11 @@ void Material::apply(DrawContext &context)
     shader_.setUniformValue("view", context.camera->getViewMatrix());
     shader_.setUniformValue("projection", context.camera->getProjectionMatrix());
     
-    assert(context.light);
-    context.light->apply(context);
+    assert(context.lights);
+    
+    for (Light* light : *context.lights) {
+        light->apply(context);
+    }
     
     shader_.setUniformValue("ambient", ambient_);
     shader_.setUniformValue("diffuse", diffuse_);

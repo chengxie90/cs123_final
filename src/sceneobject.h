@@ -9,6 +9,7 @@ class SceneObject
 {
 public:
     SceneObject();
+    virtual ~SceneObject();
     
     void render(DrawContext& context);
     

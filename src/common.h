@@ -31,6 +31,7 @@ typedef QVector4D Color;
 class DrawContext;
 class Light;
 class Camera;
-
+class SceneObject;
+class Scene;
 
 #endif // COMMON_H

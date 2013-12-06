@@ -4,10 +4,7 @@
 #include <QTime>
 #include <QTimer>
 #include <QGLWidget>
-
-#include "mesh.h"
-#include "drawcontext.h"
-
+#include "common.h"
 
 class View : public QGLWidget
 {
@@ -18,9 +15,6 @@ public:
     ~View();
 
 private:
-    QTime time;
-    QTimer timer;
-
     void initializeGL();
     void paintGL();
     void resizeGL(int w, int h);
@@ -32,9 +26,11 @@ private:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 
-    Mesh mesh;
-    DrawContext context;
-    Camera* camera;
+    QTime time_;
+    QTimer timer_;
+    
+    Camera* camera_ = NULL;
+    Scene* scene_ = NULL;
     
 private slots:
     void tick();

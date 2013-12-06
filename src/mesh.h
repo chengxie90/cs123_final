@@ -28,7 +28,7 @@ public:
     // TODO
     virtual void renderGeometry(DrawContext &context) override;
     
-    void load(string filename);
+    void load(string name);
     
     const VertexBuffer& vertexBuffer() const;
     void setVertexBuffer(VertexBuffer &&vertexBuffer);

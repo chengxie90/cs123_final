@@ -3,6 +3,7 @@
 
 #include "geometry.h"
 #include "common.h"
+#include "scene.h"
 
 class QGLShaderProgram;
 
@@ -11,10 +12,17 @@ class DrawContext
 public:
     Camera* camera = NULL;
     
+    // Currently enabled shader
     QGLShaderProgram* shader = NULL;
     
-    // TODO
-    Light* light = NULL;
+    // Time elapsed since last frame
+    float deltaTime = 0;
+    
+    Lights* lights = NULL;
+    
+    SceneObjects* objects = NULL;
+    
+    Scene* scene = NULL;
 };
 
 #endif // DRAWCONTEXT_H

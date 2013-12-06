@@ -8,6 +8,7 @@ class Material
 {
 public:
     Material(string shader);
+    virtual ~Material();
     
     virtual void apply(DrawContext& context);
     
