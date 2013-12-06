@@ -20,3 +20,6 @@ qrc_*.cpp
 build_*
 *.pc
 bin/
+src/Makefile
+final
+ui_*

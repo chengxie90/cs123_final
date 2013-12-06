@@ -44,7 +44,7 @@ void View::initializeGL()
                         glewGetErrorString(err) );
     }
     
-    DEBUG_LOG(glGetString(GL_VERSION));
+    DEBUG_LOG((char *)glGetString(GL_VERSION));
     
     glClearColor(1, 0.7, 0, 1.0);
     glClearDepth(1.0);
