@@ -52,6 +52,9 @@ void View::initializeGL()
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
 
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    
     // TAs said this call does some magic
     QCursor::setPos(mapToGlobal(QPoint(width() / 2, height() / 2)));
     

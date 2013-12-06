@@ -1,24 +1,20 @@
 #version 330
 
-layout (location = 0) in vec3 vertex;
-layout (location = 1) in vec3 normal;
+layout (location = 0) in vec3 positionL;
+layout (location = 1) in vec3 normalL;
 
-uniform vec3 lightDir;
-uniform vec3 lightColor;
-
+uniform mat4 world;
 uniform mat4 view;
 uniform mat4 projection;
+uniform mat4 worldViewProjection;
 
-uniform vec4 ambient;
-uniform vec4 diffuse;
+out vec3 normalW;
+out vec3 positionW;
 
-out vec3 n;
-out vec3 l;
-
-void main( void )
+void main()
 {
-    l = normalize(-lightDir);
-    n = normalize(normal);
+    positionW = (world * vec4(positionL, 1)).xyz;
+    normalW = (world * vec4(normalL, 0)).xyz;
     
-    gl_Position = projection * view * vec4(vertex, 1);
+    gl_Position = worldViewProjection * vec4(positionL, 1);
 }

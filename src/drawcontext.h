@@ -20,9 +20,11 @@ public:
     
     Lights* lights = NULL;
     
-    SceneObjects* objects = NULL;
+    SceneObjects* sceneObjects = NULL;
     
     Scene* scene = NULL;
+    
+    SceneObject* currentSceneObject = NULL;
 };
 
 #endif // DRAWCONTEXT_H

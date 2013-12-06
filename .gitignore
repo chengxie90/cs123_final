@@ -23,3 +23,4 @@ bin/
 src/Makefile
 final
 ui_*
+final.app

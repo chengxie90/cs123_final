@@ -1,4 +1,6 @@
 #include "camera.h"
+#include "drawcontext.h"
+#include <QGLShaderProgram>
 
 Camera::Camera()
 {
@@ -9,6 +11,13 @@ Camera::Camera()
     
     updateProjection();
     lookAt({0, 0, 5}, {0, 0, 0}, {0, 1, 0});
+}
+
+void Camera::apply(DrawContext &context)
+{
+    context.shader->setUniformValue("view", getViewMatrix());
+    context.shader->setUniformValue("projection", getProjectionMatrix());
+    context.shader->setUniformValue("eyePositionW", getPosition());
 }
 
 const mat4& Camera::getProjectionMatrix() const

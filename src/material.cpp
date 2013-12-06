@@ -1,8 +1,6 @@
 #include "material.h"
 #include "QString"
 #include "drawcontext.h"
-#include "light.h"
-#include "camera.h"
 
 Material::Material(string shader)
 {
@@ -16,22 +14,25 @@ Material::Material(string shader)
     result = shader_.addShaderFromSourceFile(QGLShader::Vertex, vertexShader.c_str());
     if (!result) {
         DEBUG_LOG(shader_.log().toStdString().c_str());
+        assert(false);
     }
     
     result = shader_.addShaderFromSourceFile(QGLShader::Fragment, fragmentShader.c_str());
     if (!result) {
         DEBUG_LOG(shader_.log().toStdString().c_str());
+        assert(false);
     }
     
     result = shader_.link();
     if (!result) {
         DEBUG_LOG(shader_.log().toStdString().c_str());
+        assert(false);
     }
 }
 
 Material::~Material()
 {
-    shader_.deleteLater();
+    
 }
 
 void Material::apply(DrawContext &context)
@@ -39,19 +40,10 @@ void Material::apply(DrawContext &context)
     shader_.bind();
     context.shader = &shader_;
     
-    assert(context.camera);
-    
-    shader_.setUniformValue("view", context.camera->getViewMatrix());
-    shader_.setUniformValue("projection", context.camera->getProjectionMatrix());
-    
-    assert(context.lights);
-    
-    for (Light* light : *context.lights) {
-        light->apply(context);
-    }
-    
     shader_.setUniformValue("ambient", ambient_);
     shader_.setUniformValue("diffuse", diffuse_);
+    shader_.setUniformValue("specular", specular_);
+    shader_.setUniformValue("shiness", shiness_);
 }
 
 const Color& Material::ambient() const
@@ -73,5 +65,25 @@ void Material::setDiffuse(const Color &diffuse)
 {
     diffuse_ = diffuse;
 }
+const Color &Material::specular() const
+{
+    return specular_;
+}
+
+void Material::setSpecular(const Color &specular)
+{
+    specular_ = specular;
+}
+float Material::shiness() const
+{
+    return shiness_;
+}
+
+void Material::setShiness(float shiness)
+{
+    shiness_ = shiness;
+}
+
+
 
 

@@ -1,4 +1,7 @@
 #include "sceneobject.h"
+#include "drawcontext.h"
+#include "camera.h"
+#include "light.h"
 
 SceneObject::SceneObject()
 {
@@ -11,9 +14,24 @@ SceneObject::~SceneObject()
 
 void SceneObject::render(DrawContext &context)
 {
-    assert(material_);
+    context.currentSceneObject = this;
     
+    assert(material_);
     material_->apply(context);
+    
+    assert(context.lights);
+    for (Light* light : *context.lights) {
+        light->apply(context);
+    }
+    
+    assert(context.camera);
+    context.camera->apply(context);
+    
+    context.shader->setUniformValue("world", transform_);
+    context.shader->setUniformValue("worldViewProjection",
+                                    context.camera->getProjectionMatrix()
+                                    * context.camera->getViewMatrix()
+                                    * transform_);
     
     renderGeometry(context);
 }

@@ -2,11 +2,15 @@
 #define CAMERA_H
 
 #include "geometry.h"
+#include "common.h"
 
 class Camera
 {
 public:
     Camera();
+    virtual ~Camera() {}
+    
+    virtual void apply(DrawContext& context);
     
     const mat4& getProjectionMatrix() const;
     mat4 getViewMatrix() const;
