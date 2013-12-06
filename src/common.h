@@ -33,5 +33,6 @@ class Light;
 class Camera;
 class SceneObject;
 class Scene;
+class CameraController;
 
 #endif // COMMON_H

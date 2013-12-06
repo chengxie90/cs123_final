@@ -4,6 +4,7 @@
 #include <QTime>
 #include <QTimer>
 #include <QGLWidget>
+#include <QPoint>
 #include "common.h"
 
 class View : public QGLWidget
@@ -13,27 +14,30 @@ class View : public QGLWidget
 public:
     View(QWidget *parent);
     ~View();
-
+    
+private slots:
+    void tick();
+    
 private:
-    void initializeGL();
-    void paintGL();
-    void resizeGL(int w, int h);
+    virtual void initializeGL() override;
+    virtual void paintGL() override;
+    virtual void resizeGL(int w, int h) override;
 
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
+    virtual void mousePressEvent(QMouseEvent *event) override;
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
+    virtual void mouseReleaseEvent(QMouseEvent *event) override;
+    virtual void wheelEvent(QWheelEvent *event) override;
 
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
+    virtual void keyPressEvent(QKeyEvent *event) override;
+    virtual void keyReleaseEvent(QKeyEvent *event) override;
 
     QTime time_;
     QTimer timer_;
     
     Camera* camera_ = NULL;
+    CameraController* cameraController_ = NULL;
     Scene* scene_ = NULL;
     
-private slots:
-    void tick();
 };
 
 #endif // VIEW_H

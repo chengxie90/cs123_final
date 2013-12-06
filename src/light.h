@@ -6,6 +6,7 @@
 class Light
 {
 public:
+    virtual ~Light() {}
     virtual void apply(DrawContext& drawContext) = 0;
 };
 

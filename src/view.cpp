@@ -5,6 +5,7 @@
 #include "camera.h"
 #include "scene.h"
 #include "drawcontext.h"
+#include "cameracontroller.h"
 
 using namespace std;
 
@@ -55,6 +56,7 @@ void View::initializeGL()
     QCursor::setPos(mapToGlobal(QPoint(width() / 2, height() / 2)));
     
     camera_ = new Camera();
+    cameraController_ = new CameraController(camera_);
     scene_ = new Scene();
 }
 
@@ -80,30 +82,38 @@ void View::resizeGL(int w, int h)
 
 void View::mousePressEvent(QMouseEvent *event)
 {
-    int x = event->x();
-    int y = event->y();
-    
-    printf("%d %d\n", x, y);
-    fflush(stdout);
+    cameraController_->mousePressEvent(event);
+    update();
 }
 
 void View::mouseMoveEvent(QMouseEvent *event)
 {
-
+    cameraController_->mouseMoveEvent(event);
+    update();
 }
 
 void View::mouseReleaseEvent(QMouseEvent *event)
 {
+    cameraController_->mouseReleaseEvent(event);
+    update();
+}
+
+void View::wheelEvent(QWheelEvent *event)
+{
+    cameraController_->wheelEvent(event);
 }
 
 void View::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Escape) QApplication::quit();
+    cameraController_->keyPressEvent(event);
+    update();
 }
 
 void View::keyReleaseEvent(QKeyEvent *event)
 {
-    
+    cameraController_->keyReleaseEvent(event);
+    update();
 }
 
 void View::tick()

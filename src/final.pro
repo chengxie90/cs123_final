@@ -30,7 +30,8 @@ SOURCES += main.cpp \
     drawcontext.cpp \
     geometry.cpp \
     pointlight.cpp \
-    directlight.cpp
+    directlight.cpp \
+    cameracontroller.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -44,6 +45,7 @@ HEADERS += mainwindow.h \
     sceneobject.h \
     drawcontext.h \
     pointlight.h \
-    directlight.h
+    directlight.h \
+    cameracontroller.h
 
 FORMS += mainwindow.ui
