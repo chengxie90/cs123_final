@@ -4,6 +4,9 @@
 #include <geometry.h>
 #include <common.h>
 
+// TODO
+#include "sceneobject.h"
+
 struct Vertex {
     vec3 position;
     vec3 normal;
@@ -13,13 +16,17 @@ struct Vertex {
 typedef vector<uint16_t> IndexBuffer;
 typedef vector<Vertex> VertexBuffer;
 
-class Mesh
+// TODO
+class Mesh : public SceneObject
 {
 public:
     Mesh();
     ~Mesh();
     
-    void render() const;
+    void draw() const;
+    
+    // TODO
+    virtual void renderGeometry(DrawContext &context) override;
     
     void load(string filename);
     

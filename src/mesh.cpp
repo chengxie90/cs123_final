@@ -16,7 +16,7 @@ Mesh::~Mesh()
     glDeleteBuffers(1, &indexBufferObject_);
 }
 
-void Mesh::render() const
+void Mesh::draw() const
 {
     assert(vertexArrayObject_ > 0 && vertexBufferObject_ > 0 && indexBufferObject_ > 0);
     
@@ -25,6 +25,11 @@ void Mesh::render() const
     glDrawElements(GL_TRIANGLES, indexBuffer().size(), GL_UNSIGNED_SHORT, (void *)0);
     
     glBindVertexArray(0);
+}
+
+void Mesh::renderGeometry(DrawContext &context)
+{
+    draw();
 }
 
 const VertexBuffer& Mesh::vertexBuffer() const

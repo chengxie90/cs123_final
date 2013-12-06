@@ -29,7 +29,8 @@ SOURCES += main.cpp \
     sceneobject.cpp \
     drawcontext.cpp \
     geometry.cpp \
-    pointlight.cpp
+    pointlight.cpp \
+    directlight.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -42,8 +43,7 @@ HEADERS += mainwindow.h \
     material.h \
     sceneobject.h \
     drawcontext.h \
-    pointlight.h
-
-DEFINES += QT_COORD_TYPE=float
+    pointlight.h \
+    directlight.h
 
 FORMS += mainwindow.ui

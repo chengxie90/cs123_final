@@ -6,6 +6,10 @@ SceneObject::SceneObject()
 
 void SceneObject::render(DrawContext &context)
 {
+    assert(material_);
+    
+    material_->apply(context);
+    
     renderGeometry(context);
 }
 const Material *SceneObject::material() const

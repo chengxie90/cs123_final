@@ -1,5 +1,8 @@
 #include "material.h"
 #include "QString"
+#include "drawcontext.h"
+#include "light.h"
+#include "camera.h"
 
 Material::Material(string shader)
 {
@@ -28,5 +31,39 @@ Material::Material(string shader)
 
 void Material::apply(DrawContext &context)
 {
+    shader_.bind();
+    context.shader = &shader_;
     
+    assert(context.camera);
+    
+    shader_.setUniformValue("view", context.camera->getViewMatrix());
+    shader_.setUniformValue("projection", context.camera->getProjectionMatrix());
+    
+    assert(context.light);
+    context.light->apply(context);
+    
+    shader_.setUniformValue("ambient", ambient_);
+    shader_.setUniformValue("diffuse", diffuse_);
 }
+
+const Color& Material::ambient() const
+{
+    return ambient_;
+}
+
+void Material::setAmbient(const Color &ambient)
+{
+    ambient_ = ambient;
+}
+
+const Color &Material::diffuse() const
+{
+    return diffuse_;
+}
+
+void Material::setDiffuse(const Color &diffuse)
+{
+    diffuse_ = diffuse;
+}
+
+

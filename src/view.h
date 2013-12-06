@@ -4,8 +4,10 @@
 #include <QTime>
 #include <QTimer>
 #include <QGLWidget>
+
 #include "mesh.h"
-#include "camera.h"
+#include "drawcontext.h"
+
 
 class View : public QGLWidget
 {
@@ -31,7 +33,9 @@ private:
     void keyReleaseEvent(QKeyEvent *event);
 
     Mesh mesh;
-    Camera camera;
+    DrawContext context;
+    Camera* camera;
+    
 private slots:
     void tick();
 };

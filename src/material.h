@@ -11,8 +11,17 @@ public:
     
     virtual void apply(DrawContext& context);
     
+    const Color& ambient() const;
+    void setAmbient(const Color &ambient);
+    
+    const Color& diffuse() const;
+    void setDiffuse(const Color &diffuse);
+    
 protected:
     QGLShaderProgram shader_;
+    
+    Color ambient_;
+    Color diffuse_;
 };
 
 #endif // MATERIAL_H

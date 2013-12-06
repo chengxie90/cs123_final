@@ -17,6 +17,10 @@ using std::max;
 #include <iostream>
 using std::cout;
 using std::endl;
+//#include <QColor>
+//typedef QColor Color;
+#include <QVector4D>
+typedef QVector4D Color;
 
 #ifdef QT_DEBUG
     #define DEBUG_LOG(message) printf("-->");printf(message);printf("\n");fflush(stdout);
@@ -25,6 +29,8 @@ using std::endl;
 #endif
 
 class DrawContext;
+class Light;
+class Camera;
 
 
 #endif // COMMON_H

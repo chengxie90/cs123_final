@@ -2,11 +2,12 @@
 #include "view.h"
 #include <QApplication>
 #include <QKeyEvent>
-#include <QGLShader>
-#include <QGLShaderProgram>
-#include <geometry.h>
+#include "geometry.h"
 #include "mesh.h"
 #include "common.h"
+#include "camera.h"
+#include "material.h"
+#include "directlight.h"
 using namespace std;
 
 View::View(QWidget *parent) : QGLWidget(parent)
@@ -30,8 +31,9 @@ View::~View()
 }
 
 void View::initializeGL()
-{
-    assert(sizeof(qreal) == sizeof(float));
+{   
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
     
     time.start();
     timer.start(1000 / 60);
@@ -47,43 +49,55 @@ void View::initializeGL()
     
     cout << glGetString(GL_VERSION) << endl;
     
-    QGLShaderProgram program;
-    program.addShaderFromSourceFile(QGLShader::Vertex, "shaders/basic.vs");
-    program.addShaderFromSourceFile(QGLShader::Fragment, "shaders/basic.fs");
-    program.link();
+    glClearColor(1, 0.7, 0, 1.0);
+    glClearDepth(1.0);
     
-    cout << program.log().toStdString() << endl;
+    camera = new Camera();
+    Material* material = new Material("basic");
+    material->setAmbient({0.3, 0.3, 0.3, 1.0});
+    material->setDiffuse({0.7, 0.7, 0.7, 1.0});
+    DirectLight* light = new DirectLight({-1, -0.5, -1}, {1.0, 1.0, 1.0, 1.0});
     
-    program.bind();
+    mesh.setMaterial(material);
     
-    mesh.load("models/bunny.obj");
+    context.camera = camera;
+    context.light = light;
     
-    program.setUniformValue("view", camera.getViewMatrix());
-    program.setUniformValue("projection", camera.getProjectionMatrix());
+    mesh.load("models/dragon.obj");
+    
+    QCursor::setPos(mapToGlobal(QPoint(width() / 2, height() / 2)));
 }
 
 void View::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    mesh.render();
+    mesh.render(context);
 }
 
 void View::resizeGL(int w, int h)
 {
     glViewport(0, 0, w, h);
+    float aspectRatio = (float)w / h;
+    camera->setAspectRatio(aspectRatio);
 }
 
 void View::mousePressEvent(QMouseEvent *event)
 {
+    int deltaX = event->x();
+    int deltaY = event->y();
     
+    printf("%d %d\n", deltaX, deltaY);
+    fflush(stdout);
 }
 
 void View::mouseMoveEvent(QMouseEvent *event)
 {
-//    int deltaX = event->x() - width() / 2;
-//    int deltaY = event->y() - height() / 2;
+//    int deltaX = event->x();// - width() / 2;
+//    int deltaY = event->y();// - height() / 2;
     
+//    cout << deltaX << " " << deltaY << endl;
+//    fflush(stdout);
 //    if (!deltaX && !deltaY) return;
 
     // TODO: Handle mouse movements here
@@ -102,6 +116,7 @@ void View::keyPressEvent(QKeyEvent *event)
 
 void View::keyReleaseEvent(QKeyEvent *event)
 {
+    
 }
 
 void View::tick()

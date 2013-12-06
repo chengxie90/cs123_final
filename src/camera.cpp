@@ -8,7 +8,7 @@ Camera::Camera()
     heightAngle_ = 60;
     
     updateProjection();
-    lookAt({0, 0, 5}, {0, 0, 0}, {0, 1, 0});
+    lookAt({1, 1, 1}, {0, 0, 0}, {0, 1, 0});
 }
 
 const mat4& Camera::getProjectionMatrix() const
@@ -23,12 +23,14 @@ mat4 Camera::getViewMatrix() const
 
 void Camera::lookAt(const vec3 &eye, const vec3 &center, const vec3 &up)
 {
+    transform_.setToIdentity();
     transform_.lookAt(eye, center, up);
     transform_ = transform_.inverted();
 }
 
 void Camera::updateProjection()
 {
+    projection_.setToIdentity();
     projection_.perspective(heightAngle_, aspectRatio_, near_, far_);
 }
 const mat4 &Camera::transform() const
