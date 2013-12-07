@@ -29,12 +29,15 @@ void SceneObject::render(DrawContext &context)
     context.camera->apply(context);
     
     context.shader->setUniformValue("world", transform_);
+    context.shader->setUniformValue("worldView", context.camera->getViewMatrix() * transform_);
     context.shader->setUniformValue("worldViewProjection",
                                     context.camera->getProjectionMatrix()
                                     * context.camera->getViewMatrix()
                                     * transform_);
     
     renderGeometry(context);
+    
+    material_->endRender();
 }
 const Material *SceneObject::material() const
 {
@@ -43,6 +46,7 @@ const Material *SceneObject::material() const
 
 void SceneObject::setMaterial(Material *material)
 {
+    delete material_;
     material_ = material;
 }
 

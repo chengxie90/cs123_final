@@ -2,7 +2,7 @@
 
 in vec3 normalW;
 in vec3 positionW;
-in vec3 uv;
+in vec2 uv;
 
 uniform vec3 lightDir;
 uniform vec3 lightColor;
@@ -27,7 +27,7 @@ void main()
     
     vec3 h = normalize(v + l);
 
-    vec3 brdf_diffuse = useDiffuseMap ? texture(diffuseMap, uv.xy).xyz : diffuse;
+    vec3 brdf_diffuse = useDiffuseMap ? texture(diffuseMap, uv).xyz : diffuse;
     vec3 brdf_phong = brdf_diffuse + specular * pow(max(0, dot(n, h)), shiness);
 
     float cos_factor = max(0, dot(l, n));
@@ -36,5 +36,5 @@ void main()
     vec3 color = Li * brdf_phong;
     color += ambient;
 
-    fragColor = vec4(color, 0.5);
+    fragColor = vec4(color, 1);
 }

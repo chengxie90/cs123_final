@@ -26,7 +26,7 @@ void Texture::load(string filename)
     QImage image;
     
     image.load(file.fileName());
-    image = image.convertToFormat(QImage::Format_RGB32);
+    image = image.convertToFormat(QImage::Format_ARGB32);
     
     glActiveTexture(GL_TEXTURE0);
     
@@ -45,12 +45,12 @@ void Texture::load(string filename)
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture::apply(DrawContext &context)
+void Texture::apply(DrawContext &context, string name, int binding)
 {
     assert(textureID_);
     
-    glActiveTexture(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE0 + binding);
     glBindTexture(GL_TEXTURE_2D, textureID_);
     
-    context.shader->setUniformValue("diffuseMap", 0);
+    context.shader->setUniformValue(name.c_str(), binding);
 }

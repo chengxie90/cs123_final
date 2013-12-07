@@ -16,6 +16,7 @@ using std::unique_ptr;
 #include <algorithm>
 using std::min;
 using std::max;
+using std::sort;
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -23,6 +24,7 @@ using std::endl;
 //typedef QColor Color;
 #include <QVector3D>
 typedef QVector3D Color;
+
 
 #ifdef QT_DEBUG
     #define DEBUG_LOG(message) printf("-->");printf(message);printf("\n");fflush(stdout);
@@ -38,5 +40,10 @@ class Scene;
 class CameraController;
 class Texture;
 class QGLShaderProgram;
+class MeshRenderer;
+
+inline float randf() {
+    return (float)rand() / RAND_MAX * 2 - 1;
+}
 
 #endif // COMMON_H
