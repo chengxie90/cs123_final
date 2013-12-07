@@ -39,7 +39,6 @@ class SceneObject;
 class Scene;
 class CameraController;
 class Texture;
-class QGLShaderProgram;
 class MeshRenderer;
 
 inline float randf() {

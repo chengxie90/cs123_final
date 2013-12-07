@@ -17,7 +17,7 @@ ShaderCache::~ShaderCache()
     delete g_instance;
 }
 
-unique_ptr<QGLShaderProgram> ShaderCache::loadResource(string shader)
+unique_ptr<Shader> ShaderCache::loadResource(string shader)
 {
     string path = "shaders/";
     
@@ -25,7 +25,7 @@ unique_ptr<QGLShaderProgram> ShaderCache::loadResource(string shader)
     string geometryShader = path + shader + ".gs";
     string fragmentShader = path + shader + ".fs";
     
-    unique_ptr<QGLShaderProgram> p(new QGLShaderProgram);
+    unique_ptr<Shader> p(new Shader);
     
     bool result;
     

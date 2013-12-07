@@ -1,7 +1,7 @@
 #include <GL/glew.h>
 #include "texture.h"
 #include "drawcontext.h"
-#include <QGLShaderProgram>
+#include "shader.h"
 #include <QImage>
 #include <QFile>
 

@@ -2,7 +2,7 @@
 #include "drawcontext.h"
 #include "camera.h"
 #include "light.h"
-#include <QGLShaderProgram>
+#include "shader.h"
 
 SceneObject::SceneObject()
 {

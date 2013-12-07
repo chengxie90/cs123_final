@@ -1,6 +1,6 @@
 #include "directlight.h"
 #include "drawcontext.h"
-#include <QGLShaderProgram>
+#include "shader.h"
 
 DirectLight::DirectLight(const vec3 &direction, const Color &color) 
     : direction_(direction),

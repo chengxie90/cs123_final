@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 #include "PhongMaterial.h"
-#include <QGLShaderProgram>
+#include "shader.h"
 #include "shadercache.h"
 #include "drawcontext.h"
 #include "texture.h"

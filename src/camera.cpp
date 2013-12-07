@@ -1,6 +1,6 @@
 #include "camera.h"
 #include "drawcontext.h"
-#include <QGLShaderProgram>
+#include "Shader.h"
 
 Camera::Camera()
 {

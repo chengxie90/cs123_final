@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     particlesystem.cpp \
     meshrenderer.cpp \
     phongmaterial.cpp \
-    particlematerial.cpp
+    particlematerial.cpp \
+    shader.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -59,6 +60,7 @@ HEADERS += mainwindow.h \
     particlesystem.h \
     meshrenderer.h \
     phongmaterial.h \
-    particlematerial.h
+    particlematerial.h \
+    shader.h
 
 FORMS += mainwindow.ui

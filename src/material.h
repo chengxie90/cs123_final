@@ -2,6 +2,7 @@
 #define MATERIAL_H
 
 #include "common.h"
+#include "shader.h"
 
 class Material
 {
@@ -11,7 +12,7 @@ public:
     virtual void endRender() {}
     
 protected:
-    QGLShaderProgram *shader_ = NULL;
+    Shader *shader_ = NULL;
 };
 
 #endif // MATERIAL_H
