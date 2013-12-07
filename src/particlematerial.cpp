@@ -18,12 +18,14 @@ void ParticleMaterial::apply(DrawContext &context)
     
     texture_->apply(context, "map");
     
-    glDisable(GL_DEPTH_TEST);
+    //glDisable(GL_DEPTH_TEST);
+    glDepthMask(GL_FALSE);
 }
 
 void ParticleMaterial::endRender()
 {
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
 }
 
 void ParticleMaterial::setTexture(Texture *texture)

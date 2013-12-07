@@ -6,9 +6,13 @@
 
 struct Particle
 {
-    vec3 position;
-    vec3 velocity;
+    // These three rendering related properties must be declared first in this order
+    vec3 position; 
+    float roation = 0; // in angle
     float size = 1;
+    
+    // Other properties
+    vec3 velocity;
 };
 
 typedef vector<Particle> Particles;
