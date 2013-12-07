@@ -1,5 +1,5 @@
 #include "scene.h"
-#include "material.h"
+#include "phongmaterial.h"
 #include "directlight.h"
 #include "geometry.h"
 #include "mesh.h"
@@ -26,7 +26,7 @@ Scene::~Scene()
 void Scene::initialize()
 {   
     // Materials are owned (and deleted) by SceneObject
-    Material* material1 = new Material("phong");
+    PhongMaterial* material1 = new PhongMaterial;
     material1->setAmbient({0.2, 0.2, 0.2});
     material1->setDiffuse({0.7, 0.7, 0.7});
     material1->setSpecular({0.7, 0.7, 0.7});
@@ -43,7 +43,7 @@ void Scene::initialize()
     Mesh* mesh1 = MeshCache::getInstance()->acquire("sphere");
     mesh1->setMaterial(material1);
     
-    Material* material2 = new Material("phong");
+    PhongMaterial* material2 = new PhongMaterial;
     material2->setAmbient({0.2, 0.2, 0.2});
     material2->setDiffuse({0.7, 0.7, 0.7});
     material2->setSpecular({0.7, 0.7, 0.7});

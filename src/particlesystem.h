@@ -7,6 +7,7 @@
 struct Particle
 {
     vec3 position;
+    vec3 velocity;
 };
 
 typedef vector<Particle> Particles;

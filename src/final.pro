@@ -23,7 +23,6 @@ SOURCES += main.cpp \
     scene.cpp \
     camera.cpp \
     mesh.cpp \
-    material.cpp \
     sceneobject.cpp \
     geometry.cpp \
     pointlight.cpp \
@@ -34,7 +33,9 @@ SOURCES += main.cpp \
     texture.cpp \
     shadercache.cpp \
     particlesystem.cpp \
-    meshrenderer.cpp
+    meshrenderer.cpp \
+    phongmaterial.cpp \
+    particlematerial.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -56,6 +57,8 @@ HEADERS += mainwindow.h \
     texture.h \
     shadercache.h \
     particlesystem.h \
-    meshrenderer.h
+    meshrenderer.h \
+    phongmaterial.h \
+    particlematerial.h
 
 FORMS += mainwindow.ui

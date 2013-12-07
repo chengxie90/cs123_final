@@ -1,20 +1,21 @@
-#include "material.h"
+#include <GL/glew.h>
+#include "PhongMaterial.h"
+#include <QGLShaderProgram>
+#include "shadercache.h"
 #include "drawcontext.h"
 #include "texture.h"
-#include "shadercache.h"
-#include <QGLShaderProgram>
 
-Material::Material(string shader)
+PhongMaterial::PhongMaterial()
 {
-    shader_ = ShaderCache::getInstance()->acquire(shader);
+    shader_ = ShaderCache::getInstance()->acquire("phong");
 }
 
-Material::~Material()
+PhongMaterial::~PhongMaterial()
 {
     
 }
 
-void Material::apply(DrawContext &context)
+void PhongMaterial::apply(DrawContext &context)
 {
     shader_->bind();
     context.shader = shader_;
@@ -33,54 +34,49 @@ void Material::apply(DrawContext &context)
     }
 }
 
-const Color& Material::ambient() const
+const Color& PhongMaterial::ambient() const
 {
     return ambient_;
 }
 
-void Material::setAmbient(const Color &ambient)
+void PhongMaterial::setAmbient(const Color &ambient)
 {
     ambient_ = ambient;
 }
 
-const Color &Material::diffuse() const
+const Color &PhongMaterial::diffuse() const
 {
     return diffuse_;
 }
 
-void Material::setDiffuse(const Color &diffuse)
+void PhongMaterial::setDiffuse(const Color &diffuse)
 {
     diffuse_ = diffuse;
 }
-const Color &Material::specular() const
+const Color &PhongMaterial::specular() const
 {
     return specular_;
 }
 
-void Material::setSpecular(const Color &specular)
+void PhongMaterial::setSpecular(const Color &specular)
 {
     specular_ = specular;
 }
-float Material::shiness() const
+float PhongMaterial::shiness() const
 {
     return shiness_;
 }
 
-void Material::setShiness(float shiness)
+void PhongMaterial::setShiness(float shiness)
 {
     shiness_ = shiness;
 }
-const Texture *Material::diffuseMap() const
+const Texture *PhongMaterial::diffuseMap() const
 {
     return diffuseMap_;
 }
 
-void Material::setDiffuseMap(Texture *diffuseMap)
+void PhongMaterial::setDiffuseMap(Texture *diffuseMap)
 {
     diffuseMap_ = diffuseMap;
 }
-
-
-
-
-
