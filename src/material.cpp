@@ -1,33 +1,12 @@
 #include "material.h"
-#include "QString"
 #include "drawcontext.h"
+#include "texture.h"
+#include "shadercache.h"
+#include <QGLShaderProgram>
 
 Material::Material(string shader)
 {
-    string path = "shaders/";
-    
-    bool result;
-    
-    string vertexShader = path + shader + ".vs";
-    string fragmentShader = path + shader + ".fs";
-    
-    result = shader_.addShaderFromSourceFile(QGLShader::Vertex, vertexShader.c_str());
-    if (!result) {
-        DEBUG_LOG(shader_.log().toStdString().c_str());
-        assert(false);
-    }
-    
-    result = shader_.addShaderFromSourceFile(QGLShader::Fragment, fragmentShader.c_str());
-    if (!result) {
-        DEBUG_LOG(shader_.log().toStdString().c_str());
-        assert(false);
-    }
-    
-    result = shader_.link();
-    if (!result) {
-        DEBUG_LOG(shader_.log().toStdString().c_str());
-        assert(false);
-    }
+    shader_ = ShaderCache::getInstance()->acquire(shader);
 }
 
 Material::~Material()
@@ -37,13 +16,21 @@ Material::~Material()
 
 void Material::apply(DrawContext &context)
 {
-    shader_.bind();
-    context.shader = &shader_;
+    shader_->bind();
+    context.shader = shader_;
     
-    shader_.setUniformValue("ambient", ambient_);
-    shader_.setUniformValue("diffuse", diffuse_);
-    shader_.setUniformValue("specular", specular_);
-    shader_.setUniformValue("shiness", shiness_);
+    shader_->setUniformValue("ambient", ambient_);
+    shader_->setUniformValue("diffuse", diffuse_);
+    shader_->setUniformValue("specular", specular_);
+    shader_->setUniformValue("shiness", shiness_);
+    
+    if (diffuseMap_) {
+        shader_->setUniformValue("useDiffuseMap", true);
+        diffuseMap_->apply(context);
+    }
+    else {
+        shader_->setUniformValue("useDiffuseMap", false);
+    }
 }
 
 const Color& Material::ambient() const
@@ -83,6 +70,16 @@ void Material::setShiness(float shiness)
 {
     shiness_ = shiness;
 }
+const Texture *Material::diffuseMap() const
+{
+    return diffuseMap_;
+}
+
+void Material::setDiffuseMap(Texture *diffuseMap)
+{
+    diffuseMap_ = diffuseMap;
+}
+
 
 
 

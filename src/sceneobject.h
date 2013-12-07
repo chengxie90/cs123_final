@@ -16,13 +16,14 @@ public:
     const Material *material() const;
     void setMaterial(Material *material);
     
+    mat4& transform();
     const mat4& transform() const;
     void setTransform(const mat4 &transform);
     
 protected:
     virtual void renderGeometry(DrawContext& context) = 0;
     
-    Material *material_;
+    Material* material_;
     mat4 transform_;
 };
 

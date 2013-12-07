@@ -51,11 +51,14 @@ void View::initializeGL()
     
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
+    
+    glFrontFace(GL_CCW);
 
     glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
+    glDepthFunc(GL_LEQUAL);
     
-    // TAs said this call does some magic
+    glEnable(GL_TEXTURE_2D);
+    
     QCursor::setPos(mapToGlobal(QPoint(width() / 2, height() / 2)));
     
     camera_ = new Camera();

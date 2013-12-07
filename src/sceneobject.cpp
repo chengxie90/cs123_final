@@ -2,6 +2,7 @@
 #include "drawcontext.h"
 #include "camera.h"
 #include "light.h"
+#include <QGLShaderProgram>
 
 SceneObject::SceneObject()
 {
@@ -43,6 +44,11 @@ const Material *SceneObject::material() const
 void SceneObject::setMaterial(Material *material)
 {
     material_ = material;
+}
+
+mat4 &SceneObject::transform()
+{
+    return transform_;
 }
 
 const mat4 &SceneObject::transform() const

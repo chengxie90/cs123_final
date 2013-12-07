@@ -31,7 +31,12 @@ SOURCES += main.cpp \
     geometry.cpp \
     pointlight.cpp \
     directlight.cpp \
-    cameracontroller.cpp
+    cameracontroller.cpp \
+    meshcache.cpp \
+    texturecache.cpp \
+    materialcache.cpp \
+    texture.cpp \
+    shadercache.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -46,6 +51,12 @@ HEADERS += mainwindow.h \
     drawcontext.h \
     pointlight.h \
     directlight.h \
-    cameracontroller.h
+    cameracontroller.h \
+    resourcecache.h \
+    meshcache.h \
+    texturecache.h \
+    materialcache.h \
+    texture.h \
+    shadercache.h
 
 FORMS += mainwindow.ui
