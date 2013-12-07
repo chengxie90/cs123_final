@@ -1,5 +1,6 @@
 #include "shadercache.h"
 #include "common.h"
+#include <QFile>
 
 static ShaderCache* g_instance = NULL;
 
@@ -21,6 +22,7 @@ unique_ptr<QGLShaderProgram> ShaderCache::loadResource(string shader)
     string path = "shaders/";
     
     string vertexShader = path + shader + ".vs";
+    string geometryShader = path + shader + ".gs";
     string fragmentShader = path + shader + ".fs";
     
     unique_ptr<QGLShaderProgram> p(new QGLShaderProgram);
@@ -31,6 +33,15 @@ unique_ptr<QGLShaderProgram> ShaderCache::loadResource(string shader)
     if (!result) {
         DEBUG_LOG(p->log().toStdString().c_str());
         assert(false);
+    }
+    
+    QFile file(geometryShader.c_str());
+    if (file.open(QFile::ReadOnly | QFile::Text)) {
+        result = p->addShaderFromSourceFile(QGLShader::Geometry, geometryShader.c_str());
+        if (!result) {
+            DEBUG_LOG(p->log().toStdString().c_str());
+            assert(false);
+        }
     }
     
     result = p->addShaderFromSourceFile(QGLShader::Fragment, fragmentShader.c_str());

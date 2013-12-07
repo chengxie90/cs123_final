@@ -8,6 +8,7 @@ struct Particle
 {
     vec3 position;
     vec3 velocity;
+    float size = 1;
 };
 
 typedef vector<Particle> Particles;
@@ -21,8 +22,9 @@ public:
     virtual void renderGeometry(DrawContext &context) override; 
     
 private:
+    void update(float dt);
     Particles particles_;
-    
+    MeshRenderer *renderer_;
 };
 
 #endif // PARTICLESYSTEM_H

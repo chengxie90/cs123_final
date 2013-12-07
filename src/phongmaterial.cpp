@@ -27,7 +27,7 @@ void PhongMaterial::apply(DrawContext &context)
     
     if (diffuseMap_) {
         shader_->setUniformValue("useDiffuseMap", true);
-        diffuseMap_->apply(context);
+        diffuseMap_->apply(context, "diffuseMap");
     }
     else {
         shader_->setUniformValue("useDiffuseMap", false);

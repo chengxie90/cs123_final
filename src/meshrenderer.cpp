@@ -24,6 +24,9 @@ void MeshRenderer::render() const
         assert(indexBufferObject_ > 0);
         glDrawElements(GL_TRIANGLES, numElements_, GL_UNSIGNED_SHORT, (void *)0);
     }
+    else if (primitiveType_ == PrimitiveType::Points) {
+        glDrawArrays(GL_POINTS, 0, numElements_);
+    }
     
     glBindVertexArray(0);
 }

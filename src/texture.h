@@ -11,7 +11,7 @@ public:
     
     void load(string filename);
     
-    virtual void apply(DrawContext& context);
+    virtual void apply(DrawContext& context, string name, int binding = 0);
     
 private:
     uint32_t textureID_ = 0;
