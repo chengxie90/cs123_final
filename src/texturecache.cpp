@@ -1,4 +1,6 @@
 #include "texturecache.h"
+#include "texture2d.h"
+#include "texturecube.h"
 
 static TextureCache* g_instance = NULL;
 
@@ -10,15 +12,24 @@ TextureCache *TextureCache::getInstance()
     return g_instance;
 }
 
+Texture *TextureCache::acquire(string name, TextureType type)
+{
+    Texture* p = getResource(name);
+    if (p) {
+        return p;
+    }
+    
+    string filename = "textures/" + name;
+    
+    p = new Texture2D;
+    p->load(filename);
+    
+    addResource(name, p);
+    
+    return p;
+}
+
 TextureCache::~TextureCache()
 {
     delete g_instance;
-}
-
-unique_ptr<Texture> TextureCache::loadResource(string name)
-{
-    string filename = "textures/" + name;
-    unique_ptr<Texture> p(new Texture);
-    p->load(filename);
-    return p;
 }

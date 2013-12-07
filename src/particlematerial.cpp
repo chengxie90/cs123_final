@@ -16,7 +16,7 @@ void ParticleMaterial::apply(DrawContext &context)
     
     assert(texture_);
     
-    texture_->apply(context, "map");
+    texture_->apply(context, "map", 0);
     
     //glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);

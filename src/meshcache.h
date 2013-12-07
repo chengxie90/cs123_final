@@ -9,9 +9,10 @@ class MeshCache : public ResourceCache<Mesh>
 public:
     static MeshCache* getInstance();
     
+    Mesh* acquire(string name);
+    
 private:
     virtual ~MeshCache();
-    virtual unique_ptr<Mesh> loadResource(string name) override;
 };
 
 #endif // MESHCACHE_H

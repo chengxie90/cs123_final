@@ -9,11 +9,11 @@ public:
     Texture();
     virtual ~Texture();
     
-    void load(string filename);
+    virtual void load(string name) = 0;
     
-    virtual void apply(DrawContext& context, string name, int binding = 0);
+    virtual void apply(DrawContext& context, string name, int binding) const = 0;
     
-private:
+protected:
     uint32_t textureID_ = 0;
 };
 

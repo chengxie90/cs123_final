@@ -9,9 +9,10 @@ class ShaderCache : public ResourceCache<Shader>
 public:
     static ShaderCache* getInstance();
     
+    Shader* acquire(string name);
+    
 private:
     virtual ~ShaderCache();
-    virtual unique_ptr<Shader> loadResource(string name) override;
 };
 
 #endif // SHADERCACHE_H

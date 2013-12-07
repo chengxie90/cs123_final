@@ -12,20 +12,20 @@ ShaderCache *ShaderCache::getInstance()
     return g_instance;
 }
 
-ShaderCache::~ShaderCache()
+Shader *ShaderCache::acquire(string name)
 {
-    delete g_instance;
-}
-
-unique_ptr<Shader> ShaderCache::loadResource(string shader)
-{
+    Shader *p = getResource(name);
+    
+    if (p) {
+        return p;
+    }
+    
     string path = "shaders/";
+    string vertexShader = path + name + ".vs";
+    string geometryShader = path + name + ".gs";
+    string fragmentShader = path + name + ".fs";
     
-    string vertexShader = path + shader + ".vs";
-    string geometryShader = path + shader + ".gs";
-    string fragmentShader = path + shader + ".fs";
-    
-    unique_ptr<Shader> p(new Shader);
+    p = new Shader;
     
     bool result;
     
@@ -56,5 +56,12 @@ unique_ptr<Shader> ShaderCache::loadResource(string shader)
         assert(false);
     }
     
+    addResource(name, p);
+    
     return p;
+}
+
+ShaderCache::~ShaderCache()
+{
+    delete g_instance;
 }

@@ -7,18 +7,6 @@ template <class ResourceType>
 class ResourceCache
 {
 public:
-    ResourceType* acquire(string name) 
-    {
-        auto it = m_resourceMap.find(name);
-        if (it != end(m_resourceMap)) {
-            return it->second.get();
-        }
-        else {
-            m_resourceMap[name] = move(loadResource(name));
-            return m_resourceMap[name].get();
-        }
-    }
-    
     void remove(string name) 
     {
         m_resourceMap.erase(name);
@@ -35,7 +23,20 @@ protected:
     ResourceCache(const ResourceCache&) {}
     ResourceCache& operator=(const ResourceCache&) {}
     
-    virtual unique_ptr<ResourceType> loadResource(string name) = 0;
+    ResourceType* getResource(string name) {
+        auto it = m_resourceMap.find(name);
+        if (it != end(m_resourceMap)) {
+            return it->second.get();
+        }
+        else {
+            return NULL;
+        }
+    }
+    
+    void addResource(string name, ResourceType* p) {
+        m_resourceMap[name] = move(unique_ptr<ResourceType>(p));
+    }
+    
     std::map<string, unique_ptr<ResourceType>> m_resourceMap;
 };
 

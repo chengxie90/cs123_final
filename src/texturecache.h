@@ -5,14 +5,19 @@
 #include "resourcecache.h"
 #include "common.h"
 
+enum class TextureType {
+    Texture2D,
+    TextureCube,
+};
+
 class TextureCache : public ResourceCache<Texture>
 {
 public:
     static TextureCache* getInstance();
+    Texture* acquire(string name, TextureType type);
     
 private:
     virtual ~TextureCache();
-    virtual unique_ptr<Texture> loadResource(string name) override;
 };
 
 #endif // TEXTURECACHE_H

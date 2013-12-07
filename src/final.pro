@@ -36,7 +36,11 @@ SOURCES += main.cpp \
     meshrenderer.cpp \
     phongmaterial.cpp \
     particlematerial.cpp \
-    shader.cpp
+    shader.cpp \
+    skybox.cpp \
+    skyboxmaterial.cpp \
+    texture2d.cpp \
+    texturecube.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -61,6 +65,10 @@ HEADERS += mainwindow.h \
     meshrenderer.h \
     phongmaterial.h \
     particlematerial.h \
-    shader.h
+    shader.h \
+    skybox.h \
+    skyboxmaterial.h \
+    texture2d.h \
+    texturecube.h
 
 FORMS += mainwindow.ui

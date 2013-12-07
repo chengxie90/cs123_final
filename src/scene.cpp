@@ -35,14 +35,14 @@ void Scene::initialize()
     material1->setShiness(50);
     
     // Textures are owned by cache
-    Texture* diffuseMap = TextureCache::getInstance()->acquire("cheese.png");
+    Texture* diffuseMap = TextureCache::getInstance()->acquire("bonehead.jpg", TextureType::Texture2D);
     material1->setDiffuseMap(diffuseMap);
     
     // Lights owned by the scene
     DirectLight* light = new DirectLight({-1, -0.5, -1}, {1.0, 1.0, 1.0});
     
     // Meshes owned by the scene
-    Mesh* mesh1 = MeshCache::getInstance()->acquire("sphere");
+    Mesh* mesh1 = MeshCache::getInstance()->acquire("cube");
     mesh1->setMaterial(material1);
     
     PhongMaterial* material2 = new PhongMaterial;
@@ -66,7 +66,7 @@ void Scene::initialize()
     
     ParticleSystem *particleSystem = new ParticleSystem;
     ParticleMaterial* particleMaterial = new ParticleMaterial;
-    Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado.png");
+    Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado.png", TextureType::Texture2D);
     
     particleMaterial->setTexture(tornadoMap);
 

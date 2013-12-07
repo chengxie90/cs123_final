@@ -11,18 +11,25 @@ MeshCache *MeshCache::getInstance()
     return g_instance;
 }
 
-MeshCache::~MeshCache()
+Mesh *MeshCache::acquire(string name)
 {
-    delete g_instance;
-}
-
-unique_ptr<Mesh> MeshCache::loadResource(string name)
-{
-    unique_ptr<Mesh> p(new Mesh);
+    Mesh* p = getResource(name);
+    
+    if (p) {
+        return p;
+    }
     
     string filename = string("models/") + name + ".obj";
     
+    p = new Mesh;
     p->load(filename);
     
+    addResource(name, p);
+    
     return p;
+}
+
+MeshCache::~MeshCache()
+{
+    delete g_instance;
 }
