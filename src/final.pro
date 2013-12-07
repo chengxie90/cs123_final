@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     meshcache.cpp \
     texturecache.cpp \
     materialcache.cpp \
-    texture.cpp
+    texture.cpp \
+    shadercache.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -55,6 +56,7 @@ HEADERS += mainwindow.h \
     meshcache.h \
     texturecache.h \
     materialcache.h \
-    texture.h
+    texture.h \
+    shadercache.h
 
 FORMS += mainwindow.ui

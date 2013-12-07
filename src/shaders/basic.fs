@@ -14,6 +14,7 @@ uniform vec3 ambient;
 uniform vec3 specular;
 uniform float shiness;
 
+uniform bool useDiffuseMap;
 uniform sampler2D diffuseMap;
 
 out vec4 fragColor;
@@ -26,12 +27,14 @@ void main()
     
     vec3 h = normalize(v + l);
 
-    vec3 brdf_phong = texture(diffuseMap, uv.xy).xyz + specular * pow(max(0, dot(n, h)), 30);
+    vec3 brdf_diffuse = useDiffuseMap ? texture(diffuseMap, uv.xy).xyz : diffuse;
+    vec3 brdf_phong = brdf_diffuse + specular * pow(max(0, dot(n, h)), shiness);
 
     float cos_factor = max(0, dot(l, n));
     vec3 Li = lightColor * cos_factor;
 
     vec3 color = Li * brdf_phong;
+    color += ambient;
 
     fragColor = vec4(color, 1);
 }

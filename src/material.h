@@ -2,7 +2,6 @@
 #define MATERIAL_H
 
 #include "common.h"
-#include <QGLShaderProgram>
 
 class Material
 {
@@ -28,7 +27,7 @@ public:
     void setDiffuseMap(Texture *diffuseMap);
     
 protected:
-    QGLShaderProgram shader_;
+    QGLShaderProgram *shader_;
     
     Color ambient_;
     Color diffuse_;

@@ -21,7 +21,7 @@ using std::cout;
 using std::endl;
 //#include <QColor>
 //typedef QColor Color;
-#include <QVector4D>
+#include <QVector3D>
 typedef QVector3D Color;
 
 #ifdef QT_DEBUG
@@ -37,5 +37,6 @@ class SceneObject;
 class Scene;
 class CameraController;
 class Texture;
+class QGLShaderProgram;
 
 #endif // COMMON_H

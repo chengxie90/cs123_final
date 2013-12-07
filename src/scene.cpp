@@ -25,21 +25,36 @@ Scene::~Scene()
 
 void Scene::initialize()
 {   
-    Material* material = new Material("basic");
-    material->setAmbient({0.2, 0.2, 0.2});
-    material->setDiffuse({0.7, 0.7, 0.7});
-    material->setSpecular({0.7, 0.7, 0.7});
-    material->setShiness(50);
+    Material* material1 = new Material("basic");
+    material1->setAmbient({0.2, 0.2, 0.2});
+    material1->setDiffuse({0.7, 0.7, 0.7});
+    material1->setSpecular({0.7, 0.7, 0.7});
+    material1->setShiness(50);
     
     Texture* diffuseMap = TextureCache::getInstance()->acquire("cheese.png");
-    material->setDiffuseMap(diffuseMap);
+    material1->setDiffuseMap(diffuseMap);
     
     DirectLight* light = new DirectLight({-1, -0.5, -1}, {1.0, 1.0, 1.0});
     
-    Mesh* mesh = MeshCache::getInstance()->acquire("sphere");
-    mesh->setMaterial(material);
+    Mesh* mesh1 = MeshCache::getInstance()->acquire("sphere");
+    mesh1->setMaterial(material1);
+    
+    Material* material2 = new Material("basic");
+    material2->setAmbient({0.2, 0.2, 0.2});
+    material2->setDiffuse({0.7, 0.7, 0.7});
+    material2->setSpecular({0.7, 0.7, 0.7});
+    material2->setShiness(50);
+    
+    mesh1->transform().translate(1, 0, 0);
+    mesh1->transform().scale(0.25, 0.25, 0.25);
+    
+    Mesh* mesh2 = MeshCache::getInstance()->acquire("dragon");
+    mesh2->setMaterial(material2);
+    
+    mesh2->transform().translate(-1, 0, 0);
 
-    sceneObjects_.push_back(mesh);
+    sceneObjects_.push_back(mesh1);
+    sceneObjects_.push_back(mesh2);
     lights_.push_back(light);
 }
 

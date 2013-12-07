@@ -16,6 +16,7 @@ public:
     const Material *material() const;
     void setMaterial(Material *material);
     
+    mat4& transform();
     const mat4& transform() const;
     void setTransform(const mat4 &transform);
     
