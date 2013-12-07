@@ -32,7 +32,9 @@ SOURCES += main.cpp \
     meshcache.cpp \
     texturecache.cpp \
     texture.cpp \
-    shadercache.cpp
+    shadercache.cpp \
+    particlesystem.cpp \
+    meshrenderer.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -52,6 +54,8 @@ HEADERS += mainwindow.h \
     meshcache.h \
     texturecache.h \
     texture.h \
-    shadercache.h
+    shadercache.h \
+    particlesystem.h \
+    meshrenderer.h
 
 FORMS += mainwindow.ui

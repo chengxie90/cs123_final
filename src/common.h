@@ -38,5 +38,6 @@ class Scene;
 class CameraController;
 class Texture;
 class QGLShaderProgram;
+class MeshRenderer;
 
 #endif // COMMON_H

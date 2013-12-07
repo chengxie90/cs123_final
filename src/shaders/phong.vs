@@ -2,7 +2,7 @@
 
 layout (location = 0) in vec3 positionL;
 layout (location = 1) in vec3 normalL;
-layout (location = 2) in vec3 uvL;
+layout (location = 2) in vec2 uvL;
 
 uniform mat4 world;
 uniform mat4 view;
@@ -11,7 +11,7 @@ uniform mat4 worldViewProjection;
 
 out vec3 normalW;
 out vec3 positionW;
-out vec3 uv;
+out vec2 uv;
 
 void main()
 {
