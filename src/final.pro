@@ -16,25 +16,21 @@ TEMPLATE = app
 CONFIG -= depend_includepath
 
 INCLUDEPATH += "glew/include"
-# DEPENDPATH += folder1 folder2
 
 SOURCES += main.cpp \
     mainwindow.cpp \
     view.cpp \
     scene.cpp \
     camera.cpp \
-    light.cpp \
     mesh.cpp \
     material.cpp \
     sceneobject.cpp \
-    drawcontext.cpp \
     geometry.cpp \
     pointlight.cpp \
     directlight.cpp \
     cameracontroller.cpp \
     meshcache.cpp \
     texturecache.cpp \
-    materialcache.cpp \
     texture.cpp \
     shadercache.cpp
 
@@ -55,7 +51,6 @@ HEADERS += mainwindow.h \
     resourcecache.h \
     meshcache.h \
     texturecache.h \
-    materialcache.h \
     texture.h \
     shadercache.h
 

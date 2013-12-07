@@ -4,7 +4,6 @@
 #include <geometry.h>
 #include <common.h>
 
-// TODO
 #include "sceneobject.h"
 
 struct Vertex {
@@ -16,7 +15,6 @@ struct Vertex {
 typedef vector<uint16_t> IndexBuffer;
 typedef vector<Vertex> VertexBuffer;
 
-// TODO
 class Mesh : public SceneObject
 {
 public:
