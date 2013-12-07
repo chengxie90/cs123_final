@@ -24,6 +24,9 @@ public:
     float shiness() const;
     void setShiness(float shiness);
     
+    const Texture *diffuseMap() const;
+    void setDiffuseMap(Texture *diffuseMap);
+    
 protected:
     QGLShaderProgram shader_;
     
@@ -31,6 +34,8 @@ protected:
     Color diffuse_;
     Color specular_;
     float shiness_ = 0;
+    
+    Texture* diffuseMap_ = NULL;
 };
 
 #endif // MATERIAL_H

@@ -1,6 +1,7 @@
 #include "material.h"
 #include "QString"
 #include "drawcontext.h"
+#include "texture.h"
 
 Material::Material(string shader)
 {
@@ -44,6 +45,10 @@ void Material::apply(DrawContext &context)
     shader_.setUniformValue("diffuse", diffuse_);
     shader_.setUniformValue("specular", specular_);
     shader_.setUniformValue("shiness", shiness_);
+    
+    if (diffuseMap_) {
+        diffuseMap_->apply(context);
+    }
 }
 
 const Color& Material::ambient() const
@@ -83,6 +88,16 @@ void Material::setShiness(float shiness)
 {
     shiness_ = shiness;
 }
+const Texture *Material::diffuseMap() const
+{
+    return diffuseMap_;
+}
+
+void Material::setDiffuseMap(Texture *diffuseMap)
+{
+    diffuseMap_ = diffuseMap;
+}
+
 
 
 

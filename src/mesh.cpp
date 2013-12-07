@@ -91,10 +91,8 @@ void Mesh::setIndexBuffer(IndexBuffer &&indexBuffer)
     glBindVertexArray(0);
 }
 
-void Mesh::load(string name)
+void Mesh::load(string filename)
 {
-    string filename = string("models/") + name + ".obj";
-    
     VertexBuffer vertexBuffer;
     IndexBuffer indexBuffer;
     

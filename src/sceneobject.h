@@ -22,7 +22,7 @@ public:
 protected:
     virtual void renderGeometry(DrawContext& context) = 0;
     
-    Material *material_;
+    Material* material_;
     mat4 transform_;
 };
 

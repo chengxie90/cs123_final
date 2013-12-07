@@ -7,6 +7,8 @@
 using std::string;
 #include <vector>
 using std::vector;
+#include <map>
+using std::map;
 #include <assert.h>
 #include <memory>
 using std::shared_ptr;
@@ -20,7 +22,7 @@ using std::endl;
 //#include <QColor>
 //typedef QColor Color;
 #include <QVector4D>
-typedef QVector4D Color;
+typedef QVector3D Color;
 
 #ifdef QT_DEBUG
     #define DEBUG_LOG(message) printf("-->");printf(message);printf("\n");fflush(stdout);
@@ -34,5 +36,6 @@ class Camera;
 class SceneObject;
 class Scene;
 class CameraController;
+class Texture;
 
 #endif // COMMON_H
