@@ -7,9 +7,10 @@ class Terrain : public SceneObject
 {
 public:
     Terrain();
+    virtual ~Terrain();
     
 private:
-    void buildMesh() {}
+    void buildMesh();
 };
 
 #endif // TERRAIN_H

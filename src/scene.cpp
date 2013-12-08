@@ -10,6 +10,7 @@
 #include "particlesystem.h"
 #include "skybox.h"
 #include "skyboxmaterial.h"
+#include "terrain.h"
 
 Scene::Scene()
 {
@@ -88,6 +89,10 @@ void Scene::initialize()
     
     // Skybox
     skybox_ = new Skybox("cloudy");
+    
+    // Terrain
+    Terrain* terrain = new Terrain();
+    sceneObjects_.push_back(terrain);
 }
 
 void Scene::render(DrawContext &context)
