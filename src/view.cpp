@@ -50,7 +50,7 @@ void View::initializeGL()
     glClearDepth(1.0);
     
     glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
+    glCullFace(GL_BACK);    
     
     glFrontFace(GL_CCW);
 
@@ -59,8 +59,6 @@ void View::initializeGL()
     
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
-    //glPointSize(100);
     
     QCursor::setPos(mapToGlobal(QPoint(width() / 2, height() / 2)));
     

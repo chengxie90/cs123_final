@@ -3,10 +3,12 @@
 #include "meshcache.h"
 #include "skyboxmaterial.h"
 #include "texturecache.h"
+#include "drawcontext.h"
+#include "camera.h"
 
 Skybox::Skybox(string name)
 {
-    mesh_ = MeshCache::getInstance()->acquire("cube");
+    mesh_ = MeshCache::getInstance()->acquire("skybox");
     
     SkyboxMaterial *material = new SkyboxMaterial;
     Texture* texture = TextureCache::getInstance()->acquire("cloudy", TextureType::TextureCube);

@@ -27,9 +27,10 @@ void TextureCube::load(string name)
     };
     
     for(int i = 0; i < 6; i++) {
-        string path = string(name) + suffixes[i] + ".png";
+        cout << i << endl;fflush(stdout);
+        string path = string(name) + suffixes[i] + ".jpg";
         QImage img = QGLWidget::convertToGLFormat(QImage(path.c_str()));
-        glTexImage2D(targets[i], 0, GL_RGBA, img.width(), img.height(),
+        glTexImage2D(targets[i], 0  , GL_RGBA, img.width(), img.height(),
                      0, GL_RGBA, GL_UNSIGNED_BYTE, img.bits());
     }
     
@@ -50,4 +51,5 @@ void TextureCube::apply(DrawContext &context, string name, int binding) const
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureID_);
     
     context.shader->setUniformValue(name.c_str(), binding);
+    cout << glGetError() << endl;
 }
