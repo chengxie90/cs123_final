@@ -40,7 +40,7 @@ void Scene::initialize()
     material1->setShiness(50);
     
     // Textures are owned by cache
-    Texture* diffuseMap = TextureCache::getInstance()->acquire("cheese", TextureType::Texture2D);
+    Texture* diffuseMap = TextureCache::getInstance()->acquire("heightmap2", TextureType::Texture2D);
     material1->setDiffuseMap(diffuseMap);
     
     SceneObject* obj1 = new SceneObject;
@@ -75,7 +75,14 @@ void Scene::initialize()
     DirectLight* light = new DirectLight({-1, -0.5, -1}, {1.0, 1.0, 1.0});
     lights_.push_back(light);
     
-    // Particle System
+    // Skybox
+    skybox_ = new Skybox("cloudy");
+    
+    // Terrain
+    Terrain* terrain = new Terrain();
+    sceneObjects_.push_back(terrain);
+    
+    // Particle System, add particle systems last, or there'll be depth issues.
     ParticleSystem *particleSystem = new ParticleSystem;
     ParticleMaterial* particleMaterial = new ParticleMaterial;
     Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
@@ -86,13 +93,6 @@ void Scene::initialize()
     particleSystem->transform().translate(0, 10, 0);
     
     sceneObjects_.push_back(particleSystem);
-    
-    // Skybox
-    skybox_ = new Skybox("cloudy");
-    
-    // Terrain
-    Terrain* terrain = new Terrain();
-    sceneObjects_.push_back(terrain);
 }
 
 void Scene::render(DrawContext &context)

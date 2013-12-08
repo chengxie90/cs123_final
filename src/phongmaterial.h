@@ -25,6 +25,9 @@ public:
     
     void setDiffuseMap(Texture *diffuseMap);
     
+    // TODO
+    void setHeightMap(Texture *heightMap);
+    
 private:
     Color ambient_;
     Color diffuse_;
@@ -32,6 +35,9 @@ private:
     float shiness_ = 0;
     
     Texture* diffuseMap_ = NULL;
+    
+    // TODO
+    Texture* heightMap_ = NULL;
 };
 
 #endif // PHONGMATERIAL_H
