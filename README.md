@@ -21,7 +21,7 @@ Build directly on OS X or Linux.
 - Orbit Camera Controller (same as in cs123 assignments)
 
 ## Usage
-See Scene::initialize()
+See Scene::initialize() and View::initialzeGL()
 
 ## Coding Style
 Mostly observing Google C++ coding style
