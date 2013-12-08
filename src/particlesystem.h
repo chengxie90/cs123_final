@@ -24,7 +24,9 @@ public:
     ParticleSystem();
     virtual ~ParticleSystem();
     
-    virtual void renderGeometry(DrawContext &context) override; 
+    virtual void renderGeometry(DrawContext &context) override;
+    
+    void setParticleTexture(Texture* texture);
     
 private:
     void update(float dt);

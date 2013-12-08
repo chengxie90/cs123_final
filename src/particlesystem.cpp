@@ -3,9 +3,10 @@
 #include "mesh.h"
 #include "drawcontext.h"
 #include "common.h"
+#include "particlematerial.h"
 
 ParticleSystem::ParticleSystem()
-{
+{   
     Particle p;
     particles_.push_back(p);
     particles_.push_back(p);
@@ -26,9 +27,9 @@ ParticleSystem::~ParticleSystem()
     delete mesh_;
 }
 
+// To Ken: This function can be ignored.
 void ParticleSystem::renderGeometry(DrawContext &context)
-{
-    // To Ken: This function can be ignored.
+{   
     update(context.deltaTime);
     
     VertexBufferDesc desc;
@@ -40,6 +41,13 @@ void ParticleSystem::renderGeometry(DrawContext &context)
     mesh_->setVertexBuffer(desc, PrimitiveType::Points);
     
     mesh_->render();
+}
+
+void ParticleSystem::setParticleTexture(Texture *texture)
+{
+    ParticleMaterial* material = new ParticleMaterial;
+    material->setTexture(texture);
+    setMaterial(material);
 }
 
 void ParticleSystem::update(float dt)

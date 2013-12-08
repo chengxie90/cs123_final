@@ -1,6 +1,7 @@
 #ifndef GEOMETRY_H
 #define GEOMETRY_H
 
+#include "common.h"
 #include <QVector2D>
 #include <QVector3D>
 #include <QVector4D>
@@ -15,6 +16,13 @@ typedef QVector2D vec2;
 typedef QVector3D vec3;
 typedef QVector4D vec4;
 typedef QMatrix4x4 mat4;
+
+using std::ostream;
+
+inline ostream& operator<<(ostream& os, const vec3& vec) {
+    os << vec.x() << " " << vec.y() << " " << vec.z();
+    return os;
+}
 
 //class Transform {
 //public:

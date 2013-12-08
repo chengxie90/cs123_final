@@ -6,14 +6,11 @@
 class OrbitCameraController : public CameraController
 {
 public:
-    using CameraController::CameraController;
+    OrbitCameraController(Camera *camera) : CameraController(camera) {}
     virtual void mousePressEvent(QMouseEvent *event) override;
     virtual void mouseMoveEvent(QMouseEvent *event) override;
     virtual void mouseReleaseEvent(QMouseEvent *event) override;
     virtual void wheelEvent(QWheelEvent *event) override;
-    
-    virtual void keyPressEvent(QKeyEvent *event) override;
-    virtual void keyReleaseEvent(QKeyEvent *event) override;
     
 protected:
     void updateViewMatrix();

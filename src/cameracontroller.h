@@ -21,6 +21,8 @@ public:
     
     virtual void keyPressEvent(QKeyEvent *event) {}
     virtual void keyReleaseEvent(QKeyEvent *event) {}
+    
+    virtual void update(float dt) {}
 
 protected:
     Camera* camera_;

@@ -29,7 +29,11 @@ public:
     float heightAngle() const;
     void setHeightAngle(float heightAngle);
     
-    vec3 getPosition() const;
+    vec3 front() const;
+    vec3 right() const;
+    vec3 up() const;
+    
+    vec3 position() const;
     
     mat4& transform();
     const mat4& transform() const;

@@ -40,7 +40,7 @@ void Scene::initialize()
     material1->setShiness(50);
     
     // Textures are owned by cache
-    Texture* diffuseMap = TextureCache::getInstance()->acquire("heightmap2", TextureType::Texture2D);
+    Texture* diffuseMap = TextureCache::getInstance()->acquire("heightmap1", TextureType::Texture2D);
     material1->setDiffuseMap(diffuseMap);
     
     SceneObject* obj1 = new SceneObject;
@@ -84,11 +84,8 @@ void Scene::initialize()
     
     // Particle System, add particle systems last, or there'll be depth issues.
     ParticleSystem *particleSystem = new ParticleSystem;
-    ParticleMaterial* particleMaterial = new ParticleMaterial;
     Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
-    
-    particleMaterial->setTexture(tornadoMap);
-    particleSystem->setMaterial(particleMaterial);
+    particleSystem->setParticleTexture(tornadoMap);
     
     particleSystem->transform().translate(0, 10, 0);
     

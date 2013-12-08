@@ -6,6 +6,7 @@
 #include "scene.h"
 #include "drawcontext.h"
 #include "orbitcameracontroller.h"
+#include "fpscameracontroller.h"
 
 using namespace std;
 
@@ -63,7 +64,9 @@ void View::initializeGL()
     QCursor::setPos(mapToGlobal(QPoint(width() / 2, height() / 2)));
     
     camera_ = new Camera();
-    cameraController_ = new OrbitCameraController(camera_);
+    //cameraController_ = new OrbitCameraController(camera_);
+    cameraController_ = new FPSCameraController(camera_);
+    
     scene_ = new Scene();
 }
 
@@ -72,6 +75,8 @@ void View::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     float seconds = time_.restart() * 0.001f;
+    
+    cameraController_->update(seconds);
     
     DrawContext context;
     context.deltaTime = seconds;

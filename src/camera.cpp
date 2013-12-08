@@ -4,20 +4,20 @@
 
 Camera::Camera()
 {
-    near_ = 1;
-    far_ = 100000;
+    near_ = 10;
+    far_ = 10000;
     aspectRatio_ = 1;
     heightAngle_ = 60;
     
     updateProjection();
-    lookAt({0, 0, 5}, {0, 0, 0}, {0, 1, 0});
+    lookAt({3, 3, 3}, {0, 0, 0}, {0, 1, 0});
 }
 
 void Camera::apply(DrawContext &context)
 {
     context.shader->setUniformValue("view", viewMatrix());
     context.shader->setUniformValue("projection", projectionMatrix());
-    context.shader->setUniformValue("eyePositionW", getPosition());
+    context.shader->setUniformValue("eyePositionW", position());
 }
 
 const mat4& Camera::projectionMatrix() const
@@ -63,7 +63,22 @@ void Camera::setHeightAngle(float heightAngle)
     updateProjection();
 }
 
-vec3 Camera::getPosition() const
+vec3 Camera::front() const
+{
+    return -(transform_.column(2).toVector3D());
+}
+
+vec3 Camera::right() const
+{
+    return transform_.column(0).toVector3D();
+}
+
+vec3 Camera::up() const
+{
+    return transform_.column(1).toVector3D();
+}
+
+vec3 Camera::position() const
 {
     return transform_.column(3).toVector3D();
 }

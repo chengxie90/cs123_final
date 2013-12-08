@@ -42,16 +42,6 @@ void OrbitCameraController::wheelEvent(QWheelEvent *event)
     updateViewMatrix();
 }
 
-void OrbitCameraController::keyPressEvent(QKeyEvent *event)
-{
-    Q_UNUSED(event);
-}
-
-void OrbitCameraController::keyReleaseEvent(QKeyEvent *event)
-{
-    Q_UNUSED(event);
-}
-
 void OrbitCameraController::updateViewMatrix()
 {
     QMatrix4x4 transform;

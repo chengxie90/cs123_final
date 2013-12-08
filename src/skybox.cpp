@@ -14,4 +14,9 @@ Skybox::Skybox(string name)
     Texture* texture = TextureCache::getInstance()->acquire(name, TextureType::TextureCube);
     material->setTexture(texture);
     setMaterial(material);
+    
+    transform().translate(0, -50, 0);
+    transform().scale(1000);
+    
+    
 }
