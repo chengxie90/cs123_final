@@ -26,7 +26,7 @@ Scene::~Scene()
         delete object;
     }
     
-    //delete skybox_;
+    delete skybox_;
 }
 
 void Scene::initialize()
@@ -70,8 +70,6 @@ void Scene::initialize()
 
     sceneObjects_.push_back(obj2);
     
-    //
-    
     // Lights owned by the scene
     DirectLight* light = new DirectLight({-1, -0.5, -1}, {1.0, 1.0, 1.0});
     lights_.push_back(light);
@@ -83,6 +81,8 @@ void Scene::initialize()
     
     particleMaterial->setTexture(tornadoMap);
     particleSystem->setMaterial(particleMaterial);
+    
+    particleSystem->transform().translate(0, 10, 0);
     
     sceneObjects_.push_back(particleSystem);
     

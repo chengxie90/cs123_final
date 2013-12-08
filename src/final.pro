@@ -35,11 +35,12 @@ SOURCES += main.cpp \
     particlesystem.cpp \
     phongmaterial.cpp \
     particlematerial.cpp \
-    shader.cpp \
     skybox.cpp \
     skyboxmaterial.cpp \
     texture2d.cpp \
-    texturecube.cpp
+    texturecube.cpp \
+    terrain.cpp \
+    meshutility.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -67,6 +68,8 @@ HEADERS += mainwindow.h \
     skybox.h \
     skyboxmaterial.h \
     texture2d.h \
-    texturecube.h
+    texturecube.h \
+    terrain.h \
+    meshutility.h
 
 FORMS += mainwindow.ui

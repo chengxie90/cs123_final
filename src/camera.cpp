@@ -4,8 +4,8 @@
 
 Camera::Camera()
 {
-    near_ = 0.1;
-    far_ = 1000;
+    near_ = 1;
+    far_ = 10000;
     aspectRatio_ = 1;
     heightAngle_ = 60;
     

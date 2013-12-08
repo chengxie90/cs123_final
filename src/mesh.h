@@ -35,8 +35,6 @@ public:
     Mesh();
     ~Mesh();
     
-    void load(string name);
-    
     void render() const;
     
     // Mesh doesn't own vertex buffer and index buffer, callers are responsible for releasing them

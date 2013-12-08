@@ -1,4 +1,5 @@
 #include "meshcache.h"
+#include "meshutility.h"
 #include "mesh.h"
 
 static MeshCache* g_instance = NULL;
@@ -21,8 +22,9 @@ Mesh *MeshCache::acquire(string name)
     
     string filename = string("models/") + name + ".obj";
     
-    p = new Mesh;
-    p->load(filename);
+    p = MeshUtility::loadObjModel(filename);
+    
+    assert(p);
     
     addResource(name, p);
     
