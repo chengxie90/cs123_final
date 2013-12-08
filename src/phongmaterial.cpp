@@ -1,5 +1,5 @@
 #include <GL/glew.h>
-#include "PhongMaterial.h"
+#include "phongmaterial.h"
 #include "shader.h"
 #include "shadercache.h"
 #include "drawcontext.h"

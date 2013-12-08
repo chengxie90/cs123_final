@@ -1,6 +1,6 @@
 #include "camera.h"
 #include "drawcontext.h"
-#include "Shader.h"
+#include "shader.h"
 
 Camera::Camera()
 {
