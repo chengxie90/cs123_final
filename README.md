@@ -18,10 +18,11 @@ Build directly on OS X or Linux.
 - Resource Caching
 - Basic Scene Management
 - Perspective Camera
-- Orbit Camera Controller (same as in cs123 assignments)
+- Orbit Camera Controller (same as in cs123 assignments), and FPS Camera Controller
 
 ## Usage
 See Scene::initialize() and View::initialzeGL()
+FPS Camera Control: WSAD and right mouse button
 
 ## Coding Style
 Mostly observing Google C++ coding style
