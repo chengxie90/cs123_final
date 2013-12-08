@@ -8,6 +8,7 @@ Build directly on OS X or Linux.
 - If running with qtcreator, the working directory needs to be set properly, like <project>/cs123_final/src
 
 ## Features
+- Using OpenGL core profile (version >= 3.2), no deprecated stuff, all rendering using shaders.
 - Mesh loading and rendering
 - Phong shading with diffuse texture
 - Directional Light
