@@ -40,6 +40,7 @@ class Scene;
 class CameraController;
 class Texture;
 class MeshRenderer;
+class Mesh;
 
 inline float randf() {
     return (float)rand() / RAND_MAX * 2 - 1;

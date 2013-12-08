@@ -1,15 +1,18 @@
 #ifndef SKYBOX_H
 #define SKYBOX_H
 
-#include "sceneobject.h"
+#include "common.h"
 
-class Skybox : public SceneObject
+class Skybox
 {
 public:
-    Skybox();
+    Skybox(string name);
+    ~Skybox();
+    
+    void render(DrawContext& context);
     
 private:
-    
+    Mesh* mesh_ = NULL;
 };
 
 #endif // SKYBOX_H

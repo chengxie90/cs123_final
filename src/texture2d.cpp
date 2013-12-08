@@ -3,6 +3,7 @@
 #include "shader.h"
 #include <QImage>
 #include <QFile>
+#include <QGLWidget>
 
 Texture2D::Texture2D()
 {
@@ -10,17 +11,22 @@ Texture2D::Texture2D()
 
 void Texture2D::load(string filename)
 {
-    QFile file(filename.c_str());
+    string path = filename + ".png";
+    QFile file(path.c_str());
 
     if(!file.exists()) {
-        assert(false);
-        return;
+        path = filename + ".jpg";
+        file.setFileName(path.c_str());
+        if (!file.exists()) {
+            assert(false);
+            return;
+        }
     }
     
     QImage image;
     
-    image.load(file.fileName());
-    image = image.convertToFormat(QImage::Format_ARGB32);
+    image.load(path.c_str());
+    image = QGLWidget::convertToGLFormat(image);
     
     glActiveTexture(GL_TEXTURE0);
     
@@ -28,7 +34,7 @@ void Texture2D::load(string filename)
     
     glBindTexture(GL_TEXTURE_2D, textureID_);
     
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0, GL_BGRA, GL_UNSIGNED_BYTE, image.bits());
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

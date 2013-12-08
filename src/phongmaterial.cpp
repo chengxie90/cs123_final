@@ -71,10 +71,6 @@ void PhongMaterial::setShiness(float shiness)
 {
     shiness_ = shiness;
 }
-const Texture *PhongMaterial::diffuseMap() const
-{
-    return diffuseMap_;
-}
 
 void PhongMaterial::setDiffuseMap(Texture *diffuseMap)
 {

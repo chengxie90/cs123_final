@@ -8,6 +8,8 @@
 #include "texturecache.h"
 #include "particlematerial.h"
 #include "particlesystem.h"
+#include "skybox.h"
+#include "skyboxmaterial.h"
 
 Scene::Scene()
 {
@@ -23,56 +25,67 @@ Scene::~Scene()
     for (SceneObject* object : sceneObjects_) {
         delete object;
     }
+    
+    //delete skybox_;
 }
 
 void Scene::initialize()
 {   
-    // Materials are owned (and deleted) by SceneObject
-    PhongMaterial* material1 = new PhongMaterial;
-    material1->setAmbient({0.2, 0.2, 0.2});
-    material1->setDiffuse({0.7, 0.7, 0.7});
-    material1->setSpecular({0.7, 0.7, 0.7});
-    material1->setShiness(50);
+//    // Materials are owned (and deleted) by SceneObject
+//    PhongMaterial* material1 = new PhongMaterial;
+//    material1->setAmbient({0.2, 0.2, 0.2});
+//    material1->setDiffuse({0.7, 0.7, 0.7});
+//    material1->setSpecular({0.7, 0.7, 0.7});
+//    material1->setShiness(50);
     
-    // Textures are owned by cache
-    Texture* diffuseMap = TextureCache::getInstance()->acquire("bonehead.jpg", TextureType::Texture2D);
-    material1->setDiffuseMap(diffuseMap);
+//    // Textures are owned by cache
+//    Texture* diffuseMap = TextureCache::getInstance()->acquire("cloudy+x", TextureType::Texture2D);
+//    material1->setDiffuseMap(diffuseMap);
     
-    // Lights owned by the scene
-    DirectLight* light = new DirectLight({-1, -0.5, -1}, {1.0, 1.0, 1.0});
+//    // Lights owned by the scene
+//    DirectLight* light = new DirectLight({-1, -0.5, -1}, {1.0, 1.0, 1.0});
     
-    // Meshes owned by the scene
-    Mesh* mesh1 = MeshCache::getInstance()->acquire("cube");
-    mesh1->setMaterial(material1);
+//    // Meshes owned by the scene
+//    Mesh* mesh1 = MeshCache::getInstance()->acquire("cube");
+//    mesh1->setMaterial(material1);
     
-    PhongMaterial* material2 = new PhongMaterial;
-    material2->setAmbient({0.2, 0.2, 0.2});
-    material2->setDiffuse({0.7, 0.7, 0.7});
-    material2->setSpecular({0.7, 0.7, 0.7});
-    material2->setShiness(50);
+//    PhongMaterial* material2 = new PhongMaterial;
+//    material2->setAmbient({0.2, 0.2, 0.2});
+//    material2->setDiffuse({0.7, 0.7, 0.7});
+//    material2->setSpecular({0.7, 0.7, 0.7});
+//    material2->setShiness(50);
     
-    mesh1->transform().translate(20, 0, 0);
-    mesh1->transform().scale(5, 5, 5);
+//    mesh1->transform().translate(20, 0, 0);
+//    mesh1->transform().scale(5, 5, 5);
     
-    Mesh* mesh2 = MeshCache::getInstance()->acquire("dragon");
-    mesh2->setMaterial(material2);
+//    Mesh* mesh2 = MeshCache::getInstance()->acquire("cube");
+//    mesh2->setMaterial(material2);
     
-    mesh2->transform().translate(-20, 0, 0);
-    mesh2->transform().scale(20, 20, 20);
+//    mesh2->transform().translate(-20, 0, 0);
+//    mesh2->transform().scale(20, 20, 20);
 
-    sceneObjects_.push_back(mesh1);
-    sceneObjects_.push_back(mesh2);
-    lights_.push_back(light);
+//    sceneObjects_.push_back(mesh1);
+//    sceneObjects_.push_back(mesh2);
+//    lights_.push_back(light);
     
-    ParticleSystem *particleSystem = new ParticleSystem;
-    ParticleMaterial* particleMaterial = new ParticleMaterial;
-    Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado.png", TextureType::Texture2D);
+      //skybox_ = new Skybox("cloudy");
     
-    particleMaterial->setTexture(tornadoMap);
+//    ParticleSystem *particleSystem = new ParticleSystem;
+//    ParticleMaterial* particleMaterial = new ParticleMaterial;
+//    Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
+    
+//    particleMaterial->setTexture(tornadoMap);
 
-    particleSystem->setMaterial(particleMaterial);
+//    particleSystem->setMaterial(particleMaterial);
     
-    sceneObjects_.push_back(particleSystem);
+//    sceneObjects_.push_back(particleSystem);
+    
+    SkyboxMaterial *m = new SkyboxMaterial;
+    Texture* t = TextureCache::getInstance()->acquire("cloudy", TextureType::TextureCube);
+    Mesh* mesh = MeshCache::getInstance()->acquire("cube");
+    m->setTexture(t);
+    mesh->setMaterial(m);
+    sceneObjects_.push_back(mesh);
 }
 
 void Scene::render(DrawContext &context)
@@ -80,6 +93,8 @@ void Scene::render(DrawContext &context)
     context.lights = &lights_;
     context.sceneObjects = &sceneObjects_;
     context.scene = this;
+    
+    //skybox_->render(context);
     
     for (SceneObject* object : sceneObjects_) {
         object->render(context);

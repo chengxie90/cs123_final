@@ -21,7 +21,13 @@ Texture *TextureCache::acquire(string name, TextureType type)
     
     string filename = "textures/" + name;
     
-    p = new Texture2D;
+    if (type == TextureType::Texture2D) {
+        p = new Texture2D;
+    }
+    else if (type == TextureType::TextureCube) {
+        p = new TextureCube;
+    }
+    
     p->load(filename);
     
     addResource(name, p);

@@ -23,7 +23,6 @@ public:
     float shiness() const;
     void setShiness(float shiness);
     
-    const Texture *diffuseMap() const;
     void setDiffuseMap(Texture *diffuseMap);
     
 private:
