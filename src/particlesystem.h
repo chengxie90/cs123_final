@@ -28,7 +28,6 @@ public:
 private:
     void update(float dt);
     Particles particles_;
-    MeshRenderer *renderer_;
 };
 
 #endif // PARTICLESYSTEM_H

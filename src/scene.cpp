@@ -42,42 +42,51 @@ void Scene::initialize()
     Texture* diffuseMap = TextureCache::getInstance()->acquire("cheese", TextureType::Texture2D);
     material1->setDiffuseMap(diffuseMap);
     
-    // Lights owned by the scene
-    DirectLight* light = new DirectLight({-1, -0.5, -1}, {1.0, 1.0, 1.0});
-    
-    // Meshes owned by the scene
+    SceneObject* obj1 = new SceneObject;
     Mesh* mesh1 = MeshCache::getInstance()->acquire("cube");
-    mesh1->setMaterial(material1);
+    obj1->setMesh(mesh1);
+    obj1->setMaterial(material1);
     
+    obj1->transform().translate(20, 0, 0);
+    obj1->transform().scale(5, 5, 5);
+            
+    sceneObjects_.push_back(obj1);       
+    
+    //
     PhongMaterial* material2 = new PhongMaterial;
     material2->setAmbient({0.2, 0.2, 0.2});
     material2->setDiffuse({0.7, 0.7, 0.7});
     material2->setSpecular({0.7, 0.7, 0.7});
     material2->setShiness(50);
     
-    mesh1->transform().translate(20, 0, 0);
-    mesh1->transform().scale(5, 5, 5);
+    SceneObject *obj2 = new SceneObject;
+    Mesh* mesh2 = MeshCache::getInstance()->acquire("bunny");
+    obj2->setMesh(mesh2);
     
-    Mesh* mesh2 = MeshCache::getInstance()->acquire("dragon");
-    mesh2->setMaterial(material2);
+    obj2->setMaterial(material2);
     
-    mesh2->transform().translate(-20, 0, 0);
-    mesh2->transform().scale(20, 20, 20);
+    obj2->transform().translate(-20, 0, 0);
+    obj2->transform().scale(20, 20, 20);
 
-    sceneObjects_.push_back(mesh1);
-    sceneObjects_.push_back(mesh2);
+    sceneObjects_.push_back(obj2);
+    
+    //
+    
+    // Lights owned by the scene
+    DirectLight* light = new DirectLight({-1, -0.5, -1}, {1.0, 1.0, 1.0});
     lights_.push_back(light);
     
+    // Particle System
     ParticleSystem *particleSystem = new ParticleSystem;
     ParticleMaterial* particleMaterial = new ParticleMaterial;
     Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
     
     particleMaterial->setTexture(tornadoMap);
-
     particleSystem->setMaterial(particleMaterial);
     
     sceneObjects_.push_back(particleSystem);
     
+    // Skybox
     skybox_ = new Skybox("cloudy");
 }
 

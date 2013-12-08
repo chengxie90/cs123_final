@@ -1,6 +1,6 @@
 #include "GL/glew.h"
 #include "particlesystem.h"
-#include "meshrenderer.h"
+#include "mesh.h"
 #include "drawcontext.h"
 #include "common.h"
 
@@ -18,12 +18,12 @@ ParticleSystem::ParticleSystem()
     particles_.push_back(p);
     particles_.push_back(p);
     
-    renderer_ = new MeshRenderer;
+    mesh_ = new Mesh;
 }
 
 ParticleSystem::~ParticleSystem()
 {
-    delete renderer_;
+    delete mesh_;
 }
 
 void ParticleSystem::renderGeometry(DrawContext &context)
@@ -39,9 +39,9 @@ void ParticleSystem::renderGeometry(DrawContext &context)
     desc.bufferData = particles_.data();
     desc.bufferSize = particles_.size() * sizeof(Particle);
     desc.vertexElementSizes = {3, 1, 1, sizeof(Particle) / sizeof(float) - 5};
-    renderer_->setVertexBuffer(desc, PrimitiveType::Points);
+    mesh_->setVertexBuffer(desc, PrimitiveType::Points);
     
-    renderer_->render();
+    mesh_->render();
 }
 
 void ParticleSystem::update(float dt)

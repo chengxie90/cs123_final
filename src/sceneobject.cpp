@@ -3,6 +3,7 @@
 #include "camera.h"
 #include "light.h"
 #include "shader.h"
+#include "mesh.h"
 
 SceneObject::SceneObject()
 {
@@ -64,5 +65,23 @@ void SceneObject::setTransform(const mat4 &transform)
 {
     transform_ = transform;
 }
+
+Mesh *SceneObject::mesh()
+{
+    return mesh_;
+}
+
+void SceneObject::setMesh(Mesh *mesh)
+{
+    mesh_ = mesh;
+}
+
+void SceneObject::renderGeometry(DrawContext &context)
+{
+    if (mesh_) {
+        mesh_->render();
+    }
+}
+
 
 

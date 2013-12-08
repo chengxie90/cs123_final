@@ -11,17 +11,7 @@ Skybox::Skybox(string name)
     mesh_ = MeshCache::getInstance()->acquire("skybox");
     
     SkyboxMaterial *material = new SkyboxMaterial;
-    Texture* texture = TextureCache::getInstance()->acquire("cloudy", TextureType::TextureCube);
+    Texture* texture = TextureCache::getInstance()->acquire(name, TextureType::TextureCube);
     material->setTexture(texture);
-    mesh_->setMaterial(material);
-}
-
-Skybox::~Skybox()
-{
-    delete mesh_;
-}
-
-void Skybox::render(DrawContext &context)
-{
-    mesh_->render(context);
+    setMaterial(material);
 }

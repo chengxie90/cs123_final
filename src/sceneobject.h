@@ -20,9 +20,13 @@ public:
     const mat4& transform() const;
     void setTransform(const mat4 &transform);
     
-protected:
-    virtual void renderGeometry(DrawContext& context) = 0;
+    Mesh *mesh();
+    void setMesh(Mesh *mesh);
     
+protected:
+    virtual void renderGeometry(DrawContext& context);
+    
+    Mesh* mesh_ = NULL;
     Material* material_ = NULL;
     mat4 transform_;
 };

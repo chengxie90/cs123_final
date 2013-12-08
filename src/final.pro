@@ -33,7 +33,6 @@ SOURCES += main.cpp \
     texture.cpp \
     shadercache.cpp \
     particlesystem.cpp \
-    meshrenderer.cpp \
     phongmaterial.cpp \
     particlematerial.cpp \
     shader.cpp \
@@ -62,7 +61,6 @@ HEADERS += mainwindow.h \
     texture.h \
     shadercache.h \
     particlesystem.h \
-    meshrenderer.h \
     phongmaterial.h \
     particlematerial.h \
     shader.h \

@@ -1,9 +1,9 @@
+#include "GL/glew.h"
 #include "mesh.h"
 #include <QFile>
 #include <QTextStream>
 #include <QRegExp>
 #include <QStringList>
-#include "meshrenderer.h"
 
 Mesh::Mesh()
 {
@@ -12,14 +12,9 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
-    delete meshRenderer_;
-}
-
-void Mesh::renderGeometry(DrawContext &context)
-{
-    assert(meshRenderer_);
-    Q_UNUSED(context);
-    meshRenderer_->render();
+    glDeleteVertexArrays(1, &vertexArrayObject_);
+    glDeleteBuffers(1, &vertexBufferObject_);
+    glDeleteBuffers(1, &indexBufferObject_);
 }
 
 void Mesh::load(string filename)
@@ -90,22 +85,85 @@ void Mesh::load(string filename)
     desc.bufferSize = vertexBuffer.size() * sizeof(SimpleVertex);
     desc.vertexElementSizes = {3, 3, 2};
     
-    MeshRenderer* renderer = new MeshRenderer();
-    renderer->setVertexBuffer(desc, PrimitiveType::Triangles);
-    renderer->setIndexBuffer(indexBuffer);
+    setVertexBuffer(desc, PrimitiveType::Triangles);
+    setIndexBuffer(indexBuffer);
+}
+
+void Mesh::render() const
+{
+    assert(vertexArrayObject_ > 0 && vertexBufferObject_ > 0);
+    assert(numElements_ > 0);
     
-    setMeshRenderer(renderer);
+    glBindVertexArray(vertexArrayObject_);
+    
+    if (primitiveType_ == PrimitiveType::Triangles) {
+        assert(indexBufferObject_ > 0);
+        glDrawElements(GL_TRIANGLES, numElements_, GL_UNSIGNED_SHORT, (void *)0);
+    }
+    else if (primitiveType_ == PrimitiveType::Points) {
+        glDrawArrays(GL_POINTS, 0, numElements_);
+    }
+    
+    glBindVertexArray(0);
 }
 
-MeshRenderer *Mesh::meshRenderer()
+void Mesh::setVertexBuffer(const VertexBufferDesc &vertexBuffer, PrimitiveType primitveType)
 {
-    return meshRenderer_;
+    primitiveType_ = primitveType;
+    
+    if (vertexArrayObject_ == 0) {
+        glGenVertexArrays(1, &vertexArrayObject_);
+    }
+    
+    if (vertexBufferObject_ == 0) {
+        glGenBuffers(1, &vertexBufferObject_);
+    }
+    
+    glBindVertexArray(vertexArrayObject_);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_);
+    
+    glBufferData(GL_ARRAY_BUFFER, vertexBuffer.bufferSize, vertexBuffer.bufferData, GL_STATIC_DRAW);
+    
+    int stride = 0;
+    for (uint8_t size : vertexBuffer.vertexElementSizes) {
+        stride += size;
+    }
+    stride *= sizeof(float);
+    
+    if (indexBufferObject_ == 0) {
+        numElements_ = vertexBuffer.bufferSize / stride;
+    }
+    
+    uint64_t offset = 0;
+    for (uint32_t i = 0; i < vertexBuffer.vertexElementSizes.size(); i++) {
+        glEnableVertexAttribArray(i);
+        uint32_t elementSize = vertexBuffer.vertexElementSizes[i];
+        glVertexAttribPointer(i, elementSize, GL_FLOAT, GL_FALSE, stride, (void *)(offset * sizeof(float)));
+        offset += elementSize;
+    }
+    
+    glBindBuffer(GL_ARRAY_BUFFER, 0); 
+    glBindVertexArray(0);
 }
 
-void Mesh::setMeshRenderer(MeshRenderer *meshRenderer)
+void Mesh::setIndexBuffer(const IndexBuffer& indexBuffer)
 {
-    delete meshRenderer_;
-    meshRenderer_ = meshRenderer;
+    numElements_ = indexBuffer.size();
+    
+    if (vertexArrayObject_ == 0) {
+        glGenVertexArrays(1, &vertexArrayObject_);
+    }
+    
+    if (indexBufferObject_ == 0) {
+        glGenBuffers(1, &indexBufferObject_);
+    }
+    
+    glBindVertexArray(vertexArrayObject_);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject_);
+    
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer.size() * sizeof(uint16_t), indexBuffer.data(), GL_STATIC_DRAW);
+    
+    glBindVertexArray(0);
 }
 
 

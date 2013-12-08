@@ -3,7 +3,6 @@
 
 #include "geometry.h"
 #include "common.h"
-
 #include "sceneobject.h"
 
 struct SimpleVertex {
@@ -12,21 +11,46 @@ struct SimpleVertex {
     vec2 uv;
 };
 
-class Mesh : public SceneObject
+struct VertexBufferDesc
+{
+    const void* bufferData;
+    uint32_t bufferSize;
+    vector<uint8_t> vertexElementSizes;
+};
+
+
+enum class PrimitiveType 
+{
+    Points,
+    Lines,
+    Triangles,
+    Patches,
+};
+
+typedef vector<uint16_t> IndexBuffer;
+
+class Mesh
 {
 public:
     Mesh();
     ~Mesh();
     
-    virtual void renderGeometry(DrawContext &context) override;
-    
     void load(string name);
     
-    MeshRenderer *meshRenderer();
-    void setMeshRenderer(MeshRenderer *meshRenderer);
+    void render() const;
+    
+    // Mesh doesn't own vertex buffer and index buffer, callers are responsible for releasing them
+    void setVertexBuffer(const VertexBufferDesc& vertexBuffer,
+                         PrimitiveType primitveType);
+   
+    void setIndexBuffer(const IndexBuffer& indexBuffer);
     
 private:
-    MeshRenderer* meshRenderer_ = NULL;
+    uint32_t vertexArrayObject_ = 0;
+    uint32_t vertexBufferObject_ = 0;
+    uint32_t indexBufferObject_ = 0;
+    PrimitiveType primitiveType_ = PrimitiveType::Triangles;
+    int numElements_ = 0;
 };
 
 #endif // MESH_H
