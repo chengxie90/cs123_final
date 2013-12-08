@@ -7,6 +7,7 @@ class QMouseEvent;
 class QKeyEvent;
 class QWheelEvent;
 
+// This class is intended to be an abstract class, if we need more ways to control cameras
 class CameraController
 {
 public:

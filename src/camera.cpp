@@ -15,17 +15,17 @@ Camera::Camera()
 
 void Camera::apply(DrawContext &context)
 {
-    context.shader->setUniformValue("view", getViewMatrix());
-    context.shader->setUniformValue("projection", getProjectionMatrix());
+    context.shader->setUniformValue("view", viewMatrix());
+    context.shader->setUniformValue("projection", projectionMatrix());
     context.shader->setUniformValue("eyePositionW", getPosition());
 }
 
-const mat4& Camera::getProjectionMatrix() const
+const mat4& Camera::projectionMatrix() const
 {
     return projection_;
 }
 
-mat4 Camera::getViewMatrix() const
+mat4 Camera::viewMatrix() const
 {
     return transform_.inverted();
 }

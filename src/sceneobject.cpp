@@ -30,10 +30,10 @@ void SceneObject::render(DrawContext &context)
     context.camera->apply(context);
     
     context.shader->setUniformValue("world", transform_);
-    context.shader->setUniformValue("worldView", context.camera->getViewMatrix() * transform_);
+    context.shader->setUniformValue("worldView", context.camera->viewMatrix() * transform_);
     context.shader->setUniformValue("worldViewProjection",
-                                    context.camera->getProjectionMatrix()
-                                    * context.camera->getViewMatrix()
+                                    context.camera->projectionMatrix()
+                                    * context.camera->viewMatrix()
                                     * transform_);
     
     renderGeometry(context);

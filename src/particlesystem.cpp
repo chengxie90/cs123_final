@@ -28,17 +28,15 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::renderGeometry(DrawContext &context)
 {
+    // To Ken: This function can be ignored.
     update(context.deltaTime);
-    
-    // This is incorrect, should be sorted in view space
-//    sort(particles_.begin(), particles_.end(), [](const Particle& lhs, const Particle& rhs) {
-//        return lhs.position.z() > rhs.position.z();
-//    });
     
     VertexBufferDesc desc;
     desc.bufferData = particles_.data();
     desc.bufferSize = particles_.size() * sizeof(Particle);
-    desc.vertexElementSizes = {3, 1, 1, sizeof(Particle) / sizeof(float) - 5};
+    desc.vertexElementSizes = {3, 1, 1};
+    desc.stride = sizeof(Particle);
+          
     mesh_->setVertexBuffer(desc, PrimitiveType::Points);
     
     mesh_->render();
@@ -47,7 +45,7 @@ void ParticleSystem::renderGeometry(DrawContext &context)
 void ParticleSystem::update(float dt)
 {   
     for (Particle& particle : particles_) {
-        particle.position += {randf() * dt, randf() * dt, randf() * dt};
+        particle.position += {randf() * 10 * dt, randf() * 10 * dt, randf() * 10 * dt};
         particle.size += 0.5 * dt;
         particle.roation += 90 * dt;
     }

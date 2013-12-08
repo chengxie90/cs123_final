@@ -84,6 +84,7 @@ void Mesh::load(string filename)
     desc.bufferData = vertexBuffer.data();
     desc.bufferSize = vertexBuffer.size() * sizeof(SimpleVertex);
     desc.vertexElementSizes = {3, 3, 2};
+    desc.stride = sizeof(SimpleVertex);
     
     setVertexBuffer(desc, PrimitiveType::Triangles);
     setIndexBuffer(indexBuffer);
@@ -109,6 +110,10 @@ void Mesh::render() const
 
 void Mesh::setVertexBuffer(const VertexBufferDesc &vertexBuffer, PrimitiveType primitveType)
 {
+    assert(vertexBuffer.bufferData);
+    assert(vertexBuffer.bufferSize);
+    assert(vertexBuffer.stride);
+    
     primitiveType_ = primitveType;
     
     if (vertexArrayObject_ == 0) {
@@ -121,24 +126,18 @@ void Mesh::setVertexBuffer(const VertexBufferDesc &vertexBuffer, PrimitiveType p
     
     glBindVertexArray(vertexArrayObject_);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_);
-    
+   
     glBufferData(GL_ARRAY_BUFFER, vertexBuffer.bufferSize, vertexBuffer.bufferData, GL_STATIC_DRAW);
     
-    int stride = 0;
-    for (uint8_t size : vertexBuffer.vertexElementSizes) {
-        stride += size;
-    }
-    stride *= sizeof(float);
-    
     if (indexBufferObject_ == 0) {
-        numElements_ = vertexBuffer.bufferSize / stride;
+        numElements_ = vertexBuffer.bufferSize / vertexBuffer.stride;
     }
     
     uint64_t offset = 0;
     for (uint32_t i = 0; i < vertexBuffer.vertexElementSizes.size(); i++) {
         glEnableVertexAttribArray(i);
         uint32_t elementSize = vertexBuffer.vertexElementSizes[i];
-        glVertexAttribPointer(i, elementSize, GL_FLOAT, GL_FALSE, stride, (void *)(offset * sizeof(float)));
+        glVertexAttribPointer(i, elementSize, GL_FLOAT, GL_FALSE, vertexBuffer.stride, (void *)(offset * sizeof(float)));
         offset += elementSize;
     }
     

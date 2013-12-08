@@ -12,8 +12,8 @@ public:
     
     virtual void apply(DrawContext& context);
     
-    const mat4& getProjectionMatrix() const;
-    mat4 getViewMatrix() const;
+    const mat4& projectionMatrix() const;
+    mat4 viewMatrix() const;
     
     void lookAt(const vec3 &eye, const vec3 &center, const vec3 &up);
     

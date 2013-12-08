@@ -14,10 +14,10 @@ struct SimpleVertex {
 struct VertexBufferDesc
 {
     const void* bufferData;
-    uint32_t bufferSize;
+    uint32_t bufferSize = 0;
     vector<uint8_t> vertexElementSizes;
+    uint32_t stride = 0;
 };
-
 
 enum class PrimitiveType 
 {

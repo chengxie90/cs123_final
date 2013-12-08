@@ -13,6 +13,7 @@ struct Particle
     
     // Other properties
     vec3 velocity;
+    vec3 somethingelse;
 };
 
 typedef vector<Particle> Particles;
@@ -28,6 +29,9 @@ public:
 private:
     void update(float dt);
     Particles particles_;
+    
+    int numParticlesMax_;
+    int emissionRate_;
 };
 
 #endif // PARTICLESYSTEM_H
