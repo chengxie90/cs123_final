@@ -40,7 +40,9 @@ SOURCES += main.cpp \
     texture2d.cpp \
     texturecube.cpp \
     terrain.cpp \
-    meshutility.cpp
+    meshutility.cpp \
+    orbitcameracontroller.cpp \
+    fpscameracontroller.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -70,6 +72,8 @@ HEADERS += mainwindow.h \
     texture2d.h \
     texturecube.h \
     terrain.h \
-    meshutility.h
+    meshutility.h \
+    orbitcameracontroller.h \
+    fpscameracontroller.h
 
 FORMS += mainwindow.ui

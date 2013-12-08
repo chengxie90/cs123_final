@@ -5,7 +5,7 @@
 #include "camera.h"
 #include "scene.h"
 #include "drawcontext.h"
-#include "cameracontroller.h"
+#include "orbitcameracontroller.h"
 
 using namespace std;
 
@@ -63,7 +63,7 @@ void View::initializeGL()
     QCursor::setPos(mapToGlobal(QPoint(width() / 2, height() / 2)));
     
     camera_ = new Camera();
-    cameraController_ = new CameraController(camera_);
+    cameraController_ = new OrbitCameraController(camera_);
     scene_ = new Scene();
 }
 

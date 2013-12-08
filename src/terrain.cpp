@@ -16,7 +16,7 @@ Terrain::~Terrain()
 
 void Terrain::buildMesh()
 {
-    mesh_ = MeshUtility::createPlane(100, 200);
+    mesh_ = MeshUtility::createPlane(200, 200);
     
     PhongMaterial* material = new PhongMaterial;
     material->setAmbient({0.2, 0.2, 0.2});
