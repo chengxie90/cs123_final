@@ -21,8 +21,8 @@ Build directly on OS X or Linux.
 - Orbit Camera Controller (same as in cs123 assignments), and FPS Camera Controller
 
 ## Usage
-See Scene::initialize() and View::initialzeGL()
-FPS Camera Control: WSAD and right mouse button
+- See Scene::initialize() and View::initialzeGL()
+- FPS Camera Control: WSAD and right mouse button
 
 ## Coding Style
 Mostly observing Google C++ coding style
