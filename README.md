@@ -14,10 +14,11 @@ Build directly on OS X or Linux.
 - Directional Light
 - Particle System rendering
 - Skybox
+- Heightmap-based terrain
 - Resource Caching
 - Basic Scene Management
 - Perspective Camera
-- Orbit Camera Controller
+- Orbit Camera Controller (same as in cs123 assignments)
 
 ## Usage
 See Scene::initialize()
