@@ -18,6 +18,9 @@ Build directly on OS X or Linux.
 - Perspective Camera
 - Orbit Camera Controller
 
+## Usage
+See Scene::initialize()
+
 ## Coding Style
 Mostly observing Google C++ coding style
 http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml
