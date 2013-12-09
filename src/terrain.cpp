@@ -22,7 +22,7 @@ void Terrain::buildMesh()
     material->setAmbient({0.2, 0.2, 0.2});
     material->setDiffuse({0.7, 0.7, 0.2});
     
-    Texture* heightMap = TextureCache::getInstance()->acquire("heightmap2", TextureType::Texture2D);
+    Texture* heightMap = TextureCache::getInstance()->acquire("heightmap1", TextureType::Texture2D);
     Texture* diffuseMap = TextureCache::getInstance()->acquire("terrain", TextureType::Texture2D);
     
     material->setHeightMap(heightMap);

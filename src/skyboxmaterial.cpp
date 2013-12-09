@@ -1,3 +1,4 @@
+#include "skybox.h"
 #include "skyboxmaterial.h"
 #include "shader.h"
 #include "shadercache.h"
@@ -22,5 +23,12 @@ void SkyboxMaterial::apply(DrawContext &context)
     assert(texture_);
     
     texture_->apply(context, "cubeMap", 0);
+    
+    glDepthMask(GL_FALSE);
+}
+
+void SkyboxMaterial::endRender()
+{
+    glDepthMask(GL_TRUE);
 }
 

@@ -11,6 +11,7 @@ public:
     void setTexture(Texture *texture);
     
     virtual void apply(DrawContext &context) override;
+    virtual void endRender() override;
     
 private:
     Texture* texture_;

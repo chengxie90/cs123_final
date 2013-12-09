@@ -40,16 +40,16 @@ void Scene::initialize()
     material1->setShiness(50);
     
     // Textures are owned by cache
-    Texture* diffuseMap = TextureCache::getInstance()->acquire("heightmap1", TextureType::Texture2D);
+    Texture* diffuseMap = TextureCache::getInstance()->acquire("frostmourne", TextureType::Texture2D);
     material1->setDiffuseMap(diffuseMap);
     
     SceneObject* obj1 = new SceneObject;
-    Mesh* mesh1 = MeshCache::getInstance()->acquire("cube");
+    Mesh* mesh1 = MeshCache::getInstance()->acquire("frostmourne");
     obj1->setMesh(mesh1);
     obj1->setMaterial(material1);
     
-    obj1->transform().translate(20, 0, 0);
-    obj1->transform().scale(5, 5, 5);
+    obj1->transform().translate(20, 20, 0);
+    obj1->transform().scale(20, 20, 20);
             
     sceneObjects_.push_back(obj1);       
     

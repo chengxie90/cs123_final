@@ -21,7 +21,7 @@ void main()
 
     if (useHeightMap) {
         float height = texture(heightMap, uvL).x;
-        position += normalL * height * 30;
+        position += normalL * height * 50;
 
         float turbulence = 0.1;
         const ivec3 off = ivec3(-1, 0, 1);

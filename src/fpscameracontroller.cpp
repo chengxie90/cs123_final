@@ -22,13 +22,6 @@ void FPSCameraController::mouseMoveEvent(QMouseEvent *event)
     if (rbuttonDown_) {
         QPoint mousePos = event->pos();
         QPoint delta = mousePos - oldMousePos_;
-       
-//        QMatrix4x4& rotation;
-//        rotation.rotate(-delta.x() * 0.5, {0, 1, 0});
-//        camera_->setTransform(camera_->transform() * rotation);
-        
-////        rotation.setToIdentity();
-////        rotation.rotate(-delta.y() * 0.5, );
 
         mat4& transform = camera_->transform();
         mat4 mat;
