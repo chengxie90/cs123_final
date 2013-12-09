@@ -5,7 +5,7 @@ cs123_final
 Build directly on OS X or Linux.
 
 ## Note
-- If running with qtcreator, the working directory needs to be set properly, like <project>/cs123_final/src, ESPECIALLY when using shadow build.
+- If running with qtcreator, the working directory needs to be set properly, like <project>/cs123_final/src, particularly when using shadow build.
 
 ## Features
 - Using OpenGL core profile (version >= 3.2), no deprecated stuff, all rendering using shaders.
