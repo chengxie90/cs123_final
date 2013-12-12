@@ -2,6 +2,8 @@
 #define SCENE_H
 
 #include "common.h"
+#include "Tornado.h"
+#include "TornadoParticleSystem.h"
 
 class Skybox;
 
@@ -23,6 +25,7 @@ private:
     Lights lights_;
     
     Skybox* skybox_;
+    Tornado* tornado_;
 };
 
 #endif // SCENE_H

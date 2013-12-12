@@ -1,6 +1,6 @@
 #include "TornadoParticleSystem.h"
 
-#define NUM_PARTICLES 40
+#define NUM_PARTICLES 60
 
 TornadoParticleSystem::TornadoParticleSystem(Tornado* tornado)
 {
@@ -35,9 +35,11 @@ void TornadoParticleSystem::update(float dt)
         //particles_[it].position = m_tornado->interp(particles_[it].position.y());
      //   particles_[it].rotation += 90 * dt;
     //}
+    m_tornado->update(dt);
     for (Particle& particle : particles_) {
         //particle.position += {randf() * 10 * dt, randf() * 10 * dt, randf() * 10 * dt};
         //particle.size += 0.5 * dt;
+        particle.position = m_tornado->interp(particle.position.y());
         particle.rotation += 90 * dt;
     }
 }

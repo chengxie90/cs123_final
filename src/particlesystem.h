@@ -8,7 +8,7 @@ struct Particle
 {
     // These three rendering related properties must be declared first in this order
     vec3 position; 
-    float roation = 0; // in angle
+    float rotation = 0; // in angle
     float size = 1;
     
     // Other properties
@@ -27,10 +27,9 @@ public:
     virtual void renderGeometry(DrawContext &context) override;
     
     void setParticleTexture(Texture* texture);
-    
-private:
-    void update(float dt);
-    Particles particles_;
+
+    virtual void update(float dt);
+    vector<Particle> particles_;
     
     int numParticlesMax_;
     int emissionRate_;

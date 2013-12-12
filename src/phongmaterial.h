@@ -24,9 +24,11 @@ public:
     void setShiness(float shiness);
     
     void setDiffuseMap(Texture *diffuseMap);
+    Texture* getDiffuseMap(){return diffuseMap_;}
     
     // TODO
     void setHeightMap(Texture *heightMap);
+    Texture* getHeightMap(){return heightMap_;}
     
 private:
     Color ambient_;

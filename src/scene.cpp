@@ -28,6 +28,7 @@ Scene::~Scene()
     }
     
     delete skybox_;
+    delete tornado_;
 }
 
 void Scene::initialize()
@@ -90,6 +91,19 @@ void Scene::initialize()
     particleSystem->transform().translate(0, 10, 0);
     
     sceneObjects_.push_back(particleSystem);
+
+    // Get a tornado in here!
+    vec3 tornadoStart;
+    tornadoStart.setX(0.0);
+    tornadoStart.setY(0.5);
+    tornadoStart.setZ(0.0);
+    tornado_ = new Tornado(tornadoStart);
+    tornadoStart.setX(8.0);
+    tornadoStart.setZ(10.0);
+    tornado_->setDestination(tornadoStart);
+    TornadoParticleSystem* tPart = new TornadoParticleSystem(tornado_);
+    tPart->setParticleTexture(tornadoMap);
+    sceneObjects_.push_back(tPart);
 }
 
 void Scene::render(DrawContext &context)

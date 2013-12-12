@@ -10,6 +10,7 @@ using std::vector;
 #include <map>
 using std::map;
 #include <assert.h>
+#include <math.h>
 #include <memory>
 using std::shared_ptr;
 using std::unique_ptr;
