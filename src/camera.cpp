@@ -10,7 +10,7 @@ Camera::Camera()
     heightAngle_ = 60;
     
     updateProjection();
-    lookAt({3, 3, 3}, {0, 0, 0}, {0, 1, 0});
+    lookAt({-100, 20, 100}, {0, 0, 0}, {0, 1, 0});
 }
 
 void Camera::apply(DrawContext &context)

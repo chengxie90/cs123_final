@@ -3,10 +3,16 @@
 #include "terrainmaterial.h"
 #include "mesh.h"
 #include "texturecache.h"
+#include "texture.h"
 
-Terrain::Terrain(const vec3& center, int size)
+Terrain::Terrain(const vec3& center, float size)
 {
-    mesh_ = MeshUtility::createPlane(200, size / 2);
+    size_ = size;
+    center_ = center;
+    
+    heightScale_ = 20;
+    
+    mesh_ = MeshUtility::createPlane(200, size);
     
     TerrainMaterial* material = new TerrainMaterial;
     material->setAmbient({0.4, 0.4, 0.4});
@@ -17,7 +23,9 @@ Terrain::Terrain(const vec3& center, int size)
     material->setHeightMap(heightMap);
     material->setDiffuseMap(diffuseMap);
     
-    material->setHeightScale(10);
+    heightMap_ = heightMap;
+    
+    material->setHeightScale(heightScale_);
     
     setMaterial(material);
     
@@ -27,4 +35,19 @@ Terrain::Terrain(const vec3& center, int size)
 Terrain::~Terrain()
 {
     delete mesh_;
+}
+
+float Terrain::height(float x, float z)
+{
+    assert(heightMap_);
+    
+    vec3 uvw;
+
+    float width = size_ * 2;
+    
+    uvw.setX((x + size_) / width);
+    uvw.setY((z + size_) / width);
+    uvw.setZ(0);
+    
+    return heightMap_->sample(uvw).x() * heightScale_;
 }

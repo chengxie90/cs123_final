@@ -54,8 +54,26 @@ void Texture2D::load(string filename)
 
 vec4 Texture2D::sample(const vec3 &uvw)
 {
-    cout << "1" << endl;
-    return vec4();
+    struct Color32 {
+        uint8_t r;
+        uint8_t g;
+        uint8_t b;
+        uint8_t a;
+    };
+    
+    float u = uvw.x();
+    float v = uvw.y();
+
+    int x = (int)(u * image_->width()) % image_->width();
+    int y = image_->height() - (int)(v * image_->height()) % image_->height() - 1;
+    
+    Color32 *data = (Color32 *)image_->bits();
+    
+    assert(x < image_->width() && x >= 0);
+    assert(y < image_->height() && y >= 0);
+    
+    Color32 color = data[y * image_->width() + x];
+    return vec4(color.r / 255.f, color.g / 255.f, color.b / 255.f, color.a / 255.f);
 }
 
 void Texture2D::apply(DrawContext &context, string name, int binding) const

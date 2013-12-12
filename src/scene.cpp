@@ -41,16 +41,13 @@ void Scene::initialize()
     material1->setShiness(100);
     
     // Textures are owned by cache
-    Texture* diffuseMap = TextureCache::getInstance()->acquire("frostmourne", TextureType::Texture2D);
+    Texture* diffuseMap = TextureCache::getInstance()->acquire("cheese", TextureType::Texture2D);
     material1->setDiffuseMap(diffuseMap);
     
     SceneObject* obj1 = new SceneObject;
-    Mesh* mesh1 = MeshCache::getInstance()->acquire("frostmourne");
+    Mesh* mesh1 = MeshCache::getInstance()->acquire("cube");
     obj1->setMesh(mesh1);
     obj1->setMaterial(material1);
-    
-    obj1->transform().translate(0, 50, 0);
-    obj1->transform().scale(20, 20, 20);
             
     sceneObjects_.push_back(obj1);
     
@@ -66,11 +63,17 @@ void Scene::initialize()
     
     Terrain* terrain = new Terrain({0, 0, 0}, size);
     sceneObjects_.push_back(terrain);
+    
+    float x = -100;
+    float z = 100;
+    float y = terrain->height(x, z);
+    
+    obj1->transform().translate(x, y, z);
 
     // Get a tornado in here!
     vec3 tornadoStart;
     tornadoStart.setX(0.0);
-    tornadoStart.setY(50);
+    tornadoStart.setY(0);
     tornadoStart.setZ(0.0);
     tornado_ = new Tornado(tornadoStart);
     tornadoStart.setX(8.0);
@@ -88,7 +91,7 @@ void Scene::render(DrawContext &context)
     context.sceneObjects = &sceneObjects_;
     context.scene = this;
     
-    //skybox_->render(context);
+    skybox_->render(context);
     
     for (SceneObject* object : sceneObjects_) {
         object->render(context);
