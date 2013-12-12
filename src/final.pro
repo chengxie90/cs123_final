@@ -44,7 +44,8 @@ SOURCES += main.cpp \
     orbitcameracontroller.cpp \
     fpscameracontroller.cpp \
     Tornado.cpp \
-    TornadoParticleSystem.cpp
+    TornadoParticleSystem.cpp \
+    terrainmaterial.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -78,6 +79,7 @@ HEADERS += mainwindow.h \
     orbitcameracontroller.h \
     fpscameracontroller.h \
     Tornado.h \
-    TornadoParticleSystem.h
+    TornadoParticleSystem.h \
+    terrainmaterial.h
 
 FORMS += mainwindow.ui

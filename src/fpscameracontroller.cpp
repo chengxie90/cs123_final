@@ -4,6 +4,8 @@
 #include <QWheelEvent>
 #include "camera.h"
 
+static const float rotate_factor = 0.3;
+
 FPSCameraController::FPSCameraController(Camera *camera) : CameraController(camera)
 {
 
@@ -32,11 +34,11 @@ void FPSCameraController::mouseMoveEvent(QMouseEvent *event)
         transform = mat * transform;
         
         mat.setToIdentity();
-        mat.rotate(-delta.x() * 0.5, {0, 1, 0});
+        mat.rotate(-delta.x() * rotate_factor, {0, 1, 0});
         transform = mat * transform;
         
         mat.setToIdentity();
-        mat.rotate(-delta.y() * 0.5, camera_->right());
+        mat.rotate(-delta.y() * rotate_factor, camera_->right());
         transform = mat * transform;
         
         mat.setToIdentity();

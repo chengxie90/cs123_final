@@ -2,6 +2,7 @@
 #define TEXTURE_H
 
 #include "common.h"
+#include "geometry.h"
 
 class Texture
 {
@@ -10,6 +11,8 @@ public:
     virtual ~Texture();
     
     virtual void load(string name) = 0;
+    
+    virtual vec4 sample(const vec3& uvw) = 0;
     
     virtual void apply(DrawContext& context, string name, int binding) const = 0;
     

@@ -98,6 +98,8 @@ Mesh *MeshUtility::createPlane(int tessellationLevel, float size)
     
     vec3 dy = (upperleft - lowerleft) / tessellationLevel;
     
+    cout << dy << endl;
+    
     float width = (lowerright - lowerleft).length();
     float height = (upperleft - lowerleft).length();
     
@@ -152,6 +154,7 @@ void MeshUtility::tessellate(vec3 p1, vec3 p2, int level, vector<vec3> &result)
     assert(level > 0);
     
     auto delta = (p2 - p1) / level;
+  
     for (int i = 0; i <= level; i++)
     {
         result.push_back(p1 + delta * i);

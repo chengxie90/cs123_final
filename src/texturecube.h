@@ -10,6 +10,8 @@ public:
     
     virtual void load(string name) override;
     
+    virtual vec4 sample(const vec3 &uvw) override;
+    
     virtual void apply(DrawContext &context, string name, int binding) const override;
 };
 

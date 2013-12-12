@@ -42,6 +42,11 @@ void TextureCube::load(string name)
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
+vec4 TextureCube::sample(const vec3 &uvw)
+{
+    return vec4();
+}
+
 void TextureCube::apply(DrawContext &context, string name, int binding) const
 {
     assert(textureID_);

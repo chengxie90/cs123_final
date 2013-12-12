@@ -24,7 +24,7 @@ private:
     bool dPressed_ = false;
     bool rbuttonDown_ = false;
     QPoint oldMousePos_;
-    float speed_ = 50.f;
+    float speed_ = 10.f;
 };
 
 #endif // FPSCAMERACONTROLLER_H

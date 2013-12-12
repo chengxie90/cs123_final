@@ -9,6 +9,11 @@ Texture2D::Texture2D()
 {
 }
 
+Texture2D::~Texture2D()
+{
+    delete image_;
+}
+
 void Texture2D::load(string filename)
 {
     string path = filename + ".png";
@@ -23,10 +28,11 @@ void Texture2D::load(string filename)
         }
     }
     
-    QImage image;
+    delete image_;
+    image_ = new QImage();
     
-    image.load(path.c_str());
-    image = QGLWidget::convertToGLFormat(image);
+    image_->load(path.c_str());
+    *image_ = QGLWidget::convertToGLFormat(*image_);
     
     glActiveTexture(GL_TEXTURE0);
     
@@ -34,15 +40,22 @@ void Texture2D::load(string filename)
     
     glBindTexture(GL_TEXTURE_2D, textureID_);
     
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_->width(), image_->height(),
+                 0, GL_RGBA, GL_UNSIGNED_BYTE, image_->bits());
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+vec4 Texture2D::sample(const vec3 &uvw)
+{
+    cout << "1" << endl;
+    return vec4();
 }
 
 void Texture2D::apply(DrawContext &context, string name, int binding) const

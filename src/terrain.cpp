@@ -1,6 +1,6 @@
 #include "terrain.h"
 #include "meshutility.h"
-#include "phongmaterial.h"
+#include "terrainmaterial.h"
 #include "mesh.h"
 #include "texturecache.h"
 
@@ -8,15 +8,16 @@ Terrain::Terrain(const vec3& center, int size)
 {
     mesh_ = MeshUtility::createPlane(200, size / 2);
     
-    PhongMaterial* material = new PhongMaterial;
-    material->setAmbient({0.2, 0.2, 0.2});
-    material->setDiffuse({0.7, 0.7, 0.2});
+    TerrainMaterial* material = new TerrainMaterial;
+    material->setAmbient({0.4, 0.4, 0.4});
     
-    Texture* heightMap = TextureCache::getInstance()->acquire("heightmap3", TextureType::Texture2D);
+    Texture* heightMap = TextureCache::getInstance()->acquire("heightmap2", TextureType::Texture2D);
     Texture* diffuseMap = TextureCache::getInstance()->acquire("terrain", TextureType::Texture2D);
     
     material->setHeightMap(heightMap);
     material->setDiffuseMap(diffuseMap);
+    
+    material->setHeightScale(10);
     
     setMaterial(material);
     

@@ -32,16 +32,6 @@ void PhongMaterial::apply(DrawContext &context)
     else {
         shader_->setUniformValue("useDiffuseMap", false);
     }
-    
-    // TODO
-    if (heightMap_) {
-        shader_->setUniformValue("useHeightMap", true);
-        heightMap_->apply(context, "heightMap", 1);
-    }
-    else {
-        shader_->setUniformValue("useHeightMap", false);
-    }
-    
 }
 
 const Color& PhongMaterial::ambient() const
@@ -72,6 +62,7 @@ void PhongMaterial::setSpecular(const Color &specular)
 {
     specular_ = specular;
 }
+
 float PhongMaterial::shiness() const
 {
     return shiness_;
@@ -86,9 +77,3 @@ void PhongMaterial::setDiffuseMap(Texture *diffuseMap)
 {
     diffuseMap_ = diffuseMap;
 }
-
-void PhongMaterial::setHeightMap(Texture *heightMap)
-{
-    heightMap_ = heightMap;
-}
-
