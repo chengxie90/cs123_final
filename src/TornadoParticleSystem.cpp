@@ -14,7 +14,7 @@ void TornadoParticleSystem::init()
     mesh_ = new Mesh();
     // "Template" particle, modify and push back into the vector to create copies of it.
     Particle p;
-    for(int it = 0; it < NUM_PARTICLES; it++){
+    for(int it = NUM_PARTICLES-1; it >= 0; it--){
         float heightScale = pow((float)it/(NUM_PARTICLES - 1), 2.0);
         float curHeight = m_tornado->getHeight() * heightScale;
         p.position = m_tornado->interpLocal(curHeight);

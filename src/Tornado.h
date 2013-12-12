@@ -8,7 +8,7 @@
 
 // This is the logical tornado (not the visual tornado) - change the position of this tornado's
 // origin and control points to move the tornado around in the world.
-class Tornado : public SceneObject
+class Tornado
 {
 public:
     Tornado();

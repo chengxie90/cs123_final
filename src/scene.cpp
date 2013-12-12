@@ -90,26 +90,18 @@ void Scene::initialize()
     
 //    terrain = new Terrain({size, 0, 0}, size+2);
 //    sceneObjects_.push_back(terrain);
-    
-    // Particle System, add particle systems last, or there'll be depth issues.
-    ParticleSystem *particleSystem = new ParticleSystem;
-    Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
-    particleSystem->setParticleTexture(tornadoMap);
-    
-    particleSystem->transform().translate(0, 10, 0);
-    
-    sceneObjects_.push_back(particleSystem);
 
     // Get a tornado in here!
     vec3 tornadoStart;
     tornadoStart.setX(0.0);
-    tornadoStart.setY(0.5);
+    tornadoStart.setY(50);
     tornadoStart.setZ(0.0);
     tornado_ = new Tornado(tornadoStart);
     tornadoStart.setX(8.0);
     tornadoStart.setZ(10.0);
     tornado_->setDestination(tornadoStart);
     TornadoParticleSystem* tPart = new TornadoParticleSystem(tornado_);
+    Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
     tPart->setParticleTexture(tornadoMap);
     sceneObjects_.push_back(tPart);
 }

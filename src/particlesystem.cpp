@@ -25,8 +25,6 @@ ParticleSystem::ParticleSystem()
 ParticleSystem::~ParticleSystem()
 {
     delete mesh_;
-    // Free the memory associated with particles_ by swapping with an empty vector.
-    vector<Particle>().swap(particles_);
 }
 
 // To Ken: This function can be ignored.
@@ -56,7 +54,7 @@ void ParticleSystem::update(float dt)
 {   
     for (Particle& particle : particles_) {
         particle.position += {randf() * 10 * dt, randf() * 10 * dt, randf() * 10 * dt};
-        // particle.size += 0.5 * dt;
+        particle.size += 0.5 * dt;
         particle.rotation += 90 * dt;
     }
 }
