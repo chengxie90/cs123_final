@@ -6,11 +6,8 @@
 class Terrain : public SceneObject
 {
 public:
-    Terrain();
+    Terrain(const vec3& center, int size);
     virtual ~Terrain();
-    
-private:
-    void buildMesh();
 };
 
 #endif // TERRAIN_H

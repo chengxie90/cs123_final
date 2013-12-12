@@ -80,8 +80,16 @@ void Scene::initialize()
     skybox_ = new Skybox("cloudy");
     
     // Terrain
-    Terrain* terrain = new Terrain();
+    int size = 800;
+    
+    Terrain* terrain = new Terrain({0, 0, 0}, size+2);
     sceneObjects_.push_back(terrain);
+    
+//    terrain = new Terrain({size, 0, size}, size+2);
+//    sceneObjects_.push_back(terrain);
+    
+//    terrain = new Terrain({size, 0, 0}, size+2);
+//    sceneObjects_.push_back(terrain);
     
     // Particle System, add particle systems last, or there'll be depth issues.
     ParticleSystem *particleSystem = new ParticleSystem;
