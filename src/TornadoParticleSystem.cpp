@@ -25,6 +25,8 @@ TornadoParticleSystem::TornadoParticleSystem(Tornado* tornado)
 
 void TornadoParticleSystem::init()
 {
+    setEmissionRate((int)((m_numParticles * m_cycleSpeed) / m_tornado->getHeight()));
+    setMaxParticleCount(m_numParticles);
     m_active_count = 0;
     m_lastActivation = 0.0;
     // "Template" particle, modify and push back into the vector to create copies of it.
@@ -56,34 +58,21 @@ void TornadoParticleSystem::update(float dt)
     // Update our transform to match the new origin.
     transform_.setToIdentity();
     transform_.translate(m_tornado->getOrigin());
-    // Only activate more paticles if we don't have enough already.
-    bool activated = !(m_active_count < m_numParticles);
-    for (Particle &particle : particles_) {
-        if(particle.active){
-            particle.position.setY(particle.position.y() - (m_cycleSpeed * dt));
-            // If the particle is going into the ground, reset it.
-            // Keep a buffer of 5 thresholds to prevent breaks in the tornado effect.
-            if(resetThreshold(&particle)){
-                resetParticle(&particle);
-            }
-            particle.position = getParticlePosition(&particle, particle.position.y());
-            particle.size = getParticleSize(particle.position.y());
-            particle.rotation = updateParticleRotation(particle.rotation, dt);
-            particle.life += dt;
-        }
-        else if(!activated){
-            activated = true;
-            // If we are past the threshold, it's time to bring a new pixel online,
-            float threshold = m_tornado->getHeight() / (abs(m_cycleSpeed) * m_numParticles);
-            if(m_lastActivation >= threshold){
-                //std::cout<<"PING"<<endl;
-                m_lastActivation -= threshold;
-                particle.active = true;
-                m_active_count++;
-                // particle.position's y-value is less than 0, so it will be reset next update.
-            }
-        }
-    }
+    this->ParticleSystem::update(dt);
+}
+
+void TornadoParticleSystem::spawnParticle(Particle *particle)
+{
+    particle->position.setY(m_tornado->getHeight());
+    particle->maxLife = m_tornado->getHeight() / m_cycleSpeed;
+}
+
+void TornadoParticleSystem::updateParticle(Particle &particle, float dt)
+{
+    particle.position.setY(particle.position.y() - (m_cycleSpeed * dt));
+    particle.position = getParticlePosition(&particle, particle.position.y());
+    particle.size = getParticleSize(particle.position.y());
+    particle.rotation = updateParticleRotation(particle.rotation, dt);
 }
 
 vec3 TornadoParticleSystem::getParticlePosition(Particle *p, float yval)
@@ -99,21 +88,5 @@ float TornadoParticleSystem::getParticleSize(float yval)
 float TornadoParticleSystem::updateParticleRotation(float rot, float dt)
 {
     return rot + (90.0 * dt);
-}
-
-bool TornadoParticleSystem::resetThreshold(Particle* p)
-{
-    float yval = p->position.y();
-    float threshold = 5.0 * m_tornado->getHeight() / m_numParticles;
-    return yval < threshold;
-}
-
-void TornadoParticleSystem::resetParticle(Particle* p)
-{
-    p->position.setY(m_tornado->getHeight());
-    p->life = 0;
-    // This particle is always the first one!
-    particles_.push_back(*p);
-    //particles_.erase(particles_.begin());
 }
 

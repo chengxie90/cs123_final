@@ -69,7 +69,7 @@ void ParticleSystem::update(float dt)
     }
     
     numParticlesToSpawn_ -= count;
-    
+
     for (uint32_t i = 0; i < count; i++) {
         Particle particle;
         this->spawnParticle(&particle);

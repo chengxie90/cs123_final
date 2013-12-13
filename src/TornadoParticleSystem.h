@@ -22,8 +22,8 @@ protected:
     virtual vec3 getParticlePosition(Particle* p, float yval);
     virtual float getParticleSize(float yval);
     virtual float updateParticleRotation(float rot, float dt);
-    virtual bool resetThreshold(Particle *p);
-    virtual void resetParticle(Particle *p);
+    virtual void spawnParticle(Particle *particle);
+    virtual void updateParticle(Particle& particle, float dt);
 };
 
 #endif // TORNADOPARTICLESYSTEM_H

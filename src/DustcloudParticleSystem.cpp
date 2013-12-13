@@ -18,6 +18,8 @@ void DustcloudParticleSystem::init()
     if(!m_numParticles){
         m_numParticles = NUM_PARTICLES_DUST;
     }
+    setEmissionRate((int)((m_numParticles * m_cycleSpeed) / m_tornado->getHeight()));
+    setMaxParticleCount(m_numParticles);
     m_active_count = 0;
     m_lastActivation = 0.0;
     // "Template" particle, modify and push back into the vector to create copies of it.
@@ -41,6 +43,12 @@ DustcloudParticleSystem::~DustcloudParticleSystem()
     // Nothing to see here...
 }
 
+void DustcloudParticleSystem::spawnParticle(Particle *particle)
+{
+    particle->position.setY(0.0);
+    particle->maxLife = m_tornado->getHeight() / m_cycleSpeed;
+}
+
 vec3 DustcloudParticleSystem::getParticlePosition(Particle *p, float yval)
 {
     // Hacky but simple and effective way of making dust swirl: use rotation as angle around spine!
@@ -60,21 +68,5 @@ float DustcloudParticleSystem::getParticleSize(float yval)
 float DustcloudParticleSystem::updateParticleRotation(float rot, float dt)
 {
     return rot + (DUST_ROT_SPEED * dt);
-}
-
-bool DustcloudParticleSystem::resetThreshold(Particle* p)
-{
-    float yval = p->position.y();
-    float threshold = m_tornado->getHeight() - (3.0 * m_tornado->getHeight() / m_numParticles);
-    return yval > threshold;
-}
-
-void DustcloudParticleSystem::resetParticle(Particle* p)
-{
-    p->position.setY(0.0);
-    // This particle is always the first one!
-    particles_.push_back(*p);
-    particles_.erase(particles_.begin());
-    std::cout<<"ASDJHAKWDJ"<<endl;
 }
 
