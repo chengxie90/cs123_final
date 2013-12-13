@@ -73,7 +73,7 @@ void TornadoParticleSystem::update(float dt)
             // If we are past the threshold, it's time to bring a new pixel online,
             float threshold = m_tornado->getHeight() / (m_cycleSpeed * m_numParticles);
             if(m_lastActivation >= threshold){
-                std::cout<<"PING"<<endl;
+                //std::cout<<"PING"<<endl;
                 m_lastActivation -= threshold;
                 particle.active = true;
                 m_active_count++;

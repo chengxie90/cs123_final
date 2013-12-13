@@ -6,11 +6,10 @@
 #include "drawcontext.h"
 #include "meshcache.h"
 #include "texturecache.h"
-#include "particlematerial.h"
 #include "particlesystem.h"
 #include "skybox.h"
-#include "skyboxmaterial.h"
 #include "terrain.h"
+#include "cloud.h"
 
 Scene::Scene()
 {
@@ -66,26 +65,22 @@ void Scene::initialize()
     
     Terrain* terrain = new Terrain({0, 0, 0}, size);
     sceneObjects_.push_back(terrain);
-    
-    float x = -100;
-    float z = 100;
-    float y = terrain->height(x, z);
-    
-    obj1->transform().translate(x, y, z);
 
     // Get a tornado in here!
-    vec3 tornadoStart;
-    tornadoStart.setX(0.0);
-    tornadoStart.setY(0);
-    tornadoStart.setZ(0.0);
-    tornado_ = new Tornado(tornadoStart, terrain);
-    tornadoStart.setX(8.0);
-    tornadoStart.setZ(10.0);
-    tornado_->setDestination(tornadoStart);
+    vec3 start = {0, 0, 0};
+    tornado_ = new Tornado(start, terrain);
+    vec3 dest = {18, 0, 10};
+    tornado_->setDestination(dest);
     TornadoParticleSystem* tPart = new TornadoParticleSystem(tornado_);
     Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
     tPart->setParticleTexture(tornadoMap);
     sceneObjects_.push_back(tPart);
+    
+    // Clouds
+    Cloud* cloud = new Cloud(500);
+    cloud->update(20);
+    cloud->transform().translate(0, 100, 0);
+    sceneObjects_.push_back(cloud);
 }
 
 void Scene::render(DrawContext &context)
@@ -110,6 +105,7 @@ void Scene::setFogColor(const Color &fogColor)
 {
     fogColor_ = fogColor;
 }
+
 float Scene::fogDensity() const
 {
     return fogDensity_;

@@ -35,6 +35,7 @@ void SceneObject::render(DrawContext &context)
                                     context.camera->projectionMatrix()
                                     * context.camera->viewMatrix()
                                     * transform_);
+    context.shader->setUniformValue("viewInverse", context.camera->transform());
     
     renderGeometry(context);
     

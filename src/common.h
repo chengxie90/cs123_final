@@ -43,8 +43,15 @@ class Texture;
 class MeshRenderer;
 class Mesh;
 
+
+// random number between 0 and 1
 inline float randf() {
-    return (float)rand() / RAND_MAX * 2 - 1;
+    return (float)rand() / RAND_MAX;
+}
+
+// random number between a and b
+inline float randf(float a, float b) {
+    return randf() * (b - a) + a; 
 }
 
 #endif // COMMON_H
