@@ -1,8 +1,8 @@
 #include "DustcloudParticleSystem.h"
 
-#define NUM_PARTICLES_DUST 80
-#define DUST_CYCLE_SPEED 20.0
-#define DUST_ROT_SPEED 1.5
+#define NUM_PARTICLES_DUST 180
+#define DUST_CYCLE_SPEED -15.0
+#define DUST_ROT_SPEED 10.0
 
 DustcloudParticleSystem::DustcloudParticleSystem(Tornado* tornado)
 {
@@ -10,12 +10,12 @@ DustcloudParticleSystem::DustcloudParticleSystem(Tornado* tornado)
     m_cycleSpeed = DUST_CYCLE_SPEED;
     m_numParticles = NUM_PARTICLES_DUST;
     // Set up and push back all particles we want to use.
-    init();
+    //init();
 }
 
 void DustcloudParticleSystem::init()
 {
-    mesh_ = new Mesh();
+    //mesh_ = new Mesh();
     m_active_count = 0;
     m_lastActivation = 0.0;
     // "Template" particle, modify and push back into the vector to create copies of it.
@@ -39,12 +39,40 @@ DustcloudParticleSystem::~DustcloudParticleSystem()
     // Nothing to see here...
 }
 
-vec3 DustcloudParticleSystem::getParticlePosition(float yval)
+vec3 DustcloudParticleSystem::getParticlePosition(Particle *p, float yval)
 {
-    return m_tornado->interpLocal(yval);
+    // Hacky but simple and effective way of making dust swirl: use rotation as angle around spine!
+    vec3 rv = m_tornado->interpLocal(yval); // Get spine position first.
+    float adjHeight = (m_tornado->getHeight()/2.0) + abs(yval - (m_tornado->getHeight()/2.0));
+    float width = 1.2 * m_tornado->interpWidth(adjHeight);
+    rv.setX(rv.x() + (width * sin(p->rotation)));
+    rv.setZ(rv.z() + (width * cos(p->rotation)));
+    return rv;
 }
 
 float DustcloudParticleSystem::getParticleSize(float yval)
 {
-    return m_tornado->interpWidth(yval);
+    return 3.0;//m_tornado->interpWidth(yval);
 }
+
+float DustcloudParticleSystem::updateParticleRotation(float rot, float dt)
+{
+    return rot + (DUST_ROT_SPEED * dt);
+}
+
+bool DustcloudParticleSystem::resetThreshold(Particle* p)
+{
+    float yval = p->position.y();
+    float threshold = m_tornado->getHeight() - (3.0 * m_tornado->getHeight() / m_numParticles);
+    return yval > threshold;
+}
+
+void DustcloudParticleSystem::resetParticle(Particle* p)
+{
+    p->position.setY(0.0);
+    // This particle is always the first one!
+    particles_.push_back(*p);
+    particles_.erase(particles_.begin());
+    //std::cout<<"ASDJHAKWDJ"<<endl;
+}
+

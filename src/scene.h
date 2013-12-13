@@ -3,7 +3,6 @@
 
 #include "common.h"
 #include "Tornado.h"
-#include "TornadoParticleSystem.h"
 
 class Skybox;
 

@@ -26,7 +26,6 @@ using std::endl;
 #include <QVector3D>
 typedef QVector3D Color;
 
-
 #ifdef QT_DEBUG
     #define DEBUG_LOG(message) printf("-->");printf(message);printf("\n");fflush(stdout);
 #else

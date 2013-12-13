@@ -15,8 +15,10 @@ TornadoParticleSystem::TornadoParticleSystem()
 TornadoParticleSystem::TornadoParticleSystem(Tornado* tornado)
 {
     m_tornado = tornado;
-    m_cycleSpeed = PARTICLE_CYCLE_SPEED;
-    m_numParticles = NUM_PARTICLES;
+    if(!m_cycleSpeed)
+        m_cycleSpeed = PARTICLE_CYCLE_SPEED;
+    if(!m_numParticles)
+        m_numParticles = NUM_PARTICLES;
     // Set up and push back all particles we want to use.
     init();
 }
@@ -64,14 +66,14 @@ void TornadoParticleSystem::update(float dt)
             if(resetThreshold(&particle)){
                 resetParticle(&particle);
             }
-            particle.position = getParticlePosition(particle.position.y());
+            particle.position = getParticlePosition(&particle, particle.position.y());
             particle.size = getParticleSize(particle.position.y());
-            particle.rotation += 90 * dt;
+            particle.rotation = updateParticleRotation(particle.rotation, dt);
         }
         else if(!activated){
             activated = true;
             // If we are past the threshold, it's time to bring a new pixel online,
-            float threshold = m_tornado->getHeight() / (m_cycleSpeed * m_numParticles);
+            float threshold = m_tornado->getHeight() / (abs(m_cycleSpeed) * m_numParticles);
             if(m_lastActivation >= threshold){
                 //std::cout<<"PING"<<endl;
                 m_lastActivation -= threshold;
@@ -83,7 +85,7 @@ void TornadoParticleSystem::update(float dt)
     }
 }
 
-vec3 TornadoParticleSystem::getParticlePosition(float yval)
+vec3 TornadoParticleSystem::getParticlePosition(Particle *p, float yval)
 {
     return m_tornado->interpLocal(yval);
 }
@@ -91,6 +93,11 @@ vec3 TornadoParticleSystem::getParticlePosition(float yval)
 float TornadoParticleSystem::getParticleSize(float yval)
 {
     return m_tornado->interpWidth(yval);
+}
+
+float TornadoParticleSystem::updateParticleRotation(float rot, float dt)
+{
+    return rot + (90.0 * dt);
 }
 
 bool TornadoParticleSystem::resetThreshold(Particle* p)
@@ -103,5 +110,8 @@ bool TornadoParticleSystem::resetThreshold(Particle* p)
 void TornadoParticleSystem::resetParticle(Particle* p)
 {
     p->position.setY(m_tornado->getHeight());
+    // This particle is always the first one!
+    particles_.push_back(*p);
+    particles_.erase(particles_.begin());
 }
 
