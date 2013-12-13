@@ -111,6 +111,9 @@ float Tornado::initWidth(float height)
     return rv;
 }
 
+#define TORNADO_RAND_SCALE 15.0
+#define TORNADO_MAX_TWIST 0.09
+
 void Tornado::update(float dt)
 {
     vec3 diff = m_destination - m_origin;
@@ -125,10 +128,12 @@ void Tornado::update(float dt)
     // Add a little random shake to the control points...
     for(int it = 0; it < NUM_CONTROL_POINTS; it++){
         vec3 rvec;
-        rvec.setX(min(0.06, 15.0 * dt * (double)rand() / RAND_MAX));
-        rvec.setY(min(0.06, 15.0 * dt * (double)rand() / RAND_MAX));
+        double rx = TORNADO_RAND_SCALE/2.0 - (TORNADO_RAND_SCALE * dt * (double)rand() / RAND_MAX);
+        double ry = TORNADO_RAND_SCALE/2.0 - (TORNADO_RAND_SCALE * dt * (double)rand() / RAND_MAX);
+        rvec.setX(max(TORNADO_MAX_TWIST, min(-TORNADO_MAX_TWIST, rx)));
+        rvec.setY(max(TORNADO_MAX_TWIST, min(-TORNADO_MAX_TWIST, ry)));
         rvec.setZ(0.0);
         //std::cout<<it<<": "<<rvec<<endl;
-        m_controlPoints[it] += rvec;
+        //m_controlPoints[it] += rvec;
     }
 }

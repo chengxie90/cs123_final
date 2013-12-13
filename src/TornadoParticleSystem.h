@@ -14,8 +14,8 @@ public:
 protected:
     int m_active_count;
     float m_lastActivation;
-    int m_numParticles;
-    float m_cycleSpeed;
+    int m_numParticles = 0;
+    float m_cycleSpeed = 0;
     Tornado* m_tornado;
     virtual void init();
     virtual void update(float dt);

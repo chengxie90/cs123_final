@@ -7,15 +7,17 @@
 DustcloudParticleSystem::DustcloudParticleSystem(Tornado* tornado)
 {
     m_tornado = tornado;
-    m_cycleSpeed = DUST_CYCLE_SPEED;
-    m_numParticles = NUM_PARTICLES_DUST;
-    // Set up and push back all particles we want to use.
-    //init();
+    // Nothing that TornadoParticleSystem doesn't do...
 }
 
 void DustcloudParticleSystem::init()
 {
-    //mesh_ = new Mesh();
+    if(!m_cycleSpeed){
+        m_cycleSpeed = DUST_CYCLE_SPEED;
+    }
+    if(!m_numParticles){
+        m_numParticles = NUM_PARTICLES_DUST;
+    }
     m_active_count = 0;
     m_lastActivation = 0.0;
     // "Template" particle, modify and push back into the vector to create copies of it.
@@ -23,7 +25,7 @@ void DustcloudParticleSystem::init()
     p.active = false;
     p.size = 0.0;
     p.position.setY(-1.0);
-    for(int it = m_numParticles - 1; it >= 0; it--){
+    for(int it = 0; it < m_numParticles; it++){
         // Uncomment this if we don't want the particles to grow down.
         /*float heightScale = pow((float)it/(NUM_PARTICLES - 1), 2.0);
         float curHeight = m_tornado->getHeight() * heightScale;
@@ -73,6 +75,6 @@ void DustcloudParticleSystem::resetParticle(Particle* p)
     // This particle is always the first one!
     particles_.push_back(*p);
     particles_.erase(particles_.begin());
-    //std::cout<<"ASDJHAKWDJ"<<endl;
+    std::cout<<"ASDJHAKWDJ"<<endl;
 }
 

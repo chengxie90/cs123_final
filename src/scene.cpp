@@ -77,11 +77,12 @@ void Scene::initialize()
     TornadoParticleSystem* tPart = new TornadoParticleSystem(tornado_);
     Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
     tPart->setParticleTexture(tornadoMap);
-    // sceneObjects_.push_back(tPart);
+    sceneObjects_.push_back(tPart);
 
-    //DustcloudParticleSystem* dPart = new DustcloudParticleSystem(tornado_);
-    //dPart->setParticleTexture(tornadoMap);
-    //sceneObjects_.push_back(dPart);
+    /*DustcloudParticleSystem* dPart = new DustcloudParticleSystem(tornado_);
+    Texture* dustMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
+    dPart->setParticleTexture(dustMap);
+    sceneObjects_.push_back(dPart);*/
     
     // Clouds
     Cloud* cloud = new Cloud(500);

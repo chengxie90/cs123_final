@@ -10,9 +10,9 @@ Cloud::Cloud(float radius)
     Texture* texture = TextureCache::getInstance()->acquire("cloud1", TextureType::Texture2D);
     setParticleTexture(texture);
     
-    setEmissionRate(20);
+    setEmissionRate(10);
     
-    setMaxParticleCount(1000);
+    setMaxParticleCount(100);
     
     ParticleMaterial* material = static_cast<ParticleMaterial *>(material_);
     material->setHorizontal(true);

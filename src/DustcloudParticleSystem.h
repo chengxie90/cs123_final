@@ -10,6 +10,8 @@ public:
     ~DustcloudParticleSystem();
 protected:
     float m_angSpeed;
+    int m_numParticles = 180;
+    float m_cycleSpeed = -15.0;
     virtual void init();
     virtual vec3 getParticlePosition(Particle* p, float yval);
     virtual float getParticleSize(float yval);

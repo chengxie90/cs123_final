@@ -32,7 +32,7 @@ void TornadoParticleSystem::init()
     p.active = false;
     p.size = 0.0;
     p.position.setY(-1.0);
-    for(int it = m_numParticles - 1; it >= 0; it--){
+    for(int it = 0; it < m_numParticles; it++){
         // Uncomment this if we don't want the particles to grow down.
         /*float heightScale = pow((float)it/(NUM_PARTICLES - 1), 2.0);
         float curHeight = m_tornado->getHeight() * heightScale;
@@ -58,7 +58,7 @@ void TornadoParticleSystem::update(float dt)
     transform_.translate(m_tornado->getOrigin());
     // Only activate more paticles if we don't have enough already.
     bool activated = !(m_active_count < m_numParticles);
-    for (Particle& particle : particles_) {
+    for (Particle &particle : particles_) {
         if(particle.active){
             particle.position.setY(particle.position.y() - (m_cycleSpeed * dt));
             // If the particle is going into the ground, reset it.
@@ -69,6 +69,7 @@ void TornadoParticleSystem::update(float dt)
             particle.position = getParticlePosition(&particle, particle.position.y());
             particle.size = getParticleSize(particle.position.y());
             particle.rotation = updateParticleRotation(particle.rotation, dt);
+            particle.life += dt;
         }
         else if(!activated){
             activated = true;
@@ -110,8 +111,9 @@ bool TornadoParticleSystem::resetThreshold(Particle* p)
 void TornadoParticleSystem::resetParticle(Particle* p)
 {
     p->position.setY(m_tornado->getHeight());
+    p->life = 0;
     // This particle is always the first one!
     particles_.push_back(*p);
-    particles_.erase(particles_.begin());
+    //particles_.erase(particles_.begin());
 }
 
