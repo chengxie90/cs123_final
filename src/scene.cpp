@@ -78,7 +78,7 @@ void Scene::initialize()
     tornadoStart.setX(0.0);
     tornadoStart.setY(0);
     tornadoStart.setZ(0.0);
-    tornado_ = new Tornado(tornadoStart);
+    tornado_ = new Tornado(tornadoStart, terrain);
     tornadoStart.setX(8.0);
     tornadoStart.setZ(10.0);
     tornado_->setDestination(tornadoStart);

@@ -5,6 +5,7 @@
 
 #include "common.h"
 #include "sceneobject.h"
+#include "terrain.h"
 
 // This is the logical tornado (not the visual tornado) - change the position of this tornado's
 // origin and control points to move the tornado around in the world.
@@ -12,7 +13,7 @@ class Tornado
 {
 public:
     Tornado();
-    Tornado(vec3 startOrigin);
+    Tornado(vec3 startOrigin, Terrain* terr);
     virtual ~Tornado();
     float getHeight(){return m_height;} // Allow access to height and age.
     float getAge(){return m_age;}
@@ -23,9 +24,12 @@ public:
     float interpWidth(float height);    // Get the tornado width at a given local height...
     // Give the tornado somewhere to go! Just x and z taken into account.
     void setDestination(vec3 dest){m_destination = dest;}
+    // Use a heightmap for this tornado!
+    void setTerrain(Terrain* terr){m_terrain = terr;}
     virtual void update(float dt);
 
 protected:
+    Terrain* m_terrain;
     float initWidth(float height);      // Initial width function for the tornado.
     float m_height;
     float m_age;            // How long has this tornado been active? Useful if we want to descend from the sky.

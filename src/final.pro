@@ -45,6 +45,7 @@ SOURCES += main.cpp \
     fpscameracontroller.cpp \
     Tornado.cpp \
     TornadoParticleSystem.cpp \
+    DustcloudParticleSystem.cpp \
     terrainmaterial.cpp \
     material.cpp
 
@@ -81,6 +82,7 @@ HEADERS += mainwindow.h \
     fpscameracontroller.h \
     Tornado.h \
     TornadoParticleSystem.h \
+    DustcloudParticleSystem.h \
     terrainmaterial.h
 
 FORMS += mainwindow.ui

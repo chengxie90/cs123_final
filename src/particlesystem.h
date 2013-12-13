@@ -10,6 +10,7 @@ struct Particle
     vec3 position; 
     float rotation = 0; // in angle
     float size = 1;
+    bool active = true;
     
     // Other properties
     vec3 velocity;

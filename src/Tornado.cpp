@@ -3,6 +3,7 @@
 #define TORNADO_INIT_HEIGHT 120.0
 #define TORNADO_INIT_SPEED 2.0
 #define TORNADO_SCALE_FACTOR 45.0
+#define TORNADO_SUB_GROUND 15.0
 
 Tornado::Tornado(){
     // Just initialize with default values.
@@ -10,9 +11,10 @@ Tornado::Tornado(){
     init();
 }
 
-Tornado::Tornado(vec3 startOrigin)
+Tornado::Tornado(vec3 startOrigin, Terrain* terr)
 {
     // Add origin, then initialize.
+    m_terrain = terr;
     m_origin = startOrigin;
     init();
 }
@@ -52,7 +54,7 @@ vec3 Tornado::interp(float height)
     return interpLocal(height - m_origin.y());
 }
 
-// Interpolate the tornado's spine position at a some height in the tornado.
+// Interpolate the tornado's local spine position at a some height in the tornado.
 vec3 Tornado::interpLocal(float height)
 {
     float segmentSize = m_height/(NUM_CONTROL_POINTS - 1);
@@ -71,9 +73,9 @@ vec3 Tornado::interpLocal(float height)
     vec3 p2 = m_controlPoints[ind + 1];
     vec3 rv;
     // Right now, this is just linear interpolation. If we want, we can bring in a bezier curve or something.
-    rv.setX(m_origin.x() + (p1.x() * (1.0 - offset)) + (p2.x() * offset));
-    rv.setZ(m_origin.z() + (p1.z() * (1.0 - offset)) + (p2.z() * offset));
-    rv.setY(m_origin.y() + height);
+    rv.setX(p1.x() * (1.0 - offset) + (p2.x() * offset));
+    rv.setZ(p1.z() * (1.0 - offset) + (p2.z() * offset));
+    rv.setY(height);
     return rv;
 }
 
@@ -116,6 +118,10 @@ void Tornado::update(float dt)
     float dist = min((double) diff.length(), (double) m_speed * dt);
     diff.normalize();
     m_origin += (diff * dist);
+    // Set the origin's y-value to sub_ground below the height map at the current point.
+    float terrainHeight = m_terrain->height(m_origin.x(), m_origin.y());
+    //std::cout<<terrainHeight<<endl;
+    m_origin.setY(terrainHeight - TORNADO_SUB_GROUND);
     // Add a little random shake to the control points...
     for(int it = 0; it < NUM_CONTROL_POINTS; it++){
         vec3 rvec;
