@@ -13,6 +13,7 @@
 #include "terrain.h"
 #include "cloud.h"
 #include "rain.h"
+#include "rainsplash.h"
 
 Scene::Scene()
 {
@@ -93,6 +94,13 @@ void Scene::initialize()
     // Rain
     Rain* rain = new Rain(30);
     sceneObjects_.push_back(rain);
+    
+    // RainSplash
+    RainSplash* splash = new RainSplash(50, true, terrain);
+    sceneObjects_.push_back(splash);
+    
+    splash = new RainSplash(50, false, terrain);
+    sceneObjects_.push_back(splash);
 }
 
 void Scene::render(DrawContext &context)

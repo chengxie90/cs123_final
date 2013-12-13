@@ -55,4 +55,8 @@ inline float randf(float a, float b) {
     return randf() * (b - a) + a; 
 }
 
+inline float linear_interpolate(float a, float b, float ratio) {
+    return a * (1 - ratio) + b * ratio;
+}
+
 #endif // COMMON_H

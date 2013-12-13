@@ -12,12 +12,12 @@ Rain::Rain(float radius)
     Texture* texture =  TextureCache::getInstance()->acquire("rain", TextureType::Texture2D);
     setParticleTexture(texture);
     
-    setEmissionRate(400);
+    setEmissionRate(1000);
     
     setMaxParticleCount(10000);
     
     ParticleMaterial* material = static_cast<ParticleMaterial *>(material_);
-    material->setLengthScale(8);
+    material->setLengthScale(12);
 }
 
 void Rain::spawnParticle(Particle *particle)
@@ -39,7 +39,7 @@ void Rain::spawnParticle(Particle *particle)
     
     particle->maxLife = 2;
     
-    particle->size = 0.07;
+    particle->size = 0.08;
     
     float scale = randf(0.6f, 0.8f);
     particle->color = {scale, scale, scale};

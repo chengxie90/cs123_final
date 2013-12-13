@@ -27,12 +27,14 @@ void ParticleMaterial::apply(DrawContext &context)
     
     //glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
+    glDisable(GL_CULL_FACE);
 }
 
 void ParticleMaterial::endRender()
 {
     //glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
+    glEnable(GL_CULL_FACE);
 }
 
 void ParticleMaterial::setTexture(Texture *texture)
