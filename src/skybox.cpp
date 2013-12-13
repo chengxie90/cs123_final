@@ -15,8 +15,5 @@ Skybox::Skybox(string name)
     material->setTexture(texture);
     setMaterial(material);
     
-    transform().translate(0, -50, 0);
-    transform().scale(1000);
-    
-    
+    transform().translate(0, 0, 0);
 }

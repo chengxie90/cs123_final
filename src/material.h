@@ -8,7 +8,7 @@ class Material
 {
 public:
     virtual ~Material() {}
-    virtual void apply(DrawContext& context) = 0;
+    virtual void apply(DrawContext& context);
     virtual void endRender() {}
     
 protected:

@@ -17,8 +17,7 @@ PhongMaterial::~PhongMaterial()
 
 void PhongMaterial::apply(DrawContext &context)
 {
-    shader_->bind();
-    context.shader = shader_;
+    Material::apply(context);
     
     shader_->setUniformValue("ambient", ambient_);
     shader_->setUniformValue("diffuse", diffuse_);

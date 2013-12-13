@@ -45,7 +45,8 @@ SOURCES += main.cpp \
     fpscameracontroller.cpp \
     Tornado.cpp \
     TornadoParticleSystem.cpp \
-    terrainmaterial.cpp
+    terrainmaterial.cpp \
+    material.cpp
 
 HEADERS += mainwindow.h \
     view.h \

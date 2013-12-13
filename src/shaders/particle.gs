@@ -7,8 +7,10 @@ uniform mat4 projection;
 
 in float dim[];
 in float rot[];
+in float fog_factor[];
 
 out vec2 uv;
+out float fogFactor;
 
 void main() {
     float size = dim[0];
@@ -23,21 +25,25 @@ void main() {
     vec4 offset = rotMat * vec4(-size, -size, 0.0, 0.0);
     gl_Position = projection * (offset + gl_in[0].gl_Position);
     uv = vec2(0.0, 0.0);
+    fogFactor = fog_factor[0];
     EmitVertex();
 
     offset = rotMat * vec4(size, -size, 0.0, 0.0);
     gl_Position = projection * (offset + gl_in[0].gl_Position);
     uv = vec2(1.0, 0.0);
+    fogFactor = fog_factor[0];
     EmitVertex();
 
     offset = rotMat * vec4(-size, size, 0.0, 0.0);
     gl_Position = projection * (offset + gl_in[0].gl_Position);
     uv = vec2(0.0, 1.0);
+    fogFactor = fog_factor[0];
     EmitVertex();
 
     offset = rotMat * vec4(size, size, 0.0, 0.0);
     gl_Position = projection * (offset + gl_in[0].gl_Position);
     uv = vec2(1.0, 1.0);
+    fogFactor = fog_factor[0];
     EmitVertex();
 
     EndPrimitive();

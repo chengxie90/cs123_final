@@ -11,10 +11,9 @@ ParticleMaterial::ParticleMaterial()
 
 void ParticleMaterial::apply(DrawContext &context)
 {
-    shader_->bind();
-    context.shader = shader_;
-    
     assert(texture_);
+    
+    Material::apply(context);
     
     texture_->apply(context, "map", 0);
     

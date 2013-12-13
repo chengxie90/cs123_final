@@ -33,6 +33,9 @@ Scene::~Scene()
 
 void Scene::initialize()
 {   
+    setFogColor({0.45, 0.47, 0.5});
+    setFogDensity(0.008);
+    
     // Materials are owned (and deleted) by SceneObject
     PhongMaterial* material1 = new PhongMaterial;
     material1->setAmbient({0.2, 0.2, 0.2});
@@ -97,5 +100,26 @@ void Scene::render(DrawContext &context)
         object->render(context);
     }
 }
+
+const Color &Scene::fogColor() const
+{
+    return fogColor_;
+}
+
+void Scene::setFogColor(const Color &fogColor)
+{
+    fogColor_ = fogColor;
+}
+float Scene::fogDensity() const
+{
+    return fogDensity_;
+}
+
+void Scene::setFogDensity(float fogDensity)
+{
+    fogDensity_ = fogDensity;
+}
+
+
 
 

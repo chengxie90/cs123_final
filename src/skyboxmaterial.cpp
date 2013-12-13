@@ -17,8 +17,7 @@ void SkyboxMaterial::setTexture(Texture *texture)
 
 void SkyboxMaterial::apply(DrawContext &context)
 {
-    shader_->bind();
-    context.shader = shader_;
+    Material::apply(context);
     
     assert(texture_);
     

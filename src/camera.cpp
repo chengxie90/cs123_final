@@ -4,8 +4,8 @@
 
 Camera::Camera()
 {
-    near_ = 1;
-    far_ = 10000;
+    near_ = 0.1;
+    far_ = 1000;
     aspectRatio_ = 1;
     heightAngle_ = 60;
     
@@ -18,6 +18,8 @@ void Camera::apply(DrawContext &context)
     context.shader->setUniformValue("view", viewMatrix());
     context.shader->setUniformValue("projection", projectionMatrix());
     context.shader->setUniformValue("eyePositionW", position());
+    context.shader->setUniformValue("near", near());
+    context.shader->setUniformValue("far", far());
 }
 
 const mat4& Camera::projectionMatrix() const

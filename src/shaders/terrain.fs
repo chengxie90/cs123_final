@@ -1,13 +1,18 @@
 #version 330
 
 in vec3 normalW;
-in vec3 positionW;
 in vec2 uv;
+in float fogFactor;
+
+uniform float near;
+uniform float far;
 
 uniform vec3 lightDir;
 uniform vec3 lightColor;
 
 uniform vec3 ambient;
+
+uniform vec3 fogColor;
 
 uniform sampler2D diffuseMap;
 
@@ -25,6 +30,8 @@ void main()
 
     vec3 color = Li * brdf_diffuse;
     color += ambient * brdf_diffuse;
+    
+    color = mix(color, fogColor, fogFactor);
 
     fragColor = vec4(color, 1);
 }

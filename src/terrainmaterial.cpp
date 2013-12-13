@@ -13,8 +13,7 @@ void TerrainMaterial::apply(DrawContext &context)
     assert(heightMap_);
     assert(diffuseMap_);
     
-    shader_->bind();
-    context.shader = shader_;
+    Material::apply(context);
     
     shader_->setUniformValue("ambient", ambient_);
     shader_->setUniformValue("heightScale", heightScale_);
