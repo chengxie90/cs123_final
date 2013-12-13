@@ -2,6 +2,8 @@
 #include "texture.h"
 #include "texturecache.h"
 #include "particlematerial.h"
+#include "drawcontext.h"
+#include "camera.h"
 
 Rain::Rain(float radius)
 {
@@ -20,14 +22,14 @@ Rain::Rain(float radius)
 
 void Rain::spawnParticle(Particle *particle)
 {
-    float speed = randf(60, 80);
+    float speed = randf(60, 100);
     vec3 velocity = {randf(0, 0.05), -1, randf(0, 0.1)};
     velocity *= speed;
     
     particle->velocity = velocity;
     
     float phi = randf(0, M_PI * 2);
-    float r = radius_ * randf();
+    float r = radius_ * randf(0.3, 1.0);
     
     float x = cosf(phi) * r;
     float y = 0;
@@ -39,7 +41,7 @@ void Rain::spawnParticle(Particle *particle)
     
     particle->size = 0.07;
     
-    float scale = randf(0.6f, 0.7f);
+    float scale = randf(0.6f, 0.8f);
     particle->color = {scale, scale, scale};
     
     particle->opacity = randf(0.4, 0.7);
@@ -48,6 +50,15 @@ void Rain::spawnParticle(Particle *particle)
 void Rain::updateParticle(Particle &particle, float dt)
 {
     particle.position += particle.velocity * dt;
-    
     particle.opacity = randf(0.4, 0.7);
 }
+
+void Rain::renderGeometry(DrawContext &context)
+{
+    ParticleSystem::renderGeometry(context);
+    transform().setToIdentity();
+    vec3 camPos = context.camera->position();
+    transform().translate(camPos.x(), camPos.y() + 30, camPos.z());
+}
+
+

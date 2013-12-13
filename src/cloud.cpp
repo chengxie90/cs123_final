@@ -14,6 +14,8 @@ Cloud::Cloud(float radius)
     
     setMaxParticleCount(100);
     
+    setRenderingOrder(RenderingOrder::YoungestFirst);
+    
     ParticleMaterial* material = static_cast<ParticleMaterial *>(material_);
     material->setHorizontal(true);
 }

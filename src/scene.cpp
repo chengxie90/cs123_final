@@ -30,7 +30,7 @@ Scene::~Scene()
     }
     
     delete skybox_;
-    delete tornado_;
+    //delete tornado_;
 }
 
 void Scene::initialize()
@@ -92,9 +92,7 @@ void Scene::initialize()
     
     // Rain
     Rain* rain = new Rain(30);
-    rain->transform().translate(0, 50, 0);
     sceneObjects_.push_back(rain);
-    
 }
 
 void Scene::render(DrawContext &context)
@@ -128,6 +126,11 @@ float Scene::fogDensity() const
 void Scene::setFogDensity(float fogDensity)
 {
     fogDensity_ = fogDensity;
+}
+
+void Scene::update(float dt)
+{
+    
 }
 
 

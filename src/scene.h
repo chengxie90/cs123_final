@@ -25,6 +25,8 @@ public:
     float fogDensity() const;
     void setFogDensity(float fogDensity);
     
+    void update(float dt);
+    
 private:
     SceneObjects sceneObjects_;
     Lights lights_;

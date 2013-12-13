@@ -12,6 +12,8 @@ public:
     
     virtual void updateParticle(Particle &particle, float dt) override;
     
+    virtual void renderGeometry(DrawContext &context) override;
+    
 private:
     float radius_;
 };

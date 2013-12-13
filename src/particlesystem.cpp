@@ -17,7 +17,6 @@ ParticleSystem::~ParticleSystem()
     delete mesh_;
 }
 
-// To Ken: This function can be ignored.
 void ParticleSystem::renderGeometry(DrawContext &context)
 {   
     update(context.deltaTime);
@@ -26,9 +25,25 @@ void ParticleSystem::renderGeometry(DrawContext &context)
         return;
     }
     
+    Particles particles = particles_;
+    
+    if (renderingOrder_ == RenderingOrder::Reversed) {
+        std::reverse(begin(particles), end(particles));
+    }
+    else if (renderingOrder_ == RenderingOrder::OldestFirst) {
+        std::sort(begin(particles), end(particles), [](const Particle& left, const Particle& right) {
+            return left.life > right.life;
+        });
+    }
+    else if (renderingOrder_ == RenderingOrder::YoungestFirst) {
+        std::sort(begin(particles), end(particles), [](const Particle& left, const Particle& right) {
+            return left.life < right.life;
+        });
+    }
+    
     VertexBufferDesc desc;
-    desc.bufferData = particles_.data();
-    desc.bufferSize = particles_.size() * sizeof(Particle);
+    desc.bufferData = particles.data();
+    desc.bufferSize = particles.size() * sizeof(Particle);
     desc.vertexElementSizes = {3, 1, 1, 3, 1};
     desc.stride = sizeof(Particle);
           
@@ -79,7 +94,7 @@ void ParticleSystem::update(float dt)
 
 void ParticleSystem::spawnParticle(Particle *particle)
 {
-
+    
 }
 
 void ParticleSystem::updateParticle(Particle &particle, float dt)
@@ -106,6 +121,17 @@ void ParticleSystem::setMaxParticleCount(int maxParticleCount)
 {
     maxParticleCount_ = maxParticleCount;
 }
+
+RenderingOrder ParticleSystem::renderingOrder() const
+{
+    return renderingOrder_;
+}
+
+void ParticleSystem::setRenderingOrder(RenderingOrder renderingOrder)
+{
+    renderingOrder_ = renderingOrder;
+}
+
 
 
 

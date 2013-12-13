@@ -23,6 +23,13 @@ struct Particle
 };
 
 typedef vector<Particle> Particles;
+
+enum class RenderingOrder {
+    Default,
+    Reversed,
+    OldestFirst,
+    YoungestFirst,
+};
               
 class ParticleSystem : public SceneObject
 {
@@ -48,9 +55,12 @@ public:
     uint32_t maxParticleCount() const;
     void setMaxParticleCount(int maxParticleCount);
     
+    RenderingOrder renderingOrder() const;
+    void setRenderingOrder(RenderingOrder renderingOrder);
+    
 protected:
     vector<Particle> particles_;
-
+    
 private:
     // time elapsed since the particle system was created
     float timeElapsed_ = 0;
@@ -62,6 +72,8 @@ private:
     uint32_t emissionRate_ = 0;
     
     float numParticlesToSpawn_ = 0;
+    
+    RenderingOrder renderingOrder_ = RenderingOrder::Reversed;
 };
 
 #endif // PARTICLESYSTEM_H

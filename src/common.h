@@ -7,6 +7,8 @@
 using std::string;
 #include <vector>
 using std::vector;
+#include <list>
+using std::list;
 #include <map>
 using std::map;
 #include <assert.h>
