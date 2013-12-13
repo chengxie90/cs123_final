@@ -8,6 +8,8 @@
 #include "texturecache.h"
 #include "particlematerial.h"
 #include "particlesystem.h"
+#include "TornadoParticleSystem.h"
+#include "DustcloudParticleSystem.h"
 #include "skybox.h"
 #include "skyboxmaterial.h"
 #include "terrain.h"
@@ -86,6 +88,9 @@ void Scene::initialize()
     Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
     tPart->setParticleTexture(tornadoMap);
     sceneObjects_.push_back(tPart);
+    //DustcloudParticleSystem* dPart = new DustcloudParticleSystem(tornado_);
+    //dPart->setParticleTexture(tornadoMap);
+    //sceneObjects_.push_back(dPart);
 }
 
 void Scene::render(DrawContext &context)

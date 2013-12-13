@@ -120,7 +120,7 @@ void Tornado::update(float dt)
     m_origin += (diff * dist);
     // Set the origin's y-value to sub_ground below the height map at the current point.
     float terrainHeight = m_terrain->height(m_origin.x(), m_origin.y());
-    //std::cout<<terrainHeight<<endl;
+    // std::cout<<terrainHeight<<endl;
     m_origin.setY(terrainHeight - TORNADO_SUB_GROUND);
     // Add a little random shake to the control points...
     for(int it = 0; it < NUM_CONTROL_POINTS; it++){

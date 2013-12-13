@@ -3,6 +3,7 @@
 #include "shadercache.h"
 #include "drawcontext.h"
 #include "scene.h"
+#include "material.h"
 
 void Material::apply(DrawContext &context)
 {
