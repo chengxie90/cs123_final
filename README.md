@@ -19,6 +19,10 @@ Build directly on OS X or Linux.
 - Basic Scene Management
 - Perspective Camera
 - Orbit Camera Controller (same as in cs123 assignments), and FPS Camera Controller
+- Tornado
+- Fog
+- Clouds
+- Rain
 
 ## Usage
 - See Scene::initialize() and View::initialzeGL()
