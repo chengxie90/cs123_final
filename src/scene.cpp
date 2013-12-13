@@ -30,6 +30,7 @@ Scene::~Scene()
     }
     
     delete skybox_;
+    delete tornado_;
 }
 
 void Scene::initialize()
@@ -76,7 +77,7 @@ void Scene::initialize()
     TornadoParticleSystem* tPart = new TornadoParticleSystem(tornado_);
     Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
     tPart->setParticleTexture(tornadoMap);
-    sceneObjects_.push_back(tPart);
+    // sceneObjects_.push_back(tPart);
 
     //DustcloudParticleSystem* dPart = new DustcloudParticleSystem(tornado_);
     //dPart->setParticleTexture(tornadoMap);
@@ -85,7 +86,7 @@ void Scene::initialize()
     // Clouds
     Cloud* cloud = new Cloud(500);
     cloud->update(20);
-    cloud->transform().translate(0, 100, 0);
+    cloud->transform().translate(0, 80, 0);
     sceneObjects_.push_back(cloud);
     
     // Rain

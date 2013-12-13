@@ -15,13 +15,13 @@ Rain::Rain(float radius)
     setMaxParticleCount(10000);
     
     ParticleMaterial* material = static_cast<ParticleMaterial *>(material_);
-    material->setLengthScale(10);
+    material->setLengthScale(8);
 }
 
 void Rain::spawnParticle(Particle *particle)
 {
-    float speed = randf(50, 50);
-    vec3 velocity = {-0.2, -1, 0.3};
+    float speed = randf(60, 80);
+    vec3 velocity = {randf(0, 0.05), -1, randf(0, 0.1)};
     velocity *= speed;
     
     particle->velocity = velocity;
@@ -37,10 +37,10 @@ void Rain::spawnParticle(Particle *particle)
     
     particle->maxLife = 2;
     
-    particle->size = 0.05;
+    particle->size = 0.07;
     
     float scale = randf(0.6f, 0.7f);
-    //particle->color = {scale, scale, scale};
+    particle->color = {scale, scale, scale};
     
     particle->opacity = randf(0.4, 0.7);
 }
@@ -48,4 +48,6 @@ void Rain::spawnParticle(Particle *particle)
 void Rain::updateParticle(Particle &particle, float dt)
 {
     particle.position += particle.velocity * dt;
+    
+    particle.opacity = randf(0.4, 0.7);
 }
