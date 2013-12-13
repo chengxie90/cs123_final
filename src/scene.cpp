@@ -34,7 +34,7 @@ Scene::~Scene()
 void Scene::initialize()
 {   
     setFogColor({0.45, 0.47, 0.5});
-    setFogDensity(0.008);
+    setFogDensity(0.004);
     
     // Materials are owned (and deleted) by SceneObject
     PhongMaterial* material1 = new PhongMaterial;

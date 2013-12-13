@@ -7,18 +7,6 @@
 
 ParticleSystem::ParticleSystem()
 {   
-    Particle p;
-    particles_.push_back(p);
-    particles_.push_back(p);
-    particles_.push_back(p);
-    particles_.push_back(p);
-    particles_.push_back(p);
-    particles_.push_back(p);
-    particles_.push_back(p);
-    particles_.push_back(p);
-    particles_.push_back(p);
-    particles_.push_back(p);
-    
     mesh_ = new Mesh;
 }
 

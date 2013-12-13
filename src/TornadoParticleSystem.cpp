@@ -23,7 +23,6 @@ TornadoParticleSystem::TornadoParticleSystem(Tornado* tornado)
 
 void TornadoParticleSystem::init()
 {
-    mesh_ = new Mesh();
     m_active_count = 0;
     m_lastActivation = 0.0;
     // "Template" particle, modify and push back into the vector to create copies of it.

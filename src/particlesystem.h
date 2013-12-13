@@ -30,6 +30,7 @@ public:
     void setParticleTexture(Texture* texture);
 
     virtual void update(float dt);
+    
     vector<Particle> particles_;
     
     int numParticlesMax_;
