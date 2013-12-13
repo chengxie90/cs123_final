@@ -12,6 +12,7 @@
 #include "skybox.h"
 #include "terrain.h"
 #include "cloud.h"
+#include "rain.h"
 
 Scene::Scene()
 {
@@ -29,7 +30,6 @@ Scene::~Scene()
     }
     
     delete skybox_;
-    delete tornado_;
 }
 
 void Scene::initialize()
@@ -87,6 +87,12 @@ void Scene::initialize()
     cloud->update(20);
     cloud->transform().translate(0, 100, 0);
     sceneObjects_.push_back(cloud);
+    
+    // Rain
+    Rain* rain = new Rain(30);
+    rain->transform().translate(0, 50, 0);
+    sceneObjects_.push_back(rain);
+    
 }
 
 void Scene::render(DrawContext &context)

@@ -48,7 +48,8 @@ SOURCES += main.cpp \
     DustcloudParticleSystem.cpp \
     terrainmaterial.cpp \
     material.cpp \
-    cloud.cpp
+    cloud.cpp \
+    rain.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -85,6 +86,7 @@ HEADERS += mainwindow.h \
     TornadoParticleSystem.h \
     DustcloudParticleSystem.h \
     terrainmaterial.h \
-    cloud.h
+    cloud.h \
+    rain.h
 
 FORMS += mainwindow.ui

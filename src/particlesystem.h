@@ -19,6 +19,7 @@ struct Particle
     
     bool active = true;
     vec3 velocity;
+    float angularSpeed = 0;
 };
 
 typedef vector<Particle> Particles;
