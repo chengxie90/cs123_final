@@ -3,6 +3,8 @@
 #include "texturecache.h"
 #include "particlematerial.h"
 #include "terrain.h"
+#include "drawcontext.h"
+#include "camera.h"
 
 RainSplash::RainSplash(float radius, bool mist, Terrain* terrain)
 {
@@ -23,18 +25,18 @@ RainSplash::RainSplash(float radius, bool mist, Terrain* terrain)
 
     setParticleTexture(texture);
     
-    setEmissionRate(1000);
+    setEmissionRate(8000);
     
-    setMaxParticleCount(10000);
+    setMaxParticleCount(40000);
 }
 
 void RainSplash::spawnParticle(Particle *particle)
 {
     float phi = randf(0, M_PI * 2);
-    float r = radius_ * randf(0.3, 1.0);
+    float r = radius_ * randf(0, 1.0);
     
-    float x = cosf(phi) * r;
-    float z = sinf(phi) * r;
+    float x = cosf(phi) * r + cameraPosition_.x();
+    float z = sinf(phi) * r + cameraPosition_.z();
     float y = terrain_->height(x, z) + 0.1;
    
     particle->position = {x, y, z};
@@ -57,4 +59,11 @@ void RainSplash::updateParticle(Particle &particle, float dt)
     particle.size = linear_interpolate(startSize_, startSize_ + 0.15, x);
     particle.opacity = startOpacity_ * (1 - x);
     
+}
+
+void RainSplash::renderGeometry(DrawContext &context)
+{
+    ParticleSystem::renderGeometry(context);
+    transform().setToIdentity();
+    cameraPosition_ = context.camera->position();
 }

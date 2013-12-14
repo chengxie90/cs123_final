@@ -84,10 +84,10 @@ void Scene::initialize()
     sceneObjects_.push_back(rain);
     
     // RainSplash
-    RainSplash* splash = new RainSplash(50, true, terrain);
+    RainSplash* splash = new RainSplash(100, true, terrain);
     sceneObjects_.push_back(splash);
     
-    splash = new RainSplash(50, false, terrain);
+    splash = new RainSplash(100, false, terrain);
     sceneObjects_.push_back(splash);
 
     // Follower cloud
@@ -188,7 +188,6 @@ void Scene::pick(const vec3 &point)
     vec3 p = point;
     float height = terrain_->height(p.x(), p.z());
     p.setY(height);
-    vec3 pos = tornado_->getOrigin();
     tornado_->setDestination(p);
 }
 
