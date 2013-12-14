@@ -9,6 +9,7 @@
 #include "particlesystem.h"
 #include "TornadoParticleSystem.h"
 #include "DustcloudParticleSystem.h"
+#include "SplashParticleSystem.h"
 #include "PhysicsObject.h"
 #include "skybox.h"
 #include "terrain.h"
@@ -37,7 +38,7 @@ Scene::~Scene()
     //delete tornado_;
 }
 
-#define NUM_PARTICLE_SYSTEMS 4
+#define NUM_PARTICLE_SYSTEMS 5
 
 void Scene::initialize()
 {   
@@ -112,31 +113,21 @@ void Scene::initialize()
     Texture* dustMap = TextureCache::getInstance()->acquire("debris", TextureType::Texture2D);
     dPart->setParticleTexture(dustMap);
 
-    Mesh* mesh11 = MeshCache::getInstance()->acquire("bunny");
+    SplashParticleSystem* sPart = new SplashParticleSystem(tornado_);
+    sPart->init();
+    Texture* splashMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
+    sPart->setParticleTexture(splashMap);
+
+    //Mesh* mesh11 = MeshCache::getInstance()->acquire("bunny");
     phys_ = new PhysicsCollection();
     phys_->gravity = 18.0;
     phys_->terrain = terrain_;
-    for(int it = 0; it < 8; it++){
-        PhongMaterial* tmat = new PhongMaterial;
-        tmat->setAmbient({0.2, 0.2, 0.2});
-        tmat->setDiffuse({0.7, 0.7, 0.7});
-        tmat->setSpecular({0.7, 0.7, 0.7});
-        tmat->setShiness(100);
-        PhysicsObject* p = new PhysicsObject(phys_);
-        p->setPosition({5.0 * it, 90.0, 5.0 * it});
-        p->setPhysicsRadius(1.8);
-        p->setMeshScale(5.0);
-        p->setGravity(true);
-        p->setMesh(mesh11);
-        p->setMaterial(tmat);
-        sceneObjects_.push_back(p);
-        phys_->objects.push_back(p);
-    }
 
     sceneObjects_.push_back(cloud);
     sceneObjects_.push_back(follower_);
     sceneObjects_.push_back(tPart);
     sceneObjects_.push_back(dPart);
+    sceneObjects_.push_back(sPart);
 }
 
 void Scene::render(DrawContext &context)
@@ -203,6 +194,7 @@ void Scene::update(float dt)
             out *= tornado_->getForce();
             out.setY(tornado_->getHeight() / 6.0);
             p->setVelocity(out);
+            p->addAngleVelocity({30 * dt, 60 * dt, 30 * dt});
         }
         else{
             p->setGravity(true);

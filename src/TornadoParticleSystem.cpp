@@ -109,7 +109,7 @@ float TornadoParticleSystem::updateParticleRotation(Particle* p, float dt)
 {
     float rot = p->rotation;
     float hprop = (p->position.y() - m_tornado->getOrigin().y()) / m_tornado->getHeight();
-    float rotFactor = (1.0 + hprop) * dt * randf(20.0, 25.0);
+    float rotFactor = (1.0 + hprop) * dt * randf(8.0, 10.0);
     return rot + rotFactor;
 }
 

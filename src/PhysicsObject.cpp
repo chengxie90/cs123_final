@@ -8,6 +8,7 @@ PhysicsObject::PhysicsObject(PhysicsCollection* phys)
     m_angleVelocity = {0, 0, 0};
     m_meshScale = 1.0;
     m_physicsRadius = 5.0;
+    m_angle = {0.0, 0.0, 0.0};
 }
 
 PhysicsObject::~PhysicsObject()
@@ -19,6 +20,9 @@ void PhysicsObject::setPosition(vec3 pos)
     transform().setToIdentity();
     transform().translate(pos);
     transform().scale(m_meshScale);
+    transform().rotate(m_angle.x(), {1.0, 0.0, 0.0});
+    transform().rotate(m_angle.y(), {0.0, 1.0, 0.0});
+    transform().rotate(m_angle.z(), {0.0, 0.0, 1.0});
 }
 
 vec3 PhysicsObject::getWorldPosition()
@@ -48,8 +52,11 @@ void PhysicsObject::update(float dt)
         float yter = m_phys->terrain->height(next.x(), next.z());
         next.setY(yter + m_physicsRadius);
         m_velocity = {0.0, 0.0, 0.0};
+        m_angleVelocity = {0.0, 0.0, 0.0};
         setGravity(false);
     }
+    // Update m_angle based on angle velocity!
+    m_angle += (m_angleVelocity * dt);
     setPosition(next);
 
 }
