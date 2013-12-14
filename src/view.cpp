@@ -16,7 +16,7 @@ View::View(QWidget *parent) : QGLWidget(parent)
     setMouseTracking(true);
 
     // Hide the cursor since this is a fullscreen app
-    setCursor(Qt::BlankCursor);
+    //setCursor(Qt::BlankCursor);
 
     // View needs keyboard focus
     setFocusPolicy(Qt::StrongFocus);

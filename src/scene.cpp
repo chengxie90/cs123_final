@@ -70,26 +70,36 @@ void Scene::initialize()
     Terrain* terrain = new Terrain({0, 0, 0}, size);
     sceneObjects_.push_back(terrain);
 
-    // Get a tornado in here!
-    vec3 start = {0, 0, 0};
-    tornado_ = new Tornado(start, terrain);
-    vec3 dest = {18, 0, 10};
-    tornado_->setDestination(dest);
-    TornadoParticleSystem* tPart = new TornadoParticleSystem(tornado_);
-    Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
-    tPart->setParticleTexture(tornadoMap);
-    sceneObjects_.push_back(tPart);
-
-    /*DustcloudParticleSystem* dPart = new DustcloudParticleSystem(tornado_);
-    Texture* dustMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
-    dPart->setParticleTexture(dustMap);
-    sceneObjects_.push_back(dPart);*/
-    
     // Clouds
     Cloud* cloud = new Cloud(500);
     cloud->update(20);
     cloud->transform().translate(0, 80, 0);
-    sceneObjects_.push_back(cloud);
+    //sceneObjects_.push_back(cloud);
+
+    // Follower cloud
+    follower_ = new Cloud(100);
+    follower_->update(20);
+
+    // Get a tornado in here!
+    vec3 start = {0, 0, 0};
+    tornado_ = new Tornado(start, terrain);
+    follower_->transform().translate(start.x(), start.y() + tornado_->getHeight(), start.z());
+    follower_->setEmissionRate(4);
+    follower_->setMaxParticleCount(40);
+    //sceneObjects_.push_back(follower_);
+    vec3 dest = {18, 0, 10};
+    tornado_->setDestination(dest);
+    TornadoParticleSystem* tPart = new TornadoParticleSystem(tornado_);
+    tPart->init();
+    Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
+    tPart->setParticleTexture(tornadoMap);
+    sceneObjects_.push_back(tPart);
+
+    DustcloudParticleSystem* dPart = new DustcloudParticleSystem(tornado_);
+    dPart->init();
+    Texture* dustMap = TextureCache::getInstance()->acquire("debris", TextureType::Texture2D);
+    dPart->setParticleTexture(dustMap);
+    sceneObjects_.push_back(dPart);
     
     // Rain
     Rain* rain = new Rain(30);
@@ -110,6 +120,7 @@ void Scene::render(DrawContext &context)
     context.scene = this;
     
     skybox_->render(context);
+    this->update(context.deltaTime);
     
     for (SceneObject* object : sceneObjects_) {
         object->render(context);
@@ -138,7 +149,10 @@ void Scene::setFogDensity(float fogDensity)
 
 void Scene::update(float dt)
 {
-    
+    follower_->transform().setToIdentity();
+    vec3 next = tornado_->getOrigin();
+    next.setY(tornado_->getHeight());
+    follower_->transform().translate(next);
 }
 
 

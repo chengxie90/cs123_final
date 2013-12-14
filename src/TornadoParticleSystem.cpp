@@ -1,15 +1,16 @@
 #include "TornadoParticleSystem.h"
 
-#define NUM_PARTICLES 60
+#define NUM_PARTICLES 80
 // This also, by necessity, determines particle spawn rate (along with height)!
 #define PARTICLE_CYCLE_SPEED 20.0
+#define TORNADO_MIN_OPACITY 0.2
+#define TORNADO_MAX_OPACITY 1.0
+#define TORNADO_MIN_COLOR 0.4
+#define TORNADO_MAX_COLOR 0.5
 
 TornadoParticleSystem::TornadoParticleSystem()
 {
-    m_cycleSpeed = PARTICLE_CYCLE_SPEED;
-    m_numParticles = NUM_PARTICLES;
-    // Set up and push back all particles we want to use.
-    init();
+
 }
 
 TornadoParticleSystem::TornadoParticleSystem(Tornado* tornado)
@@ -20,15 +21,13 @@ TornadoParticleSystem::TornadoParticleSystem(Tornado* tornado)
     if(!m_numParticles)
         m_numParticles = NUM_PARTICLES;
     // Set up and push back all particles we want to use.
-    init();
+    //init();
 }
 
 void TornadoParticleSystem::init()
 {
-    setEmissionRate((int)((m_numParticles * m_cycleSpeed) / m_tornado->getHeight()));
+    setEmissionRate((int)((m_numParticles * abs(m_cycleSpeed)) / m_tornado->getHeight() * 0.9));
     setMaxParticleCount(m_numParticles);
-    m_active_count = 0;
-    m_lastActivation = 0.0;
     // "Template" particle, modify and push back into the vector to create copies of it.
     Particle p;
     p.active = false;
@@ -53,7 +52,6 @@ TornadoParticleSystem::~TornadoParticleSystem()
 
 void TornadoParticleSystem::update(float dt)
 {
-    m_lastActivation += dt;
     m_tornado->update(dt);
     // Update our transform to match the new origin.
     transform_.setToIdentity();
@@ -65,14 +63,35 @@ void TornadoParticleSystem::spawnParticle(Particle *particle)
 {
     particle->position.setY(m_tornado->getHeight());
     particle->maxLife = m_tornado->getHeight() / m_cycleSpeed;
+    if(m_useOpacity){
+        particle->opacity = TORNADO_MIN_OPACITY;
+    }
+    float randC = randf(TORNADO_MIN_COLOR, TORNADO_MAX_COLOR);
+    particle->color = {randC, randC, randC};
 }
 
 void TornadoParticleSystem::updateParticle(Particle &particle, float dt)
 {
-    particle.position.setY(particle.position.y() - (m_cycleSpeed * dt));
+    float lprop = particle.life / particle.maxLife;
+    float sterm = 1.5 - (4.0/3.0 * lprop);
+    if(lprop >= 0.75){
+        sterm = 0.5 + (4.0 * (lprop - 0.75));
+    }
+
+    particle.position.setY(particle.position.y() - (m_cycleSpeed * dt * sterm));
     particle.position = getParticlePosition(&particle, particle.position.y());
     particle.size = getParticleSize(particle.position.y());
     particle.rotation = updateParticleRotation(particle.rotation, dt);
+    if(m_useOpacity){
+        float oprop = sqrt(lprop);
+        particle.opacity = (oprop * TORNADO_MAX_OPACITY) + (TORNADO_MIN_OPACITY * (1.0 - oprop));
+    }
+    else if(m_randOpacity){
+        float oprop = randf(0.3, 0.6);
+        particle.opacity = oprop;
+    }
+    float randC = min(TORNADO_MAX_COLOR, max(TORNADO_MIN_COLOR, particle.color.x() + randf(-0.02, 0.02)));
+    particle.color = {randC, randC, randC};
 }
 
 vec3 TornadoParticleSystem::getParticlePosition(Particle *p, float yval)

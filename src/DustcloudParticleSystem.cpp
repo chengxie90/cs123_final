@@ -1,8 +1,8 @@
 #include "DustcloudParticleSystem.h"
 
-#define NUM_PARTICLES_DUST 180
-#define DUST_CYCLE_SPEED -15.0
-#define DUST_ROT_SPEED 10.0
+#define NUM_PARTICLES_DUST 100
+#define DUST_CYCLE_SPEED -25.0
+#define DUST_ROT_SPEED -4.0
 
 DustcloudParticleSystem::DustcloudParticleSystem(Tornado* tornado)
 {
@@ -12,30 +12,11 @@ DustcloudParticleSystem::DustcloudParticleSystem(Tornado* tornado)
 
 void DustcloudParticleSystem::init()
 {
-    if(!m_cycleSpeed){
-        m_cycleSpeed = DUST_CYCLE_SPEED;
-    }
-    if(!m_numParticles){
-        m_numParticles = NUM_PARTICLES_DUST;
-    }
-    setEmissionRate((int)((m_numParticles * m_cycleSpeed) / m_tornado->getHeight()));
-    setMaxParticleCount(m_numParticles);
-    m_active_count = 0;
-    m_lastActivation = 0.0;
-    // "Template" particle, modify and push back into the vector to create copies of it.
-    Particle p;
-    p.active = false;
-    p.size = 0.0;
-    p.position.setY(-1.0);
-    for(int it = 0; it < m_numParticles; it++){
-        // Uncomment this if we don't want the particles to grow down.
-        /*float heightScale = pow((float)it/(NUM_PARTICLES - 1), 2.0);
-        float curHeight = m_tornado->getHeight() * heightScale;
-        p.position = m_tornado->interpLocal(curHeight);
-        p.size = m_tornado->interpWidth(curHeight);
-        p.active = true;*/
-        particles_.push_back(p);
-    }
+    m_cycleSpeed = DUST_CYCLE_SPEED;
+    m_numParticles = NUM_PARTICLES_DUST;
+    m_useOpacity = false;
+    m_randOpacity = true;
+    this->TornadoParticleSystem::init();
 }
 
 DustcloudParticleSystem::~DustcloudParticleSystem()
@@ -46,14 +27,16 @@ DustcloudParticleSystem::~DustcloudParticleSystem()
 void DustcloudParticleSystem::spawnParticle(Particle *particle)
 {
     particle->position.setY(0.0);
-    particle->maxLife = m_tornado->getHeight() / m_cycleSpeed;
+    particle->maxLife = m_tornado->getHeight() / abs(m_cycleSpeed);
+    particle->rotation = 2.0 * M_PI * (double)rand() / RAND_MAX;
 }
 
 vec3 DustcloudParticleSystem::getParticlePosition(Particle *p, float yval)
 {
     // Hacky but simple and effective way of making dust swirl: use rotation as angle around spine!
     vec3 rv = m_tornado->interpLocal(yval); // Get spine position first.
-    float adjHeight = (m_tornado->getHeight()/2.0) + abs(yval - (m_tornado->getHeight()/2.0));
+    float revPoint = 0.3;
+    float adjHeight = (m_tornado->getHeight() * revPoint) + abs(yval - (m_tornado->getHeight() * revPoint));
     float width = 1.2 * m_tornado->interpWidth(adjHeight);
     rv.setX(rv.x() + (width * sin(p->rotation)));
     rv.setZ(rv.z() + (width * cos(p->rotation)));

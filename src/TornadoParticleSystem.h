@@ -11,13 +11,13 @@ public:
     TornadoParticleSystem();
     TornadoParticleSystem(Tornado* tornado);
     virtual ~TornadoParticleSystem();
+    virtual void init();
 protected:
-    int m_active_count;
-    float m_lastActivation;
+    bool m_useOpacity = true;
+    bool m_randOpacity = false;
     int m_numParticles = 0;
     float m_cycleSpeed = 0;
     Tornado* m_tornado;
-    virtual void init();
     virtual void update(float dt);
     virtual vec3 getParticlePosition(Particle* p, float yval);
     virtual float getParticleSize(float yval);

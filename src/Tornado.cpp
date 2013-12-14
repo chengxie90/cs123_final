@@ -1,9 +1,9 @@
 #include "Tornado.h"
 
-#define TORNADO_INIT_HEIGHT 120.0
+#define TORNADO_INIT_HEIGHT 90.0
 #define TORNADO_INIT_SPEED 2.0
-#define TORNADO_SCALE_FACTOR 45.0
-#define TORNADO_SUB_GROUND 15.0
+#define TORNADO_SCALE_FACTOR 35.0
+#define TORNADO_SUB_GROUND 10.0
 
 Tornado::Tornado(){
     // Just initialize with default values.
@@ -111,8 +111,8 @@ float Tornado::initWidth(float height)
     return rv;
 }
 
-#define TORNADO_RAND_SCALE 15.0
-#define TORNADO_MAX_TWIST 0.09
+#define TORNADO_RAND_SCALE 25.0
+#define TORNADO_MAX_TWIST 0.2
 
 void Tornado::update(float dt)
 {

@@ -11,7 +11,7 @@ public:
     virtual void spawnParticle(Particle *particle) override;
     
     virtual void updateParticle(Particle &particle, float dt) override;
-    
+
 private:
     float radius_;
 };
