@@ -14,7 +14,7 @@ Wind::Wind(float radius)
     
     setEmissionRate(10);
     
-    setMaxParticleCount(40);
+    setMaxParticleCount(20);
 }
 
 void Wind::spawnParticle(Particle *particle)
