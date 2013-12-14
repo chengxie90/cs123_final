@@ -42,7 +42,7 @@ void Rain::spawnParticle(Particle *particle)
     particle->size = 0.08;
     
     float scale = randf(0.6f, 0.8f);
-    particle->color = {scale, scale * 0.9, scale * 0.85};
+    particle->color = {scale, scale * 0.9, scale * 0.80};
     
     particle->opacity = randf(0.4, 0.7);
 }

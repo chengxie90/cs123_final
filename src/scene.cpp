@@ -17,6 +17,7 @@
 #include "rain.h"
 #include "rainsplash.h"
 #include "camera.h"
+#include "wind.h"
 
 Scene::Scene()
 {
@@ -38,7 +39,7 @@ Scene::~Scene()
     //delete tornado_;
 }
 
-#define NUM_PARTICLE_SYSTEMS 5
+#define NUM_PARTICLE_SYSTEMS 6
 
 void Scene::initialize()
 {   
@@ -53,11 +54,11 @@ void Scene::initialize()
     material1->setShiness(100);
     
     // Textures are owned by cache
-    Texture* diffuseMap = TextureCache::getInstance()->acquire("cheese", TextureType::Texture2D);
+    Texture* diffuseMap = TextureCache::getInstance()->acquire("stone", TextureType::Texture2D);
     material1->setDiffuseMap(diffuseMap);
     
     SceneObject* obj1 = new SceneObject;
-    Mesh* mesh1 = MeshCache::getInstance()->acquire("cube");
+    Mesh* mesh1 = MeshCache::getInstance()->acquire("stone");
     obj1->setMesh(mesh1);
     obj1->setMaterial(material1);
             
@@ -105,7 +106,7 @@ void Scene::initialize()
     tornado_->setDestination(dest);
     TornadoParticleSystem* tPart = new TornadoParticleSystem(tornado_);
     tPart->init();
-    Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
+    Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado2", TextureType::Texture2D);
     tPart->setParticleTexture(tornadoMap);
 
     DustcloudParticleSystem* dPart = new DustcloudParticleSystem(tornado_);
@@ -123,11 +124,14 @@ void Scene::initialize()
     phys_->gravity = 18.0;
     phys_->terrain = terrain_;
 
+    Wind* wind = new Wind(50);
+   
     sceneObjects_.push_back(cloud);
     sceneObjects_.push_back(follower_);
     sceneObjects_.push_back(tPart);
     sceneObjects_.push_back(dPart);
     sceneObjects_.push_back(sPart);
+    sceneObjects_.push_back(wind);
 }
 
 void Scene::render(DrawContext &context)

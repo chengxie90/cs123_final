@@ -52,7 +52,8 @@ SOURCES += main.cpp \
     rain.cpp \
     rainsplash.cpp \
     PhysicsObject.cpp \
-    SplashParticleSystem.cpp
+    SplashParticleSystem.cpp \
+    wind.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -93,6 +94,7 @@ HEADERS += mainwindow.h \
     rain.h \
     rainsplash.h \
     PhysicsObject.h \
-    SplashParticleSystem.h
+    SplashParticleSystem.h \
+    wind.h
 
 FORMS += mainwindow.ui
