@@ -12,14 +12,14 @@ Wind::Wind(float radius)
     Texture* texture =  TextureCache::getInstance()->acquire("wind", TextureType::Texture2D);
     setParticleTexture(texture);
     
-    setEmissionRate(5);
+    setEmissionRate(10);
     
     setMaxParticleCount(40);
 }
 
 void Wind::spawnParticle(Particle *particle)
 {
-    float speed = 10;
+    float speed = randf(10, 20);
     vec3 velocity = {randf(0, 1), 0, randf(0, 1)};
     velocity *= speed;
     
@@ -36,7 +36,7 @@ void Wind::spawnParticle(Particle *particle)
     
     particle->maxLife = 10;
     
-    particle->size = randf(25, 50);
+    particle->size = randf(10, 50);
     
     float scale = randf(0.6f, 0.8f);
     particle->color = {scale, scale * 0.9, scale * 0.85};
@@ -48,7 +48,7 @@ void Wind::updateParticle(Particle &particle, float dt)
 {
     particle.position += particle.velocity * dt;
     
-    particle.opacity = randf(0.1, 0.11);
+    particle.opacity = randf(0.11, 0.13);
 }
 
 void Wind::renderGeometry(DrawContext &context)
