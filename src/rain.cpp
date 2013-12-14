@@ -12,9 +12,9 @@ Rain::Rain(float radius)
     Texture* texture =  TextureCache::getInstance()->acquire("rain", TextureType::Texture2D);
     setParticleTexture(texture);
     
-    setEmissionRate(1000);
+    setEmissionRate(4000);
     
-    setMaxParticleCount(10000);
+    setMaxParticleCount(20000);
     
     ParticleMaterial* material = static_cast<ParticleMaterial *>(material_);
     material->setLengthScale(12);
@@ -42,7 +42,7 @@ void Rain::spawnParticle(Particle *particle)
     particle->size = 0.08;
     
     float scale = randf(0.6f, 0.8f);
-    particle->color = {scale, scale, scale};
+    particle->color = {scale, scale * 0.9, scale * 0.85};
     
     particle->opacity = randf(0.4, 0.7);
 }
@@ -58,7 +58,7 @@ void Rain::renderGeometry(DrawContext &context)
     ParticleSystem::renderGeometry(context);
     transform().setToIdentity();
     vec3 camPos = context.camera->position();
-    transform().translate(camPos.x(), camPos.y() + 30, camPos.z());
+    transform().translate(camPos.x(), camPos.y() + 50, camPos.z());
 }
 
 

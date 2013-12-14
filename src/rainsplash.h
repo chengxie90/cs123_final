@@ -14,6 +14,8 @@ public:
     
     virtual void updateParticle(Particle &particle, float dt) override;
     
+    virtual void renderGeometry(DrawContext &context) override;
+    
 private:
     float radius_ = 0;
     
@@ -22,6 +24,8 @@ private:
     
     float startSize_ = 0;
     float startOpacity_ = 0;
+    
+    vec3 cameraPosition_;
 };
 
 #endif // RAINSPLASH_H

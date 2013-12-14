@@ -82,10 +82,10 @@ void Scene::initialize()
     sceneObjects_.push_back(rain);
     
     // RainSplash
-    RainSplash* splash = new RainSplash(50, true, terrain);
+    RainSplash* splash = new RainSplash(100, true, terrain);
     sceneObjects_.push_back(splash);
     
-    splash = new RainSplash(50, false, terrain);
+    splash = new RainSplash(100, false, terrain);
     sceneObjects_.push_back(splash);
 
     // Follower cloud
@@ -164,20 +164,7 @@ void Scene::pick(const vec3 &point)
     vec3 p = point;
     p.setY(terrain_->height(p.x(), p.z()));
     
-    PhongMaterial* material1 = new PhongMaterial;
-    material1->setAmbient({0.2, 0.2, 0.2});
-    material1->setDiffuse({0.7, 0.7, 0.7});
-    material1->setSpecular({0.7, 0.7, 0.7});
-    material1->setShiness(100);
-    
-    SceneObject* obj1 = new SceneObject;
-    Mesh* mesh1 = MeshCache::getInstance()->acquire("bunny");
-    obj1->setMesh(mesh1);
-    obj1->setMaterial(material1);
-    
-    obj1->transform().translate(p);
-            
-    sceneObjects_.push_back(obj1);
+    tornado_->setDestination(p);
 }
 
 
