@@ -126,7 +126,7 @@ void Tornado::update(float dt)
     diff.normalize();
     m_origin += (diff * dist);
     // Set the origin's y-value to sub_ground below the height map at the current point.
-    float terrainHeight = m_terrain->height(m_origin.x(), m_origin.y());
+    float terrainHeight = m_terrain->height(m_origin.x(), m_origin.z());
     // std::cout<<terrainHeight<<endl;
     m_origin.setY(terrainHeight - TORNADO_SUB_GROUND);
     // Add a little random shake to the control points...
@@ -150,12 +150,12 @@ void Tornado::update(float dt)
 void Tornado::capControls()
 {
     for(int it = 0; it < NUM_CONTROL_POINTS; it++){
-        double hprop = (double)it / (double)(NUM_CONTROL_POINTS - 1);
-        double maxDelta = TORNADO_MAX_DELTA * hprop;
-        double maxDT = maxDelta * 20.0;
+        float hprop = (float)it / (float)(NUM_CONTROL_POINTS - 1);
+        float maxDelta = TORNADO_MAX_DELTA * hprop;
+        float maxDT = maxDelta * 20.0;
         // Cap control point x and z...
-        m_controlPoints[it].setX(min((float)maxDT, max(-(float)maxDT, m_controlPoints[it].x())));
-        m_controlPoints[it].setZ(min((float)maxDT, max(-(float)maxDT, m_controlPoints[it].z())));
+        m_controlPoints[it].setX(min(maxDT, max(-maxDT, (float)m_controlPoints[it].x())));
+        m_controlPoints[it].setZ(min(maxDT, max(-maxDT, (float)m_controlPoints[it].z())));
         // Cap control width...
         float minW = (1.0 - maxDelta) * m_initWidths[it];
         float maxW = (1.0 + maxDelta) * m_initWidths[it];

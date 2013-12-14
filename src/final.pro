@@ -50,7 +50,8 @@ SOURCES += main.cpp \
     material.cpp \
     cloud.cpp \
     rain.cpp \
-    rainsplash.cpp
+    rainsplash.cpp \
+    PhysicsObject.cpp
 
 HEADERS += mainwindow.h \
     view.h \
@@ -89,6 +90,7 @@ HEADERS += mainwindow.h \
     terrainmaterial.h \
     cloud.h \
     rain.h \
-    rainsplash.h
+    rainsplash.h \
+    PhysicsObject.h
 
 FORMS += mainwindow.ui

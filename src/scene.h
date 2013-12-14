@@ -8,6 +8,7 @@ class Skybox;
 class Cloud;
 class Tornado;
 class Terrain;
+class PhysicsCollection;
 
 typedef vector<SceneObject *> SceneObjects;
 typedef vector<Light *> Lights;
@@ -35,6 +36,8 @@ public:
 private:
     SceneObjects sceneObjects_;
     Lights lights_;
+
+    PhysicsCollection* phys_;
     
     Skybox* skybox_;
     Tornado* tornado_;

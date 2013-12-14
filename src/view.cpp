@@ -98,7 +98,7 @@ void View::mousePressEvent(QMouseEvent *event)
     
     if (event->button() == Qt::LeftButton) {
         QPoint screenPoint = event->pos();
-        cout << screenPoint.x() << " " << screenPoint.y() << endl;
+        //cout << screenPoint.x() << " " << screenPoint.y() << endl;
         
         float screenX = screenPoint.x();
         float screenY = height() - screenPoint.y();
@@ -122,7 +122,7 @@ void View::mousePressEvent(QMouseEvent *event)
         
         vec3 hit = camPos + t * dir;
         
-        cout << hit << endl;
+        //cout << hit << endl;
         
         scene_->pick(hit);
     }

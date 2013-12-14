@@ -91,7 +91,7 @@ void TornadoParticleSystem::updateParticle(Particle &particle, float dt)
         float oprop = randf(0.3, 0.6);
         particle.opacity = oprop;
     }
-    float randC = std::min((float)TORNADO_MAX_COLOR, std::max((float)TORNADO_MIN_COLOR, particle.color.x() + randf(-0.02, 0.02)));
+    float randC = min((float)TORNADO_MAX_COLOR, max((float)TORNADO_MIN_COLOR, (float) particle.color.x() + randf(-0.02, 0.02)));
     particle.color = {randC, randC, randC};
 }
 

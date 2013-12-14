@@ -9,6 +9,7 @@
 #include "particlesystem.h"
 #include "TornadoParticleSystem.h"
 #include "DustcloudParticleSystem.h"
+#include "PhysicsObject.h"
 #include "skybox.h"
 #include "terrain.h"
 #include "cloud.h"
@@ -32,6 +33,7 @@ Scene::~Scene()
     }
     
     delete skybox_;
+    delete phys_;
     //delete tornado_;
 }
 
@@ -111,6 +113,22 @@ void Scene::initialize()
     Texture* dustMap = TextureCache::getInstance()->acquire("debris", TextureType::Texture2D);
     dPart->setParticleTexture(dustMap);
     sceneObjects_.push_back(dPart);
+
+    Mesh* mesh11 = MeshCache::getInstance()->acquire("bunny");
+    phys_ = new PhysicsCollection();
+    phys_->gravity = 4.0;
+    phys_->terrain = terrain_;
+    for(int it = 0; it < 8; it++){
+        PhysicsObject* p = new PhysicsObject(phys_);
+        p->setPosition({5.0 * it, 30.0, 5.0 * it});
+        p->setPhysicsRadius(1.8);
+        p->setMeshScale(5.0);
+        p->setGravity(true);
+        p->setMesh(mesh11);
+        p->setMaterial(material1);
+        sceneObjects_.push_back(p);
+        phys_->objects.push_back(p);
+    }
    
 }
 
@@ -157,27 +175,21 @@ void Scene::update(float dt)
     vec3 next = tornado_->getOrigin();
     next.setY(tornado_->getHeight());
     follower_->transform().translate(next);
+
+    for(PhysicsObject* p : phys_->objects){
+        if(p->isGravityEnabled())
+            p->addVelocity({0.0, -phys_->gravity * dt, 0.0});
+        p->update(dt);
+    }
 }
 
 void Scene::pick(const vec3 &point)
 {
     vec3 p = point;
-    p.setY(terrain_->height(p.x(), p.z()));
-    
-    PhongMaterial* material1 = new PhongMaterial;
-    material1->setAmbient({0.2, 0.2, 0.2});
-    material1->setDiffuse({0.7, 0.7, 0.7});
-    material1->setSpecular({0.7, 0.7, 0.7});
-    material1->setShiness(100);
-    
-    SceneObject* obj1 = new SceneObject;
-    Mesh* mesh1 = MeshCache::getInstance()->acquire("bunny");
-    obj1->setMesh(mesh1);
-    obj1->setMaterial(material1);
-    
-    obj1->transform().translate(p);
-            
-    sceneObjects_.push_back(obj1);
+    float height = terrain_->height(p.x(), p.z());
+    p.setY(height);
+    vec3 pos = tornado_->getOrigin();
+    tornado_->setDestination(p);
 }
 
 
