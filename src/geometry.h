@@ -24,6 +24,11 @@ inline ostream& operator<<(ostream& os, const vec3& vec) {
     return os;
 }
 
+inline ostream& operator<<(ostream& os, const vec4& vec) {
+    os << vec.x() << " " << vec.y() << " " << vec.z() << " " << vec.w();
+    return os;
+}
+
 //class Transform {
 //public:
 //    mat4& matrix();
