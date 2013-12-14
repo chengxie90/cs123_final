@@ -14,6 +14,7 @@
 #include "cloud.h"
 #include "rain.h"
 #include "rainsplash.h"
+#include "camera.h"
 
 Scene::Scene()
 {
@@ -118,6 +119,10 @@ void Scene::render(DrawContext &context)
     context.lights = &lights_;
     context.sceneObjects = &sceneObjects_;
     context.scene = this;
+    
+    cout << context.camera->projectionMatrix() * 
+            context.camera->viewMatrix() * vec4(0, 0, 0, 1) << endl;
+                                    
     
     skybox_->render(context);
     this->update(context.deltaTime);
