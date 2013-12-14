@@ -16,6 +16,7 @@
 #include "rain.h"
 #include "rainsplash.h"
 #include "camera.h"
+#include "wind.h"
 
 Scene::Scene()
 {
@@ -104,7 +105,7 @@ void Scene::initialize()
     tornado_->setDestination(dest);
     TornadoParticleSystem* tPart = new TornadoParticleSystem(tornado_);
     tPart->init();
-    Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
+    Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado2", TextureType::Texture2D);
     tPart->setParticleTexture(tornadoMap);
     sceneObjects_.push_back(tPart);
 
@@ -130,6 +131,8 @@ void Scene::initialize()
         phys_->objects.push_back(p);
     }
    
+    Wind* wind = new Wind(50);
+    sceneObjects_.push_back(wind);
 }
 
 void Scene::render(DrawContext &context)
