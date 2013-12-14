@@ -30,6 +30,7 @@ void Tornado::init()
     // Initialize an array of control points and widths...
     m_controlPoints = new vec3[NUM_CONTROL_POINTS];
     m_controlWidths = new float[NUM_CONTROL_POINTS];
+    m_initWidths = new float[NUM_CONTROL_POINTS];
     float segmentSize = m_height/(NUM_CONTROL_POINTS - 1);
     for(int it = 0; it < NUM_CONTROL_POINTS; it++){
         float th = it * segmentSize;
@@ -38,7 +39,8 @@ void Tornado::init()
         m_controlPoints[it].setY(th);
         // width should be a function of height.
         // Should edit scale factor to match texture?
-        m_controlWidths[it] = initWidth(th);
+        m_initWidths[it] = initWidth(th);
+        m_controlWidths[it] = m_initWidths[it];
     }
 }
 
@@ -46,6 +48,7 @@ Tornado::~Tornado()
 {
     delete[] m_controlPoints;
     delete[] m_controlWidths;
+    delete[] m_initWidths;
 }
 
 // Interpolate the tornado's spine position at a given world-space height.
@@ -111,8 +114,9 @@ float Tornado::initWidth(float height)
     return rv;
 }
 
-#define TORNADO_RAND_SCALE 25.0
-#define TORNADO_MAX_TWIST 0.2
+#define TORNADO_RAND_SCALE 10.0
+#define TORNADO_MAX_TWIST 0.10
+#define TORNADO_MAX_DELTA 0.20
 
 void Tornado::update(float dt)
 {
@@ -127,13 +131,34 @@ void Tornado::update(float dt)
     m_origin.setY(terrainHeight - TORNADO_SUB_GROUND);
     // Add a little random shake to the control points...
     for(int it = 0; it < NUM_CONTROL_POINTS; it++){
+        // Shake control point position...
         vec3 rvec;
-        double rx = TORNADO_RAND_SCALE/2.0 - (TORNADO_RAND_SCALE * dt * (double)rand() / RAND_MAX);
-        double ry = TORNADO_RAND_SCALE/2.0 - (TORNADO_RAND_SCALE * dt * (double)rand() / RAND_MAX);
-        rvec.setX(max(TORNADO_MAX_TWIST, min(-TORNADO_MAX_TWIST, rx)));
-        rvec.setY(max(TORNADO_MAX_TWIST, min(-TORNADO_MAX_TWIST, ry)));
-        rvec.setZ(0.0);
-        //std::cout<<it<<": "<<rvec<<endl;
-        //m_controlPoints[it] += rvec;
+        double hprop = (double)it / (double)(NUM_CONTROL_POINTS - 1);
+        double rx = dt * hprop * TORNADO_RAND_SCALE * randf(-1.0, 1.0);
+        double ry = dt * hprop * TORNADO_RAND_SCALE * randf(-1.0, 1.0);
+        rvec.setX(min(TORNADO_MAX_TWIST, max(-TORNADO_MAX_TWIST, rx)));
+        rvec.setZ(min(TORNADO_MAX_TWIST, max(-TORNADO_MAX_TWIST, ry)));
+        rvec.setY(0.0);
+        // Shake control point widths...
+        float rwf = dt * hprop * TORNADO_RAND_SCALE * 0.5;
+        m_controlWidths[it] *= randf(1.0 - rwf, 1.0 + rwf);
+        m_controlPoints[it] += rvec;
+    }
+    capControls();
+}
+
+void Tornado::capControls()
+{
+    for(int it = 0; it < NUM_CONTROL_POINTS; it++){
+        double hprop = (double)it / (double)(NUM_CONTROL_POINTS - 1);
+        double maxDelta = TORNADO_MAX_DELTA * hprop;
+        double maxDT = maxDelta * 20.0;
+        // Cap control point x and z...
+        m_controlPoints[it].setX(min(maxDT, max(-maxDT, m_controlPoints[it].x())));
+        m_controlPoints[it].setZ(min(maxDT, max(-maxDT, m_controlPoints[it].z())));
+        // Cap control width...
+        float minW = (1.0 - maxDelta) * m_initWidths[it];
+        float maxW = (1.0 + maxDelta) * m_initWidths[it];
+        m_controlWidths[it] = min(maxW, max(minW, m_controlWidths[it]));
     }
 }

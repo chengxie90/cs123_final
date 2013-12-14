@@ -81,7 +81,7 @@ void TornadoParticleSystem::updateParticle(Particle &particle, float dt)
     particle.position.setY(particle.position.y() - (m_cycleSpeed * dt * sterm));
     particle.position = getParticlePosition(&particle, particle.position.y());
     particle.size = getParticleSize(particle.position.y());
-    particle.rotation = updateParticleRotation(particle.rotation, dt);
+    particle.rotation = updateParticleRotation(&particle, dt);
     if(m_useOpacity){
         float oprop = sqrt(lprop);
         particle.opacity = (oprop * TORNADO_MAX_OPACITY) + (TORNADO_MIN_OPACITY * (1.0 - oprop));
@@ -104,8 +104,11 @@ float TornadoParticleSystem::getParticleSize(float yval)
     return m_tornado->interpWidth(yval);
 }
 
-float TornadoParticleSystem::updateParticleRotation(float rot, float dt)
+float TornadoParticleSystem::updateParticleRotation(Particle* p, float dt)
 {
-    return rot + (90.0 * dt);
+    float rot = p->rotation;
+    float hprop = (p->position.y() - m_tornado->getOrigin().y()) / m_tornado->getHeight();
+    float rotFactor = (1.0 + hprop) * dt * randf(20.0, 25.0);
+    return rot + rotFactor;
 }
 

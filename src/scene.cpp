@@ -74,7 +74,7 @@ void Scene::initialize()
     Cloud* cloud = new Cloud(500);
     cloud->update(20);
     cloud->transform().translate(0, 80, 0);
-    //sceneObjects_.push_back(cloud);
+    sceneObjects_.push_back(cloud);
 
     // Follower cloud
     follower_ = new Cloud(100);
@@ -86,7 +86,7 @@ void Scene::initialize()
     follower_->transform().translate(start.x(), start.y() + tornado_->getHeight(), start.z());
     follower_->setEmissionRate(4);
     follower_->setMaxParticleCount(40);
-    //sceneObjects_.push_back(follower_);
+    sceneObjects_.push_back(follower_);
     vec3 dest = {18, 0, 10};
     tornado_->setDestination(dest);
     TornadoParticleSystem* tPart = new TornadoParticleSystem(tornado_);
