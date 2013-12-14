@@ -124,7 +124,7 @@ void Scene::initialize()
     phys_->gravity = 18.0;
     phys_->terrain = terrain_;
 
-    Wind* wind = new Wind(50);
+    Wind* wind = new Wind(100);
    
     sceneObjects_.push_back(cloud);
     sceneObjects_.push_back(follower_);
