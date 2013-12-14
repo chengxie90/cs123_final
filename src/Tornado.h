@@ -36,9 +36,12 @@ protected:
     vec3 m_origin;          // The point where the tornado hits the terrain height map.
     vec3* m_controlPoints;  // An array of the control points needed for the tornado - these are offsets from origin!
     float* m_controlWidths; // The width of the tornado at each step!
+    float* m_initWidths;    // The original width of the tornado at each step!
     virtual void init();    // Part of both constructors.
     vec3 m_destination;
     float m_speed;
+private:
+    void capControls();     // maintain outer bounds for comtrol points and control widths.
 };
 
 #endif // TORNADO_H

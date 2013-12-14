@@ -70,6 +70,7 @@ void Scene::initialize()
     
     Terrain* terrain = new Terrain({0, 0, 0}, size);
     sceneObjects_.push_back(terrain);
+    terrain_ = terrain;
 
     // Clouds
     Cloud* cloud = new Cloud(500);
@@ -160,6 +161,9 @@ void Scene::update(float dt)
 
 void Scene::pick(const vec3 &point)
 {
+    vec3 p = point;
+    p.setY(terrain_->height(p.x(), p.z()));
+    
     PhongMaterial* material1 = new PhongMaterial;
     material1->setAmbient({0.2, 0.2, 0.2});
     material1->setDiffuse({0.7, 0.7, 0.7});
@@ -171,7 +175,7 @@ void Scene::pick(const vec3 &point)
     obj1->setMesh(mesh1);
     obj1->setMaterial(material1);
     
-    obj1->transform().translate(point);
+    obj1->transform().translate(p);
             
     sceneObjects_.push_back(obj1);
 }

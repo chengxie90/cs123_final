@@ -1,8 +1,8 @@
 #include "DustcloudParticleSystem.h"
 
-#define NUM_PARTICLES_DUST 100
-#define DUST_CYCLE_SPEED -25.0
-#define DUST_ROT_SPEED -4.0
+#define NUM_PARTICLES_DUST 75
+#define DUST_CYCLE_SPEED -15.0
+#define DUST_ROT_SPEED -6.0
 
 DustcloudParticleSystem::DustcloudParticleSystem(Tornado* tornado)
 {

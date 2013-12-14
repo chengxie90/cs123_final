@@ -21,7 +21,7 @@ protected:
     virtual void update(float dt);
     virtual vec3 getParticlePosition(Particle* p, float yval);
     virtual float getParticleSize(float yval);
-    virtual float updateParticleRotation(float rot, float dt);
+    virtual float updateParticleRotation(Particle* p, float dt);
     virtual void spawnParticle(Particle *particle);
     virtual void updateParticle(Particle& particle, float dt);
 };

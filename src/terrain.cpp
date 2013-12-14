@@ -10,7 +10,7 @@ Terrain::Terrain(const vec3& center, float size)
     size_ = size;
     center_ = center;
     
-    heightScale_ = 10;
+    heightScale_ = 30;
     
     mesh_ = MeshUtility::createPlane(200, size);
     

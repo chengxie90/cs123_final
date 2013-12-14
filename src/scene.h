@@ -7,6 +7,7 @@
 class Skybox;
 class Cloud;
 class Tornado;
+class Terrain;
 
 typedef vector<SceneObject *> SceneObjects;
 typedef vector<Light *> Lights;
@@ -38,6 +39,8 @@ private:
     Skybox* skybox_;
     Tornado* tornado_;
     Cloud* follower_;
+    
+    Terrain* terrain_;
     
     Color fogColor_;
     float fogDensity_;
