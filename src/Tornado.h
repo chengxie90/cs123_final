@@ -19,6 +19,10 @@ public:
     float getAge(){return m_age;}
     vec3 getOrigin(){return m_origin;}  // Fetch the origin and control points for the tornado.
     vec3* getControlPoints(){return m_controlPoints;}
+    float getSpeed(){return m_speed;}
+    float getForce(){return m_force;}
+    void setSpeed(float sp){m_speed = sp;}
+    void setForce(float fc){m_force = fc;}
     vec3 interp(float height);          // Get the location of the tornado spine at y-value height.
     vec3 interpLocal(float height);     // Same as interp, but in relation to the tornado's base.
     float interpWidth(float height);    // Get the tornado width at a given local height...
@@ -40,6 +44,7 @@ protected:
     virtual void init();    // Part of both constructors.
     vec3 m_destination;
     float m_speed;
+    float m_force;
 private:
     void capControls();     // maintain outer bounds for comtrol points and control widths.
 };

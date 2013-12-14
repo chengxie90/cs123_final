@@ -45,8 +45,8 @@ float Terrain::height(float x, float z)
 
     float width = size_ * 2;
     
-    uvw.setX((x + size_) / width);
-    uvw.setY((z + size_) / width);
+    uvw.setX(max(0.f, (x + size_) / width));
+    uvw.setY(max(0.f, (z + size_) / width));
     uvw.setZ(0);
     
     return heightMap_->sample(uvw).x() * heightScale_;
