@@ -95,6 +95,31 @@ void View::resizeGL(int w, int h)
 void View::mousePressEvent(QMouseEvent *event)
 {
     cameraController_->mousePressEvent(event);
+    
+    if (event->button() == Qt::LeftButton) {
+        QPoint screenPoint = event->pos();
+        cout << screenPoint.x() << " " << screenPoint.y() << endl;
+        
+        float screenX = screenPoint.x();
+        float screenY = height() - screenPoint.y() - 1;
+        float x = screenX / width() * 2 - 1;
+        float y = screenY / height() * 2 - 1;
+        float z;
+        glReadPixels(screenX, screenY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &z);
+        
+        z = z * 2 - 1;
+        
+        vec4 p = {x, y, z, 1};
+        
+        p = camera_->transform() * camera_->projectionMatrix().inverted() * p;
+        
+        p = p / p.w();
+        
+        cout << p << endl;
+        
+        scene_->pick(p.toVector3D());
+    }
+    
     update();
 }
 

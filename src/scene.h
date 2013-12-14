@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include "common.h"
+#include "geometry.h"
 
 class Skybox;
 class Cloud;
@@ -27,6 +28,8 @@ public:
     void setFogDensity(float fogDensity);
     
     void update(float dt);
+    
+    void pick(const vec3& point);
     
 private:
     SceneObjects sceneObjects_;

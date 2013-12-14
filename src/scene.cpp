@@ -73,21 +73,30 @@ void Scene::initialize()
 
     // Clouds
     Cloud* cloud = new Cloud(500);
-    cloud->update(20);
     cloud->transform().translate(0, 80, 0);
-    //sceneObjects_.push_back(cloud);
+    sceneObjects_.push_back(cloud);
+    
+    // Rain
+    Rain* rain = new Rain(30);
+    sceneObjects_.push_back(rain);
+    
+    // RainSplash
+    RainSplash* splash = new RainSplash(50, true, terrain);
+    sceneObjects_.push_back(splash);
+    
+    splash = new RainSplash(50, false, terrain);
+    sceneObjects_.push_back(splash);
 
     // Follower cloud
-    follower_ = new Cloud(100);
-    follower_->update(20);
+    follower_ = new Cloud(30);
 
     // Get a tornado in here!
     vec3 start = {0, 0, 0};
     tornado_ = new Tornado(start, terrain);
     follower_->transform().translate(start.x(), start.y() + tornado_->getHeight(), start.z());
-    follower_->setEmissionRate(4);
+    follower_->setEmissionRate(5);
     follower_->setMaxParticleCount(40);
-    //sceneObjects_.push_back(follower_);
+    sceneObjects_.push_back(follower_);
     vec3 dest = {18, 0, 10};
     tornado_->setDestination(dest);
     TornadoParticleSystem* tPart = new TornadoParticleSystem(tornado_);
@@ -101,17 +110,7 @@ void Scene::initialize()
     Texture* dustMap = TextureCache::getInstance()->acquire("debris", TextureType::Texture2D);
     dPart->setParticleTexture(dustMap);
     sceneObjects_.push_back(dPart);
-    
-    // Rain
-    Rain* rain = new Rain(30);
-    sceneObjects_.push_back(rain);
-    
-    // RainSplash
-    RainSplash* splash = new RainSplash(50, true, terrain);
-    sceneObjects_.push_back(splash);
-    
-    splash = new RainSplash(50, false, terrain);
-    sceneObjects_.push_back(splash);
+   
 }
 
 void Scene::render(DrawContext &context)
@@ -120,10 +119,9 @@ void Scene::render(DrawContext &context)
     context.sceneObjects = &sceneObjects_;
     context.scene = this;
     
-    cout << context.camera->projectionMatrix() * 
-            context.camera->viewMatrix() * vec4(0, 0, 0, 1) << endl;
+//    cout << context.camera->projectionMatrix() * 
+//            context.camera->viewMatrix() * vec4(0, 0, 0, 1) << endl;
                                     
-    
     skybox_->render(context);
     this->update(context.deltaTime);
     
@@ -158,6 +156,24 @@ void Scene::update(float dt)
     vec3 next = tornado_->getOrigin();
     next.setY(tornado_->getHeight());
     follower_->transform().translate(next);
+}
+
+void Scene::pick(const vec3 &point)
+{
+    PhongMaterial* material1 = new PhongMaterial;
+    material1->setAmbient({0.2, 0.2, 0.2});
+    material1->setDiffuse({0.7, 0.7, 0.7});
+    material1->setSpecular({0.7, 0.7, 0.7});
+    material1->setShiness(100);
+    
+    SceneObject* obj1 = new SceneObject;
+    Mesh* mesh1 = MeshCache::getInstance()->acquire("bunny");
+    obj1->setMesh(mesh1);
+    obj1->setMaterial(material1);
+    
+    obj1->transform().translate(point);
+            
+    sceneObjects_.push_back(obj1);
 }
 
 

@@ -12,7 +12,7 @@ Cloud::Cloud(float radius)
     
     setEmissionRate(10);
     
-    setMaxParticleCount(100);
+    setMaxParticleCount(1000);
     
     setRenderingOrder(RenderingOrder::YoungestFirst);
     
