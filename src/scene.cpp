@@ -39,7 +39,7 @@ Scene::~Scene()
     //delete tornado_;
 }
 
-#define NUM_PARTICLE_SYSTEMS 6
+#define NUM_PARTICLE_SYSTEMS 5
 
 void Scene::initialize()
 {   
@@ -114,10 +114,10 @@ void Scene::initialize()
     Texture* dustMap = TextureCache::getInstance()->acquire("debris", TextureType::Texture2D);
     dPart->setParticleTexture(dustMap);
 
-    SplashParticleSystem* sPart = new SplashParticleSystem(tornado_);
+    /*SplashParticleSystem* sPart = new SplashParticleSystem(tornado_);
     sPart->init();
     Texture* splashMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
-    sPart->setParticleTexture(splashMap);
+    sPart->setParticleTexture(splashMap);*/
 
     //Mesh* mesh11 = MeshCache::getInstance()->acquire("bunny");
     phys_ = new PhysicsCollection();
@@ -130,7 +130,7 @@ void Scene::initialize()
     sceneObjects_.push_back(follower_);
     sceneObjects_.push_back(tPart);
     sceneObjects_.push_back(dPart);
-    sceneObjects_.push_back(sPart);
+    //sceneObjects_.push_back(sPart);
     sceneObjects_.push_back(wind);
 }
 
@@ -194,6 +194,10 @@ void Scene::update(float dt)
             p->setGravity(false);
             // Set the velocity of this thing...
             vec3 out = {-diff.z() - (0.5 * diff.x()), 0.0, diff.x()  - (0.5 * diff.z())};
+            if(pos.y() - tornadoY < (0.3 * tornado_->getHeight())){
+                out += {(-0.5 * diff.x()), 0.0, (-0.5 * diff.x())};
+                p->addAngleVelocity({20 * dt, 20 * dt, 20 * dt});
+            }
             out.normalize();
             out *= tornado_->getForce();
             out.setY(tornado_->getHeight() / 6.0);
@@ -220,19 +224,35 @@ void Scene::placeObject(const vec3 &point)
     vec3 pt = point;
     float height = terrain_->height(pt.x(), pt.z());
     pt.setY(height);
-
-    Mesh* mesh1 = MeshCache::getInstance()->acquire("bunny");
-    PhongMaterial* tmat = new PhongMaterial;
-    tmat->setAmbient({0.2, 0.2, 0.2});
-    tmat->setDiffuse({0.7, 0.7, 0.7});
-    tmat->setSpecular({0.7, 0.7, 0.7});
-    tmat->setShiness(100);
     PhysicsObject* p = new PhysicsObject(phys_);
     float prad = 1.8;
+    Mesh* mesh1 = NULL;
+    PhongMaterial* tmat = NULL;
+    if(randf(0.0, 1.0) > 0.5){
+        mesh1 = MeshCache::getInstance()->acquire("bunny");
+        tmat = new PhongMaterial;
+        tmat->setAmbient({0.2, 0.2, 0.2});
+        tmat->setDiffuse({0.7, 0.7, 0.7});
+        tmat->setSpecular({0.7, 0.7, 0.7});
+        tmat->setShiness(100);
+        prad = 1.8;
+        p->setMeshScale(5.0);
+    }
+    else{
+        mesh1 = MeshCache::getInstance()->acquire("stone");
+        tmat = new PhongMaterial;
+        tmat->setAmbient({0.2, 0.2, 0.2});
+        tmat->setDiffuse({0.7, 0.7, 0.7});
+        tmat->setSpecular({0.7, 0.7, 0.7});
+        tmat->setShiness(100);
+        Texture* diffuseMap = TextureCache::getInstance()->acquire("stone", TextureType::Texture2D);
+        tmat->setDiffuseMap(diffuseMap);
+        prad = 2.1;
+        p->setMeshScale(7.5);
+    }
     pt.setY(pt.y() + prad);
     p->setPosition(pt);
     p->setPhysicsRadius(prad);
-    p->setMeshScale(5.0);
     p->setGravity(true);
     p->setMesh(mesh1);
     p->setMaterial(tmat);

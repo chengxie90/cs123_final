@@ -1,6 +1,6 @@
 #include "SplashParticleSystem.h"
 
-#define NUM_PARTICLES_SPLASH 10
+#define NUM_PARTICLES_SPLASH 40
 #define SPLASH_CYCLE_SPEED -15.0
 #define SPLASH_ROT_SPEED -6.0
 
@@ -28,7 +28,7 @@ SplashParticleSystem::~SplashParticleSystem()
 void SplashParticleSystem::spawnParticle(Particle *particle)
 {
     particle->position.setY(0.0);
-    particle->maxLife = m_tornado->getHeight() / abs(m_cycleSpeed);
+    particle->maxLife = m_tornado->getHeight() / abs(m_cycleSpeed) * 0.3;
     particle->rotation = 2.0 * M_PI * (double)rand() / RAND_MAX;
 }
 

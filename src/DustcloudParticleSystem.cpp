@@ -45,7 +45,7 @@ vec3 DustcloudParticleSystem::getParticlePosition(Particle *p, float yval)
 
 float DustcloudParticleSystem::getParticleSize(float yval)
 {
-    return 3.0;//m_tornado->interpWidth(yval);
+    return 5.0;//m_tornado->interpWidth(yval);
 }
 
 float DustcloudParticleSystem::updateParticleRotation(float rot, float dt)

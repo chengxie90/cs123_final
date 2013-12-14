@@ -7,6 +7,7 @@
 #include "drawcontext.h"
 #include "orbitcameracontroller.h"
 #include "fpscameracontroller.h"
+#include <QSound>
 
 using namespace std;
 
@@ -68,6 +69,10 @@ void View::initializeGL()
     cameraController_ = new FPSCameraController(camera_);
     
     scene_ = new Scene();
+
+    //QSound *sound = new QSound("sounds/background.wav");
+    //sound->setLoops(100);
+    //sound->play();
 }
 
 void View::paintGL()
