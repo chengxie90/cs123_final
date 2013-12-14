@@ -22,6 +22,7 @@ public:
     float getPhysicsRadius(){return m_physicsRadius;}
     void setPhysicsRadius(float rad){m_physicsRadius = rad;}
     void addVelocity(vec3 vel){m_velocity += vel;}
+    void setVelocity(vec3 vel){m_velocity = vel;}
     void addAngleVelocity(vec3 avel){m_angleVelocity += avel;}
     void setMeshScale(float scl){m_meshScale = scl;}
     void setPosition(vec3 pos);
@@ -37,6 +38,7 @@ protected:
     float m_meshScale;
     vec3 m_velocity;
     vec3 m_angleVelocity;
+    vec3 m_angle;
     bool m_gravityEnabled = true;
 };
 

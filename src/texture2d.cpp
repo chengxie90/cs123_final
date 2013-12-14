@@ -68,7 +68,6 @@ vec4 Texture2D::sample(const vec3 &uvw)
     int y = image_->height() - (int)(v * image_->height()) % image_->height() - 1;
     
     Color32 *data = (Color32 *)image_->bits();
-    
     assert(x < image_->width() && x >= 0);
     assert(y < image_->height() && y >= 0);
     

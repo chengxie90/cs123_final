@@ -19,6 +19,7 @@ private slots:
     void tick();
     
 private:
+    bool m_keyDown = false;
     virtual void initializeGL() override;
     virtual void paintGL() override;
     virtual void resizeGL(int w, int h) override;

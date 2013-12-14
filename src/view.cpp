@@ -123,8 +123,12 @@ void View::mousePressEvent(QMouseEvent *event)
         vec3 hit = camPos + t * dir;
         
         //cout << hit << endl;
-        
-        scene_->pick(hit);
+        if(m_keyDown){
+            scene_->placeObject(hit);
+        }
+        else{
+            scene_->pick(hit);
+        }
     }
     
     update();
@@ -150,12 +154,18 @@ void View::wheelEvent(QWheelEvent *event)
 void View::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Escape) QApplication::quit();
+    if(event->key() == Qt::Key_Space){
+        m_keyDown = true;
+    }
     cameraController_->keyPressEvent(event);
     update();
 }
 
 void View::keyReleaseEvent(QKeyEvent *event)
 {
+    if(event->key() == Qt::Key_Space){
+        m_keyDown = false;
+    }
     cameraController_->keyReleaseEvent(event);
     update();
 }

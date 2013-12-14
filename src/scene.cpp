@@ -37,6 +37,8 @@ Scene::~Scene()
     //delete tornado_;
 }
 
+#define NUM_PARTICLE_SYSTEMS 4
+
 void Scene::initialize()
 {   
     setFogColor({0.45, 0.47, 0.5});
@@ -77,7 +79,6 @@ void Scene::initialize()
     // Clouds
     Cloud* cloud = new Cloud(500);
     cloud->transform().translate(0, 80, 0);
-    sceneObjects_.push_back(cloud);
     
     // Rain
     Rain* rain = new Rain(30);
@@ -99,37 +100,43 @@ void Scene::initialize()
     follower_->transform().translate(start.x(), start.y() + tornado_->getHeight(), start.z());
     follower_->setEmissionRate(5);
     follower_->setMaxParticleCount(40);
-    sceneObjects_.push_back(follower_);
     vec3 dest = {18, 0, 10};
     tornado_->setDestination(dest);
     TornadoParticleSystem* tPart = new TornadoParticleSystem(tornado_);
     tPart->init();
     Texture* tornadoMap = TextureCache::getInstance()->acquire("tornado", TextureType::Texture2D);
     tPart->setParticleTexture(tornadoMap);
-    sceneObjects_.push_back(tPart);
 
     DustcloudParticleSystem* dPart = new DustcloudParticleSystem(tornado_);
     dPart->init();
     Texture* dustMap = TextureCache::getInstance()->acquire("debris", TextureType::Texture2D);
     dPart->setParticleTexture(dustMap);
-    sceneObjects_.push_back(dPart);
 
     Mesh* mesh11 = MeshCache::getInstance()->acquire("bunny");
     phys_ = new PhysicsCollection();
-    phys_->gravity = 4.0;
+    phys_->gravity = 18.0;
     phys_->terrain = terrain_;
     for(int it = 0; it < 8; it++){
+        PhongMaterial* tmat = new PhongMaterial;
+        tmat->setAmbient({0.2, 0.2, 0.2});
+        tmat->setDiffuse({0.7, 0.7, 0.7});
+        tmat->setSpecular({0.7, 0.7, 0.7});
+        tmat->setShiness(100);
         PhysicsObject* p = new PhysicsObject(phys_);
-        p->setPosition({5.0 * it, 30.0, 5.0 * it});
+        p->setPosition({5.0 * it, 90.0, 5.0 * it});
         p->setPhysicsRadius(1.8);
         p->setMeshScale(5.0);
         p->setGravity(true);
         p->setMesh(mesh11);
-        p->setMaterial(material1);
+        p->setMaterial(tmat);
         sceneObjects_.push_back(p);
         phys_->objects.push_back(p);
     }
-   
+
+    sceneObjects_.push_back(cloud);
+    sceneObjects_.push_back(follower_);
+    sceneObjects_.push_back(tPart);
+    sceneObjects_.push_back(dPart);
 }
 
 void Scene::render(DrawContext &context)
@@ -179,18 +186,63 @@ void Scene::update(float dt)
     for(PhysicsObject* p : phys_->objects){
         if(p->isGravityEnabled())
             p->addVelocity({0.0, -phys_->gravity * dt, 0.0});
+        // Now deal with objects picked up by the tornado/in the tornado field.
+        vec3 pos = p->getWorldPosition();
+        vec3 center = tornado_->interp(pos.y()) + tornado_->getOrigin();
+        float fieldRange = tornado_->interpWidth(pos.y()) * 1.2;
+        // An object is in the field if its distance from the center is less than fieldRange.
+        // Also height less than tornado height.
+        float tornadoY = tornado_->getOrigin().y();
+        bool withinHeight = (pos.y() >= tornadoY && pos.y() < tornadoY + tornado_->getHeight());
+        vec3 diff = pos - center;
+        if(diff.length() <= fieldRange && withinHeight){
+            p->setGravity(false);
+            // Set the velocity of this thing...
+            vec3 out = {-diff.z() - (0.5 * diff.x()), 0.0, diff.x()  - (0.5 * diff.z())};
+            out.normalize();
+            out *= tornado_->getForce();
+            out.setY(tornado_->getHeight() / 6.0);
+            p->setVelocity(out);
+        }
+        else{
+            p->setGravity(true);
+        }
         p->update(dt);
     }
 }
 
 void Scene::pick(const vec3 &point)
 {
-    vec3 p = point;
-    float height = terrain_->height(p.x(), p.z());
-    p.setY(height);
-    tornado_->setDestination(p);
+    vec3 pt = point;
+    float height = terrain_->height(pt.x(), pt.z());
+    pt.setY(height);
+    tornado_->setDestination(pt);
 }
 
+void Scene::placeObject(const vec3 &point)
+{
+    vec3 pt = point;
+    float height = terrain_->height(pt.x(), pt.z());
+    pt.setY(height);
+
+    Mesh* mesh1 = MeshCache::getInstance()->acquire("bunny");
+    PhongMaterial* tmat = new PhongMaterial;
+    tmat->setAmbient({0.2, 0.2, 0.2});
+    tmat->setDiffuse({0.7, 0.7, 0.7});
+    tmat->setSpecular({0.7, 0.7, 0.7});
+    tmat->setShiness(100);
+    PhysicsObject* p = new PhysicsObject(phys_);
+    float prad = 1.8;
+    pt.setY(pt.y() + prad);
+    p->setPosition(pt);
+    p->setPhysicsRadius(prad);
+    p->setMeshScale(5.0);
+    p->setGravity(true);
+    p->setMesh(mesh1);
+    p->setMaterial(tmat);
+    sceneObjects_.insert(sceneObjects_.end() - 4, p);
+    phys_->objects.push_back(p);
+}
 
 
 

@@ -1,7 +1,8 @@
 #include "Tornado.h"
 
 #define TORNADO_INIT_HEIGHT 90.0
-#define TORNADO_INIT_SPEED 2.0
+#define TORNADO_INIT_SPEED 3.5
+#define TORNADO_INIT_FORCE 20.0
 #define TORNADO_SCALE_FACTOR 35.0
 #define TORNADO_SUB_GROUND 10.0
 
@@ -25,6 +26,7 @@ void Tornado::init()
     m_height = TORNADO_INIT_HEIGHT;
     m_age = 0.0;
     m_speed = TORNADO_INIT_SPEED;
+    m_force = TORNADO_INIT_FORCE;
     // Don't go anywhere until setDestination is a thing.
     m_destination = m_origin;
     // Initialize an array of control points and widths...

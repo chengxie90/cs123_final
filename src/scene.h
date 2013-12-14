@@ -32,6 +32,7 @@ public:
     void update(float dt);
     
     void pick(const vec3& point);
+    void placeObject(const vec3& point);
     
 private:
     SceneObjects sceneObjects_;
